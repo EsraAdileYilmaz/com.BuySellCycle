@@ -70,6 +70,23 @@ public class API_Stepdefinitions {
 
     }
 
+    //========== Gulnur Start ======================================
+    @Given("The API user sends a GET request and records the response from the api faqsList endpoint.")
+     public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_faqs_list_endpoint() {
+     API_Methods.getResponse();
+    }
 
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api faqslist endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_faqslist_endpoint(Integer int1) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The api user sends a GET request and saves the response returned from the api faqslist endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_faqslist_endpoint() {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    //========== Gulnur Finish ======================================
 
 }
