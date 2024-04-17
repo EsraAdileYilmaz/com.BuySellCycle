@@ -9,7 +9,7 @@ Scenario: When a GET request body containing valid authorization credentials is 
   * The api user verifies that the status code is 200
   * The api user verifies that the message information in the response body is "success"
 
-  @API
+
  Scenario Outline:  When a GET request body containing valid authorization credentials is sent to the /api/profile/allCountries endpoint,
                   the returned response body should be validated to confirm that the country with an ID of 223 has the following attributes: "code": "TR" and "name": "Turkey".
 
@@ -21,3 +21,15 @@ Scenario: When a GET request body containing valid authorization credentials is 
    Examples:
      | id  | code | name   |  |
      | 223 | TR   | Turkey |  |
+
+  @API
+ Scenario: When a GET request body containing invalid authorization credentials is sent to the /api/profile/allCountries endpoint,
+           the returned status code should be validated as 401, and the message information in the response body should confirm as "Unauthenticated.".
+
+     * The api user constructs the base url with the "invalid" token.
+     * The api user sets "api/profile/allCountries" path parameters
+     #* The API user records the response from the api allCountries endpoint, confirming that the status code is '401' and the reason phrase is Unauthenticated.
+     * The API user sends a GET request and records the response from the api allCountries endpoint.
+     * The api user verifies that the status code is 401
+     * The api user verifies that the message information in the response body is "Unauthenticated."
+
