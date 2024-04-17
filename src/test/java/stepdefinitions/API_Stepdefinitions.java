@@ -1,10 +1,14 @@
 package stepdefinitions;
 
+import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 
 import io.cucumber.java.en.When;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
@@ -12,6 +16,11 @@ import utilities.API_Utilities.API_Methods;
 import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import utilities.API_Utilities.API_Methods;
+
+import java.util.HashMap;
+
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
 import static org.junit.Assert.*;
 
 
@@ -20,6 +29,14 @@ public class API_Stepdefinitions {
     public static String fullPath;
     JSONObject requestBody;
     JsonPath jsonPath;
+
+    String endpoint;
+    Response response;
+
+
+
+
+
   //========API Esra Baslangic===================================
     //US_037
    @Given("The api user constructs the base url with the {string} token.")
@@ -52,6 +69,14 @@ public class API_Stepdefinitions {
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
         Assert.assertEquals(name, jsonPath.getString("addresses[222].name"));
     }
+
+    @Given("The API user records the response from the api allCountries endpoint, confirming that the status code is '401' and the reason phrase is Unauthenticated.")
+    public void the_api_user_records_the_response_from_the_api_all_countries_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthenticated() {
+        Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    }
+
+
+
     //==========API Esra Sonu======================================
 
    
@@ -81,6 +106,26 @@ public class API_Stepdefinitions {
         requestBody = new JSONObject();
         requestBody.put("id", id);
     }
+
+    //=============AYCA START POINT==============//
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to the api change-password endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_change_password_endpoint(String oldPassword, String password, String passwordConfirmation) {
+        requestBody = new JSONObject();
+        requestBody.put("old_password",oldPassword);
+        requestBody.put("password",password);
+        requestBody.put("password_confirmation",passwordConfirmation);
+
+    }
+    @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
+
+
+       API_Methods.postResponse(requestBody.toString());
+
+
+    }
+    //=============AYCA END OF STEPS=============//
+
 
     @Given("The api user sends a GET request and saves the response returned from the api faqslist endpoint.")
     public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_faqslist_endpoint() {
