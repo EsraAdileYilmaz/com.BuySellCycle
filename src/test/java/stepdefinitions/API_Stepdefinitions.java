@@ -87,6 +87,22 @@ public class API_Stepdefinitions {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
+    @When("The API user sends a GET request and records the response from the api customer finans data endpoint.")
+    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromTheApiCustomerFinansDataEndpoint() {
+        API_Methods.getResponse();
+    }
+
+
+    @When("The api users validates to  the response body match the {string}, {string}, {string},{string},{string} information")
+    public void theApiUsersValidatesToTheResponseBodyMatchTheInformation(String wallet_running_balance, String wallet_pending_balance, String total_coupon, String total_wishlist, String total_cancel_order) {
+        jsonPath=API_Methods.response.jsonPath();
+        Assert.assertEquals(wallet_running_balance,jsonPath.getString("wallet_running_balance"));
+        Assert.assertEquals(wallet_pending_balance,jsonPath.getString("wallet_pending_balance"));
+        Assert.assertEquals(total_coupon,jsonPath.getString("total_coupon"));
+        Assert.assertEquals(total_wishlist,jsonPath.getString("total_wishlist"));
+        Assert.assertEquals(total_cancel_order,jsonPath.getString("total_cancel_order"));
+    }
+
 
     //==========API Esra Sonu======================================
 
@@ -145,6 +161,7 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
 
 
+
        API_Methods.postResponse(requestBody.toString());
 
 
@@ -163,4 +180,5 @@ public class API_Stepdefinitions {
     public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
 }
