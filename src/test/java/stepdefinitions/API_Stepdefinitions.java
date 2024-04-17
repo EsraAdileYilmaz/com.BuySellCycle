@@ -9,6 +9,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
@@ -117,8 +118,8 @@ public class API_Stepdefinitions {
     public void the_api_user_validates_the_and_of_the_response_body_with_index(String year, String name, int dataIndex) {
         API_Methods.response.then()
                 .assertThat()
-                .body("holiday[" + dataIndex + "].year", equalTo(year));
-
+                .body("holiday[" + dataIndex + "].year", Matchers.equalTo(year));
+    }
     //========== Gulnur Start ======================================
     @Given("The API user sends a GET request and records the response from the api faqsList endpoint.")
      public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_faqs_list_endpoint() {
@@ -157,9 +158,6 @@ public class API_Stepdefinitions {
     }
 
     //========== Gulnur Finish ======================================
-
-
-    }
 
     @Given("The API user records the response from the api holidayList endpoint, confirming that the status code is {string} and the reason phrase is Unauthorized.")
     public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
