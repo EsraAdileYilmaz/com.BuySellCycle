@@ -4,6 +4,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import utilities.API_Utilities.Authentication;
 public class HooksAPI {
+
     public static RequestSpecification spec;
 
     public static void setUpApi(String userType) {

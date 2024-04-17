@@ -11,6 +11,7 @@ import static stepdefinitions.API_Stepdefinitions.fullPath;
 
 
 public class API_Methods {
+
     public static Response response;
     public static int id;
 
