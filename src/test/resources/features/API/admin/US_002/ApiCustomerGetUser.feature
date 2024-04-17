@@ -1,4 +1,4 @@
-@API
+
 Feature: As a user, I should be able to access detailed information about the user who logged into the system via API connection
 
 Scenario: When a GET request is sent to the /api/customerGetUser endpoint with valid authorization credentials,
