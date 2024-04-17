@@ -2,6 +2,8 @@ package utilities.API_Utilities;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import java.util.Arrays;
+
 import static hooks.HooksAPI.spec;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -10,6 +12,7 @@ import static stepdefinitions.API_Stepdefinitions.fullPath;
 
 public class API_Methods {
     public static Response response;
+    public static int id;
 
     public static Response getResponse() {
         response = given()
@@ -150,5 +153,35 @@ public class API_Methods {
         response.then()
                 .assertThat()
                 .body("message", equalTo(message));
+    }
+
+    public static void pathParamsMethod(String rawPaths){
+        String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
+
+        System.out.println(Arrays.toString(paths));
+
+        StringBuilder tempPath = new StringBuilder("/{");
+
+
+        for (int i = 0; i < paths.length; i++) {
+
+            String key = "pp" + i;
+            String value = paths[i].trim();
+
+            spec.pathParam(key, value);
+
+            tempPath.append(key + "}/{");
+
+            if (value.matches("\\d+")) {  // value.matches("\\d+") burada value rakam iceriyorsa dedik
+                id = Integer.parseInt(value);
+            }
+        }
+        tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
+        tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
+
+        fullPath = tempPath.toString();
+        System.out.println("fullPath = " + fullPath); // /{pp0}/{pp1}
+        System.out.println("id : " + id);
+
     }
 }
