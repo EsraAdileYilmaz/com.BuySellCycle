@@ -5,7 +5,10 @@ import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 
 import io.cucumber.java.en.When;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
@@ -14,7 +17,13 @@ import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import utilities.API_Utilities.API_Methods;
 
-import static org.hamcrest.Matchers.equalTo;
+
+
+import java.util.HashMap;
+
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
+
 import static org.junit.Assert.*;
 
 
@@ -24,7 +33,18 @@ public class API_Stepdefinitions {
     JSONObject requestBody;
     JsonPath jsonPath;
 
+
     //========API Esra Baslangic===================================
+
+    String endpoint;
+    Response response;
+
+
+
+
+
+  //========API Esra Baslangic===================================
+
     //US_037
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String token) {
@@ -85,6 +105,7 @@ public class API_Stepdefinitions {
 
     }
 
+
     //============================Nazime===========================
     @Given("The API user sends a GET request and records the response from the api holidayList endpoint.")
     public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_holiday_list_endpoint() {
@@ -97,6 +118,46 @@ public class API_Stepdefinitions {
         API_Methods.response.then()
                 .assertThat()
                 .body("holiday[" + dataIndex + "].year", equalTo(year));
+
+    //========== Gulnur Start ======================================
+    @Given("The API user sends a GET request and records the response from the api faqsList endpoint.")
+     public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_faqs_list_endpoint() {
+     API_Methods.getResponse();
+    }
+
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api faqslist endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_faqslist_endpoint(Integer int1) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    //=============AYCA START POINT==============//
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to the api change-password endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_change_password_endpoint(String oldPassword, String password, String passwordConfirmation) {
+        requestBody = new JSONObject();
+        requestBody.put("old_password",oldPassword);
+        requestBody.put("password",password);
+        requestBody.put("password_confirmation",passwordConfirmation);
+
+    }
+    @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
+
+
+       API_Methods.postResponse(requestBody.toString());
+
+
+    }
+    //=============AYCA END OF STEPS=============//
+
+
+    @Given("The api user sends a GET request and saves the response returned from the api faqslist endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_faqslist_endpoint() {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    //========== Gulnur Finish ======================================
+
 
     }
 

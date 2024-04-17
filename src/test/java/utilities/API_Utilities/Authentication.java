@@ -30,6 +30,12 @@ public class Authentication {
                 reqBody.put("email", ConfigReader.getProperty("customerEmail","api"));
                 reqBody.put("password", ConfigReader.getProperty("customerPassword","api"));
                 break;
+            case "aycacustomer":
+                spec.pathParams("pp1", "api", "pp2", "login");
+                reqBody = new JSONObject();
+                reqBody.put("email", ConfigReader.getProperty("aycaCustomerEmail","api"));
+                reqBody.put("password", ConfigReader.getProperty("aycaCustomerPassword","api"));
+                break;
 
         }
 
