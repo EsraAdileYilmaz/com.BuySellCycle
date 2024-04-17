@@ -2,7 +2,7 @@ Feature: As a user, I should be able to access detailed information about the us
   via API connection.
 
 
-  @API
+
   Scenario: When a GET request is sent to the /api/customerGetUser endpoint with valid authorization credentials,
   the expected status code returned should be 200, and the message in the response body should confirm: "success".
 
