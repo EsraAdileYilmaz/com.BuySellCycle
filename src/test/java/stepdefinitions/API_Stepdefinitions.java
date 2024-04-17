@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 
@@ -20,6 +21,7 @@ public class API_Stepdefinitions {
     public static String fullPath;
     JSONObject requestBody;
     JsonPath jsonPath;
+
   //========API Esra Baslangic===================================
     //US_037
    @Given("The api user constructs the base url with the {string} token.")
@@ -52,6 +54,14 @@ public class API_Stepdefinitions {
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
         Assert.assertEquals(name, jsonPath.getString("addresses[222].name"));
     }
+
+    @Given("The API user records the response from the api allCountries endpoint, confirming that the status code is '401' and the reason phrase is Unauthenticated.")
+    public void the_api_user_records_the_response_from_the_api_all_countries_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthenticated() {
+        Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    }
+
+
+
     //==========API Esra Sonu======================================
 
    
