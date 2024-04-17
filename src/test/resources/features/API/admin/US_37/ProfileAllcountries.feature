@@ -9,7 +9,7 @@ Scenario: When a GET request body containing valid authorization credentials is 
   * The api user verifies that the status code is 200
   * The api user verifies that the message information in the response body is "success"
 
-  @API
+
  Scenario Outline:  When a GET request body containing valid authorization credentials is sent to the /api/profile/allCountries endpoint,
                   the returned response body should be validated to confirm that the country with an ID of 223 has the following attributes: "code": "TR" and "name": "Turkey".
 
