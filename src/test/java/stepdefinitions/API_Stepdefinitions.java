@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import utilities.API_Utilities.API_Methods;
+import static org.junit.Assert.*;
 
 public class API_Stepdefinitions {
     public static int id;
@@ -33,7 +34,14 @@ public class API_Stepdefinitions {
         API_Methods.messageAssert(message);
     }
 
+    @Given("The api users validates to  the response body match the {string}, {string}, {string} information")
+    public void the_api_users_validates_to_the_response_body_match_the_information(String name, String surname, String email) {
+       assertEquals(API_Methods.getBodyResponse("first_name"),name);
+       assertEquals(API_Methods.getBodyResponse("last_name"),surname);
+       assertEquals(API_Methods.getBodyResponse("email"),email);
 
+
+    }
 
 
 }

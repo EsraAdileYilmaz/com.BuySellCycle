@@ -11,3 +11,4 @@ Feature: As a user, I should be able to access detailed information about the us
     * The api users sends a GET request and records the response from the api customerGetUser endpoint.
     * The api users verifies that the status code is 200
     * The api users verifies that the message information in the response body is "success"
+    * The api users validates to  the response body match the "first_name", "last_name", "email" information
