@@ -42,18 +42,9 @@ public class API_Stepdefinitions {
     public static JSONObject requestBody;
     public static JsonPath jsonPath;
 
-    JSONObject requestBody;
-    JsonPath jsonPath;
     HashMap<Object, String> reqBodyHash ;
 
-
-
-
     public static int added_item_id;
-
-
-
-
 
     String endpoint;
     Response response;
