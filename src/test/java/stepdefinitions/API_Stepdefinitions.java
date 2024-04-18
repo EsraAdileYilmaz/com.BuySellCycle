@@ -39,9 +39,11 @@ public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
 
+
     //JSONObject requestBody;
     //JsonPath jsonPath;
     // HashMap<String,Object> reqBody;
+
 
 
     public static JSONObject requestBody;
@@ -394,7 +396,9 @@ public class API_Stepdefinitions {
     @Given("The api user send the POST request and saves the response returned from the api {string} endpoint.")
     public void the_api_user_send_the_post_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
         API_Methods.postResponse(reqBody);
+
 }
+
     //================================US_42============================================00
     @Given("The api user prepares a POST request containing the {string}, {string} {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
