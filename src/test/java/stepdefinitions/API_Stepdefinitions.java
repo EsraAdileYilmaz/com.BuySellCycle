@@ -165,6 +165,23 @@ public class API_Stepdefinitions {
 
     }
 
+    //US_021=====
+    @When("The api user prepares a DELETE request containing the refund reason {int} to be deleted to send to the api refundReasonDelete endpoint.")
+    public void theApiUserPreparesADELETERequestContainingTheRefundReasonToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @When("The API user records the response from the api refundReasonDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
+    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
+        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+    }
+
 
 
 
@@ -239,10 +256,8 @@ public class API_Stepdefinitions {
         requestBody.put("password_confirmation",passwordConfirmation);
 
     }
-
     @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
-
 
 
        API_Methods.postResponse(requestBody.toString());

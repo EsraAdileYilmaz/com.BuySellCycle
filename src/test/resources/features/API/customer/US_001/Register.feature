@@ -10,7 +10,7 @@ Scenario: When a POST body consisting of valid data (first_name, last_name, emai
   * The api user verifies that the status code is 201
   * The api user verifies that the message information in the response body is "Successfully registered"
 
-  @API
+
  Scenario: When a valid POST body containing data fields (first_name, last_name, email, password, password_confirmation, user_type, referral_code) is sent to the /api/register endpoint,
           the data in the response body (first_name, last_name, email) should be verified to match the data sent in the request body.
 
