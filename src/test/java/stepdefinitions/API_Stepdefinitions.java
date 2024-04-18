@@ -370,10 +370,10 @@ public class API_Stepdefinitions {
         Assert.assertEquals(updated_at, jsonPath.getString("refundReasonDetails[0].updated_at"));
     }
 
-    @Given("The API user sends a GET request and records the response from the api address-list endpoint.")
-    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_api_address_list_endpoint() {
+    @Given("The API user sends a GET request body and records the response from the api address-list endpoint.")
+    public void the_api_user_sends_a_get_request_body_and_records_the_response_from_the_api_api_address_list_endpoint() {
 
-        API_Methods.getResponse();
+       response =  API_Methods.getResponse();
     }
 
     @When("The api user sends the DELETE request with incorrect department ID and saves the response returned from the api departmentDelete endpoint.")
@@ -384,6 +384,23 @@ public class API_Stepdefinitions {
         API_Methods.deleteResponse(requestBody.toString());
 
     }
+
+
+
+    @When("The api user prepares a GET request containing the department id to be deleted to send to the api departmentDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheDepartmentIdToBeDeletedToSendToTheApiDepartmentDetailsEndpoint() {
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+        API_Methods.getBodyResponse(requestBody.toString());
+
+    }
+
+    @When("The api user validates the {},{string},{string},{},{string},{string},{string},{string},{string}, {},{},{string},{string} of the response body with index {}.")
+    public void theApiUserValidatesTheOfTheResponseBodyWithIndex(int dataindex, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10, String arg11, String arg12, String arg13, String arg14, String arg15, String arg16, String arg17, String arg18, String arg19, String arg20, String arg21, String arg22) {
+    }
+
 
 
 
