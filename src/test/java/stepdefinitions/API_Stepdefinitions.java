@@ -7,6 +7,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 
 import io.cucumber.java.en.When;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
@@ -382,7 +383,7 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
-}
+
 
     @Given("The api user verifies that the content of the data {int}, {string}, {string}, {int},{string},{string} in the response body.")
     public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer id, String name, String details, Integer status, String created_at, String updated_at) {
