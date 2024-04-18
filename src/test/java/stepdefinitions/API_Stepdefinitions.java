@@ -6,7 +6,6 @@ import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
@@ -14,6 +13,7 @@ import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
+import io.restassured.http.ContentType;
 
 
 import java.util.HashMap;
