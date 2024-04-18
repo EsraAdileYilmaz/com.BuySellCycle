@@ -77,7 +77,11 @@ public class API_Stepdefinitions {
     @When("The api user verifies the content of the data {int}, {string}, {string} in the response body.")
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
+
        jsonPath= response.jsonPath();
+
+        jsonPath = API_Methods.response.jsonPath();
+
 
         jsonPath = API_Methods.response.jsonPath();
 
