@@ -90,14 +90,8 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
 
-       jsonPath= response.jsonPath();
-
+        jsonPath= response.jsonPath();
         jsonPath = API_Methods.response.jsonPath();
-
-
-        jsonPath = API_Methods.response.jsonPath();
-
-
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
         Assert.assertEquals(name, jsonPath.getString("addresses[222].name"));
@@ -125,6 +119,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(total_cancel_order,jsonPath.getString("total_cancel_order"));
     }
 
+    //==US_001==============
     @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint.")
     public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterAddEndpoint(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
         reqBody = new HashMap<>();
@@ -148,21 +143,16 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesThatTheRegisterInformationInTheResponseBodyIs(String firstName, String lastName, String email) {
 
         Map<String, Object> responseMap = API_Methods.response.as(HashMap.class);
-        assertEquals(((Map) reqBody.get("user")).get("firstname"),
+        assertEquals((Map) reqBody.get("firstname"),
                 ((Map) responseMap.get("user")).get("firstname"));
-        assertEquals(((Map) reqBody.get("user")).get("lastname"),
+        assertEquals((Map) reqBody.get("lastname"),
                 ((Map) responseMap.get("user")).get("lastname"));
-        assertEquals(((Map) reqBody.get("user")).get("email"),
+        assertEquals(reqBody.get("email"),
                 ((Map) responseMap.get("user")).get("email"));
 
     }
 
     //US_021=====
-    @When("The api user prepares a DELETE request containing the refund reason {int} to be deleted to send to the api refundReasonDelete endpoint.")
-    public void theApiUserPreparesADELETERequestContainingTheRefundReasonToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint(int id) {
-        requestBody = new JSONObject();
-        requestBody.put("id", id);
-    }
 
     @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
     public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
@@ -172,6 +162,23 @@ public class API_Stepdefinitions {
     @When("The API user records the response from the api refundReasonDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
         Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+    }
+
+    @When("The api user prepares a POST request containing the department id to be deleted to send to the api refund Reason delete endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheDepartmentIdToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint() {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("reason", "product mismatch");
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+
+    }
+
+    @When("The api user sends the DELETE request with incorrect department ID and saves the response returned from the api refund Reason delete endpoint.")
+    public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",987654321);
+        API_Methods.deleteResponse(requestBody.toString());
     }
 
 
