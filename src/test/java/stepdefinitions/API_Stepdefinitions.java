@@ -263,8 +263,10 @@ public class API_Stepdefinitions {
         requestBody.put("password_confirmation",passwordConfirmation);
 
     }
+
     @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
+
 
 
        API_Methods.postResponse(requestBody.toString());
