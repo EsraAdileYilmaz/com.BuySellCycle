@@ -38,13 +38,10 @@ import static utilities.API_Utilities.API_Methods.response;
 public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
-    JSONObject requestBody;
-    JsonPath jsonPath;
+    public static JSONObject requestBody;
+    public static JsonPath jsonPath;
 
-
-
-
-    public static int addedDepartmentId;
+    public static int added_item_id;
 
 
  
@@ -243,35 +240,32 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user prepares a DELETE request containing the department id to be deleted to send to the api departmentDelete endpoint.")
-    public void the_api_user_prepares_a_delete_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_delete_endpoint() {
+    @Given("The api user prepares a POST request containing the department id to be deleted to send to the api departmentDelete endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_delete_endpoint() {
 
-        addedDepartmentId= API_Methods.departmentAddId();
-        requestBody = new JSONObject();
-        requestBody.put("id", addedDepartmentId);
-        System.out.println(requestBody);
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("name", "Marketing AYCA");
+        reqBody.put("details", "Marketing DEPARTMENT AYCA");
+        reqBody.put("status", 1453);
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
 
     }
     @Given("The api user sends the DELETE request and saves the response returned from the api departmentDelete endpoint.")
     public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_department_delete_endpoint() {
 
-
-        Response response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(requestBody.toString())
-                .delete("/{pp1}/{pp2}");
-        response.prettyPrint();
-        //API_Methods.deleteResponse(requestBody.toString());
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
 
     }
     @Given("The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.")
     public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body() {
 
         jsonPath = API_Methods.response.jsonPath();
-
-        Assert.assertEquals(requestBody.get("id"), jsonPath.getInt("Deleted_Id"));
+        Assert.assertEquals(added_item_id, jsonPath.getInt("Deleted_Id"));
 
     }
 
@@ -342,6 +336,21 @@ public class API_Stepdefinitions {
         Assert.assertEquals(reason, jsonPath.getString("refundReasonDetails[0].reason"));
         Assert.assertEquals(created_at, jsonPath.getString("refundReasonDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("refundReasonDetails[0].updated_at"));
+    }
+
+    @Given("The API user sends a GET request and records the response from the api address-list endpoint.")
+    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_api_address_list_endpoint() {
+
+        API_Methods.getResponse();
+    }
+
+    @When("The api user sends the DELETE request with incorrect department ID and saves the response returned from the api departmentDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiDepartmentDeleteEndpoint() {
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",572894875);
+        API_Methods.deleteResponse(requestBody.toString());
+
     }
 
 
@@ -417,6 +426,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
     }
+
 
 
 }
