@@ -22,7 +22,6 @@ public class API_Methods {
     public static int id;
 
 
-
     public static Response getResponse() {
         response = given()
                 .spec(spec)
@@ -164,7 +163,7 @@ public class API_Methods {
                 .body("message", equalTo(message));
     }
 
-    public static void pathParamsMethod(String rawPaths){
+    public static void pathParamsMethod(String rawPaths) {
         String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
         System.out.println(Arrays.toString(paths));
@@ -194,7 +193,7 @@ public class API_Methods {
 
     }
 
-    public static int departmentAddId (){
+    public static int departmentAddId() {
         /*
         * {
             "name": "Marketing 2",
@@ -220,4 +219,5 @@ public class API_Methods {
         JsonPath jsonPath = response.jsonPath();
         return jsonPath.getInt("added_item_id");
     }
+
 }

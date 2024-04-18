@@ -6,6 +6,8 @@ import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
+
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -32,6 +34,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 
 import static org.junit.Assert.*;
+import static utilities.API_Utilities.API_Methods.getResponse;
 import static utilities.API_Utilities.API_Methods.response;
 
 
@@ -383,8 +386,20 @@ public class API_Stepdefinitions {
 
     @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
     public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+
+        JsonPath resJP=response.jsonPath();
+        id= resJP.getInt("id");
+
     }
 
+    @Then("The api user verifies that response should contain coupon information for ID {int} with the following fields:")
+    public void theApiUserVerifiesThatResponseShouldContainCouponInformationForIDWithTheFollowingFields(int id) {
+    }
+
+    @And("The API user sends <id> a GET request and records the response from the api {string} endpoint.")
+    public void theAPIUserSendsIdAGETRequestAndRecordsTheResponseFromTheApiEndpoint(String arg0) {
+       API_Methods.getBodyResponse(id);
+    }
     // Aslis End
 
 
@@ -417,6 +432,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
     }
+
 
 
 }
