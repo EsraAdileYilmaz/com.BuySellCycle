@@ -22,7 +22,7 @@ Scenario: When a GET request body containing valid authorization credentials is 
      | id  | code | name   |  |
      | 223 | TR   | Turkey |  |
 
-  @API
+
  Scenario: When a GET request body containing invalid authorization credentials is sent to the /api/profile/allCountries endpoint,
            the returned status code should be validated as 401, and the message information in the response body should confirm as "Unauthenticated.".
 
