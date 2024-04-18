@@ -40,6 +40,9 @@ public class API_Stepdefinitions {
     public static String fullPath;
     JSONObject requestBody;
     JsonPath jsonPath;
+    HashMap<Object, String> reqBodyHash ;
+
+
 
 
 
@@ -47,7 +50,7 @@ public class API_Stepdefinitions {
     public static int addedDepartmentId;
 
 
- 
+
 
 
     String endpoint;
@@ -235,8 +238,10 @@ public class API_Stepdefinitions {
         requestBody.put("password_confirmation",passwordConfirmation);
 
     }
+
     @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
+
 
 
        API_Methods.postResponse(requestBody.toString());
@@ -363,6 +368,29 @@ public class API_Stepdefinitions {
     @Given("The API user records the response from the api holidayList endpoint, confirming that the status code is {string} and the reason phrase is Unauthorized.")
     public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    }
+
+    //================================US_42============================================00
+    @Given("The api user prepares a POST request containing the {string}, {string} {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
+         reqBodyHash=new HashMap<>();
+
+        reqBodyHash.put("customer_id" ,customer_id);
+               reqBodyHash.put( "name",name);
+               reqBodyHash.put( "email", email);
+               reqBodyHash.put( "address", address);
+               reqBodyHash.put( "phone", phone);
+               reqBodyHash.put( "city",city);
+               reqBodyHash.put( "state", state);
+               reqBodyHash.put( "country", country);
+               reqBodyHash.put( "postal_code", postal_code);
+               reqBodyHash.put( "address_type",address_type);
+    }
+
+    @Given("The api user sends the POST request and saves the response returned from the api addressAdd endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_address_add_endpoint() {
+        API_Methods.postResponse(reqBodyHash);
+
     }
 
 
