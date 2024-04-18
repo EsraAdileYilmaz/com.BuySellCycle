@@ -12,7 +12,7 @@ Feature: Testing the Coupon List API
   Scenario: Validate information for coupon with specific ID in the response body
     Given The api user constructs the base url with the "admin" token.
     And  The api user sets "api/coupon/couponList" path parameters
-    When The api user sends a GET request to endpoint with the coupon ID '<couponID>'
+    When The api user sends a GET request containing the <id> in the body and saves the response
     Then The api user validates the following information for the coupon with ID '<couponID>' in the response body:
       | title       | <expectedTitle>     |
       | coupon_code | <expectedCouponCode>|

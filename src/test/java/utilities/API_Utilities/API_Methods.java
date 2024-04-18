@@ -3,10 +3,17 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import org.apache.http.client.utils.URIBuilder;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static hooks.HooksAPI.spec;
@@ -20,7 +27,6 @@ public class API_Methods {
 
     public static Response response;
     public static int id;
-
 
 
     public static Response getResponse() {
@@ -164,7 +170,7 @@ public class API_Methods {
                 .body("message", equalTo(message));
     }
 
-    public static void pathParamsMethod(String rawPaths){
+    public static void pathParamsMethod(String rawPaths) {
         String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
         System.out.println(Arrays.toString(paths));
@@ -194,4 +200,37 @@ public class API_Methods {
 
     }
 
+    public static void pathParamsMethodUri(String rawPaths) {
+        String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
+
+        // Temel URI'yi oluştur
+        URIBuilder uriBuilder = new URIBuilder()
+                .setScheme("http")
+                .setHost(ConfigReader.getProperty("base_url", "api"))
+                .setPath("/api/coupon/couponList");
+
+        // Sorgu parametrelerini ekle
+        for (int i = 0; i < paths.length; i++) {
+            String key = "pp" + i;
+            String value = paths[i].trim();
+            uriBuilder.setParameter(key, value);
+        }
+
+        try {
+            // URI'yi oluştur
+            URI uri = uriBuilder.build();
+
+            // HttpGet isteğini oluştur
+            HttpGet httpGet = new HttpGet(uri);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
+
+
