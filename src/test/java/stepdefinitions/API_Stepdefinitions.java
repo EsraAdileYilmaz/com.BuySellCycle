@@ -181,4 +181,36 @@ public class API_Stepdefinitions {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
+    //**************Gamze**********************
+    @Given("The api user verifies that the content of the data {int}, {string}, {string} in the response body.")
+    public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer index, String name, String details) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        Assert.assertEquals(name, jsonPath.getString("departments[" + index + "].name"));
+        Assert.assertEquals(details, jsonPath.getString("departments[" + index + "].details"));
+    }
+
+    @Given("The api user sends a GET request containing the {int} in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_in_the_body_and_saves_the_response(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    @Given("The api user verifies that the content of the data {int}, {string}, {string}, {int},{string},{string} in the response body.")
+    public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer id, String name, String details, Integer status, String created_at, String updated_at) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        System.out.println("RESPONSE ID---->>> " + jsonPath.getInt("departmentDetails[0].id"));
+
+        Assert.assertEquals(id, (Integer) jsonPath.getInt("departmentDetails[0].id"));
+        Assert.assertEquals(name, jsonPath.getString("departmentDetails[0].name"));
+        Assert.assertEquals(details, jsonPath.getString("departmentDetails[0].details"));
+        Assert.assertEquals(status, (Integer) jsonPath.getInt("departmentDetails[0].status"));
+        Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
+    }
+
 }
+
+
