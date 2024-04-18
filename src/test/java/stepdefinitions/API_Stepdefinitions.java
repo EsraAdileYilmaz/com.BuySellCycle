@@ -3,7 +3,7 @@ package stepdefinitions;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
-
+import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -135,12 +135,23 @@ public class API_Stepdefinitions {
 
     public void the_api_users_validates_to_the_response_body_match_the_information(String first_name, String surname, String email) {
        jsonPath= API_Methods.response.jsonPath();
-       assertEquals(jsonPath.getString("user.first_name"),first_name);
-       assertEquals(jsonPath.getString("user.last_name"),surname);
-       assertEquals(jsonPath.getString("user.email"),email);
-
+       assertEquals(first_name,jsonPath.getString("user.first_name"));
+       assertEquals(surname,jsonPath.getString("user.last_name"));
+       assertEquals(email,jsonPath.getString("user.email"));
 
     }
+    @Given("The api user validates the {string}, {string}, {string},{string}  of the response body with index {int}.")
+    public void the_api_user_validates_the_of_the_response_body_with_index(String first_name, String username, String email, String name, Integer dataIndex) {
+     API_Methods.response.then()
+             .assertThat()
+             .body("user["+dataIndex+"].first_name",equalTo(first_name))
+             .body("user["+dataIndex+"].username",equalTo(username))
+             .body("user["+dataIndex+"].email",equalTo(email))
+             .body("user["+dataIndex+"].name",equalTo(name+" "));
+
+    }
+
+
 
     @Given("The API user sends a GET request and records the response from the api {string} endpoint.")
     public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_customer_get_user_endpoint(String endPoint) {
