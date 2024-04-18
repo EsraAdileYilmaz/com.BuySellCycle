@@ -5,9 +5,8 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-
+import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
@@ -15,6 +14,7 @@ import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
+import io.restassured.http.ContentType;
 
 
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class API_Stepdefinitions {
     public static int addedDepartmentId;
 
 
-
+ 
 
 
     String endpoint;
@@ -366,6 +366,27 @@ public class API_Stepdefinitions {
     }
 
 
+    //  Aslis
+    @When("The api user prepares a POST request containing the holiday data {string}, {string}, {string}")
+    public void theApiUserPreparesAPOSTRequestContainingTheHolidayData(String year, String name, String date) {
+        requestBody = new JSONObject();
+        requestBody.put("year",year);
+        requestBody.put("name",name);
+        requestBody.put("date",date);
+
+    }
+
+    @And("The api user send POST request to the  endpoint.")
+    public void theApiUserSendPOSTRequestToTheEndpoint() {
+        API_Methods.postResponse(requestBody.toString());
+    }
+
+    @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+    }
+
+    // Aslis End
+
 
     //**************Gamze**********************
     @Given("The api user verifies that the content of the data {int}, {string}, {string} in the response body.")
@@ -383,8 +404,6 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
-
-
     @Given("The api user verifies that the content of the data {int}, {string}, {string}, {int},{string},{string} in the response body.")
     public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer id, String name, String details, Integer status, String created_at, String updated_at) {
         jsonPath = API_Methods.response.jsonPath();
@@ -399,26 +418,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
     }
 
-//  Aslis
-@When("The api user prepares a POST request containing the holiday data {string}, {string}, {string}")
-public void theApiUserPreparesAPOSTRequestContainingTheHolidayData(String year, String name, String date) {
-    requestBody = new JSONObject();
-    requestBody.put("year",year);
-    requestBody.put("name",name);
-    requestBody.put("date",date);
 
-}
-
-@And("The api user send POST request to the  endpoint.")
-public void theApiUserSendPOSTRequestToTheEndpoint() {
-    API_Methods.postResponse(requestBody.toString());
-}
-
-@When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
-public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
-}
-
-// Aslis End
 }
 
 
