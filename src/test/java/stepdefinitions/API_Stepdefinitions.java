@@ -6,6 +6,7 @@ import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
@@ -393,6 +394,16 @@ public class API_Stepdefinitions {
         Assert.assertEquals(status, (Integer) jsonPath.getInt("departmentDetails[0].status"));
         Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
+    }
+    @Given("The api user prepares a POST request containing the {string} information to send to the api refundReasonAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_refund_reason_add_endpoint(String reason) {
+        reqBody = new HashMap<>();
+        reqBody.put("reason", reason);
+    }
+
+    @Given("The api user sends the POST request and saves the response returned from the api refundReasonAdd endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_refund_reason_add_endpoint() {
+        API_Methods.postResponse(reqBody);
     }
 
 
