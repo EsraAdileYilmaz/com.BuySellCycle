@@ -1,29 +1,28 @@
 package stepdefinitions;
 
+import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 
-import io.restassured.path.json.JsonPath;
-import org.json.JSONObject;
-import utilities.API_Utilities.API_Methods;
-
-
 
 import java.util.HashMap;
+import java.util.Map;
+
+
 
 import static hooks.HooksAPI.spec;
 import static io.restassured.RestAssured.baseURI;
+
 import static io.restassured.RestAssured.given;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -41,13 +40,19 @@ public class API_Stepdefinitions {
     JsonPath jsonPath;
 
 
+
+
     public static int addedDepartmentId;
 
 
  
 
+
     String endpoint;
     Response response;
+    Faker faker=new Faker();
+    Map<String, Object> reqBody;
+    String password;
 
 
 
@@ -114,12 +119,47 @@ public class API_Stepdefinitions {
     @When("The api users validates to  the response body match the {string}, {string}, {string},{string},{string} information")
     public void theApiUsersValidatesToTheResponseBodyMatchTheInformation(String wallet_running_balance, String wallet_pending_balance, String total_coupon, String total_wishlist, String total_cancel_order) {
         jsonPath=API_Methods.response.jsonPath();
+
         Assert.assertEquals(wallet_running_balance,jsonPath.getString("wallet_running_balance"));
         Assert.assertEquals(wallet_pending_balance,jsonPath.getString("wallet_pending_balance"));
         Assert.assertEquals(total_coupon,jsonPath.getString("total_coupon"));
         Assert.assertEquals(total_wishlist,jsonPath.getString("total_wishlist"));
         Assert.assertEquals(total_cancel_order,jsonPath.getString("total_cancel_order"));
     }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterAddEndpoint(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+    @When("The api user sends the POST request and saves the response returned from the api register endpoint.")
+    public void theApiUserSendsThePOSTRequestAndSavesTheResponseReturnedFromTheApiRegisterEndpoint() {
+        API_Methods.postResponse(reqBody);
+    }
+
+    @When("The api user verifies that the register information in the response body is {string}, {string}, {string}.")
+    public void theApiUserVerifiesThatTheRegisterInformationInTheResponseBodyIs(String firstName, String lastName, String email) {
+
+        Map<String, Object> responseMap = API_Methods.response.as(HashMap.class);
+        assertEquals(((Map) reqBody.get("user")).get("firstname"),
+                ((Map) responseMap.get("user")).get("firstname"));
+        assertEquals(((Map) reqBody.get("user")).get("lastname"),
+                ((Map) responseMap.get("user")).get("lastname"));
+        assertEquals(((Map) reqBody.get("user")).get("email"),
+                ((Map) responseMap.get("user")).get("email"));
+
+    }
+
+
 
 
     //==========API Esra Sonu======================================
@@ -323,6 +363,8 @@ public class API_Stepdefinitions {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
+
+
     //**************Gamze**********************
     @Given("The api user verifies that the content of the data {int}, {string}, {string} in the response body.")
     public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer index, String name, String details) {
@@ -352,6 +394,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
     }
+
 
 }
 
