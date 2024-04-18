@@ -9,7 +9,7 @@ Scenario: When a GET request is sent to the /api/profile/get-customer-data endpo
   * The api user verifies that the status code is 200
   * The api user verifies that the message information in the response body is "success"
 
-  @API
+
 Scenario Outline: When a GET request is sent to the /api/profile/get-customer-data endpoint with valid authorization credentials,
         the data returned in the response body (wallet_running_balance, wallet_pending_balance, total_coupon, total_wishlist, total_cancel_order) should be validated.
 
