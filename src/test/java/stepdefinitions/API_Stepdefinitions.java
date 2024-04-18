@@ -392,13 +392,19 @@ public class API_Stepdefinitions {
 
     }
 
-    @Then("The api user verifies that response should contain coupon information for ID {int} with the following fields:")
-    public void theApiUserVerifiesThatResponseShouldContainCouponInformationForIDWithTheFollowingFields(int id) {
-    }
 
     @And("The API user sends <id> a GET request and records the response from the api {string} endpoint.")
     public void theAPIUserSendsIdAGETRequestAndRecordsTheResponseFromTheApiEndpoint(String arg0) {
-       API_Methods.getBodyResponse(id);
+        API_Methods.getResponse();
+
+    }
+
+    @When("The api user sends a GET request to {string} endpoint with the coupon ID {string}")
+    public void theApiUserSendsAGETRequestToEndpointWithTheCouponIDCouponID(String id) {
+    }
+
+    @Then("The api user validates the following information for the coupon with ID {string} in the response body:")
+    public void theApiUserValidatesTheFollowingInformationForTheCouponWithIDCouponIDInTheResponseBody() {
     }
     // Aslis End
 

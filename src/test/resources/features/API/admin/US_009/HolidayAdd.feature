@@ -12,7 +12,7 @@ Feature: Adding and Verifying holidays via API
 
     Examples:
       | year | name      | date       |
-      | 2025 | Sümbül    | 29.12.2025 |
+      | 2025 | Sos    | 29.12.2025 |
 
 
 
@@ -35,7 +35,7 @@ Feature: Adding and Verifying holidays via API
 
     Examples:
       | year | name      | date       |
-      | 2025 | Sümbül    | 29.12.2025 |
+      | 2025 | Sos    | 29.12.2025 |
 
 
   Scenario Outline: Handle unauthenticated request
