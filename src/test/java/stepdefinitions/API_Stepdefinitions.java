@@ -1,29 +1,35 @@
 package stepdefinitions;
 
+import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
-
-import io.restassured.path.json.JsonPath;
-import org.json.JSONObject;
-import utilities.API_Utilities.API_Methods;
-
+import io.restassured.http.ContentType;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
+
+
+import static hooks.HooksAPI.spec;
 import static io.restassured.RestAssured.baseURI;
+
 import static io.restassured.RestAssured.given;
+
+import static org.hamcrest.Matchers.equalTo;
+
+
 
 import static org.junit.Assert.*;
 import static utilities.API_Utilities.API_Methods.response;
@@ -32,14 +38,26 @@ import static utilities.API_Utilities.API_Methods.response;
 public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
+
     JSONObject requestBody;
     JsonPath jsonPath;
      HashMap<String,Object> reqBody;
 
-    //========API Esra Baslangic===================================
+
+    public static JSONObject requestBody;
+    public static JsonPath jsonPath;
+
+
+    HashMap<Object, String> reqBodyHash ;
+
+    public static int added_item_id;
 
     String endpoint;
     Response response;
+    Faker faker=new Faker();
+    Map<String, Object> reqBody;
+    String password;
+
 
 
 
@@ -105,12 +123,47 @@ public class API_Stepdefinitions {
     @When("The api users validates to  the response body match the {string}, {string}, {string},{string},{string} information")
     public void theApiUsersValidatesToTheResponseBodyMatchTheInformation(String wallet_running_balance, String wallet_pending_balance, String total_coupon, String total_wishlist, String total_cancel_order) {
         jsonPath=API_Methods.response.jsonPath();
+
         Assert.assertEquals(wallet_running_balance,jsonPath.getString("wallet_running_balance"));
         Assert.assertEquals(wallet_pending_balance,jsonPath.getString("wallet_pending_balance"));
         Assert.assertEquals(total_coupon,jsonPath.getString("total_coupon"));
         Assert.assertEquals(total_wishlist,jsonPath.getString("total_wishlist"));
         Assert.assertEquals(total_cancel_order,jsonPath.getString("total_cancel_order"));
     }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterAddEndpoint(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+    @When("The api user sends the POST request and saves the response returned from the api register endpoint.")
+    public void theApiUserSendsThePOSTRequestAndSavesTheResponseReturnedFromTheApiRegisterEndpoint() {
+        API_Methods.postResponse(reqBody);
+    }
+
+    @When("The api user verifies that the register information in the response body is {string}, {string}, {string}.")
+    public void theApiUserVerifiesThatTheRegisterInformationInTheResponseBodyIs(String firstName, String lastName, String email) {
+
+        Map<String, Object> responseMap = API_Methods.response.as(HashMap.class);
+        assertEquals(((Map) reqBody.get("user")).get("firstname"),
+                ((Map) responseMap.get("user")).get("firstname"));
+        assertEquals(((Map) reqBody.get("user")).get("lastname"),
+                ((Map) responseMap.get("user")).get("lastname"));
+        assertEquals(((Map) reqBody.get("user")).get("email"),
+                ((Map) responseMap.get("user")).get("email"));
+
+    }
+
+
 
 
     //==========API Esra Sonu======================================
@@ -184,6 +237,7 @@ public class API_Stepdefinitions {
         requestBody.put("password_confirmation",passwordConfirmation);
 
     }
+
     @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
 
@@ -191,8 +245,124 @@ public class API_Stepdefinitions {
 
        API_Methods.postResponse(requestBody.toString());
 
+    }
+
+    @Given("The api user prepares a POST request containing the department id to be deleted to send to the api departmentDelete endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_delete_endpoint() {
+
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("name", "Marketing AYCA");
+        reqBody.put("details", "Marketing DEPARTMENT AYCA");
+        reqBody.put("status", 1453);
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
 
     }
+    @Given("The api user sends the DELETE request and saves the response returned from the api departmentDelete endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_department_delete_endpoint() {
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+
+    }
+    @Given("The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.")
+    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body() {
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(added_item_id, jsonPath.getInt("Deleted_Id"));
+
+    }
+
+    @When("The API user records the response from the api departmentDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
+    public void theAPIUserRecordsTheResponseFromTheApiDepartmentDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
+        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+
+    }
+
+    @Given("The api user prepares a PATCH request containing the {string} data to send to the api refundReasonUpdate endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String reason) {
+        requestBody = new JSONObject();
+        requestBody.put("reason", reason);
+
+    }
+    @Given("The api user sends the PATCH request and saves the response returned from the api refundReasonUpdate endpoint.")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_refund_reason_update_endpoint() {
+
+        API_Methods.patchResponse(requestBody.toString());
+    }
+    @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the endpoint.")
+    public void the_api_user_verifies_that_the_updated_id_information_in_the_response_body_matches_the_id_path_parameter_specified_in_the_endpoint() {
+
+        // 1. adim
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
+
+        // 2. adim
+        API_Methods.response.then()
+                .assertThat()
+                .body("updated_Id", equalTo(id));
+    }
+
+    @Given("The API user records the response from the api refundReasonUpdate endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
+    public void the_api_user_records_the_response_from_the_api_refund_reason_update_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_not_found() {
+
+        Assert.assertTrue(API_Methods.tryCatchPatch(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+
+
+    }
+
+    @Given("The API user records the response from the api refundReasonUpdate endpoint, confirming that the status code is '401' and the reason phrase is Unauthorized.")
+    public void the_api_user_records_the_response_from_the_api_refund_reason_update_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized() {
+
+        Assert.assertTrue(API_Methods.tryCatchPatch(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+
+    }
+
+    @Given("The api user prepares a GET request containing the refund reason {int} for which details are to be accessed, to send to the api refundReasonDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_refund_reason_details_endpoint(Integer int1) {
+
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+
+    }
+    @Given("The api user sends a GET request and saves the response returned from the api refundReasonDetails endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_refund_reason_details_endpoint() {
+
+        API_Methods.getBodyResponse(requestBody.toString());
+
+    }
+    @Given("The api user verifies that the reason information in the response body is {string}.")
+    public void the_api_user_verifies_that_the_reason_information_in_the_response_body_is(int id, String reason, String created_at, String updated_at) {
+
+        jsonPath = API_Methods.response.jsonPath();
+
+        Assert.assertEquals(id, jsonPath.getInt("refundReasonDetails[0].id"));
+        Assert.assertEquals(reason, jsonPath.getString("refundReasonDetails[0].reason"));
+        Assert.assertEquals(created_at, jsonPath.getString("refundReasonDetails[0].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("refundReasonDetails[0].updated_at"));
+    }
+
+    @Given("The API user sends a GET request and records the response from the api address-list endpoint.")
+    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_api_address_list_endpoint() {
+
+        API_Methods.getResponse();
+    }
+
+    @When("The api user sends the DELETE request with incorrect department ID and saves the response returned from the api departmentDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiDepartmentDeleteEndpoint() {
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",572894875);
+        API_Methods.deleteResponse(requestBody.toString());
+
+    }
+
+
+
+
     //=============AYCA END OF STEPS=============//
 
 
@@ -201,12 +371,16 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
+
+
+
     //========== Gulnur Finish ======================================
 
     @Given("The API user records the response from the api holidayList endpoint, confirming that the status code is {string} and the reason phrase is Unauthorized.")
     public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
 
     @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to api holidayAdd endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_api_endpoint(String year, String name, String date) {
@@ -221,7 +395,85 @@ public class API_Stepdefinitions {
     public void the_api_user_send_the_post_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
         API_Methods.postResponse(reqBody);
     }
+    //================================US_42============================================00
+    @Given("The api user prepares a POST request containing the {string}, {string} {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
+         reqBodyHash=new HashMap<>();
+
+        reqBodyHash.put("customer_id" ,customer_id);
+               reqBodyHash.put( "name",name);
+               reqBodyHash.put( "email", email);
+               reqBodyHash.put( "address", address);
+               reqBodyHash.put( "phone", phone);
+               reqBodyHash.put( "city",city);
+               reqBodyHash.put( "state", state);
+               reqBodyHash.put( "country", country);
+               reqBodyHash.put( "postal_code", postal_code);
+               reqBodyHash.put( "address_type",address_type);
+    }
+
+    @Given("The api user sends the POST request and saves the response returned from the api addressAdd endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_address_add_endpoint() {
+        API_Methods.postResponse(reqBodyHash);
+
+    }
+
+
+    //  Aslis
+    @When("The api user prepares a POST request containing the holiday data {string}, {string}, {string}")
+    public void theApiUserPreparesAPOSTRequestContainingTheHolidayData(String year, String name, String date) {
+        requestBody = new JSONObject();
+        requestBody.put("year",year);
+        requestBody.put("name",name);
+        requestBody.put("date",date);
+
+    }
+
+    @And("The api user send POST request to the  endpoint.")
+    public void theApiUserSendPOSTRequestToTheEndpoint() {
+        API_Methods.postResponse(requestBody.toString());
+    }
+
+    @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+    }
+
+    // Aslis End
+
+
+    //**************Gamze**********************
+    @Given("The api user verifies that the content of the data {int}, {string}, {string} in the response body.")
+    public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer index, String name, String details) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        Assert.assertEquals(name, jsonPath.getString("departments[" + index + "].name"));
+        Assert.assertEquals(details, jsonPath.getString("departments[" + index + "].details"));
+    }
+
+    @Given("The api user sends a GET request containing the {int} in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_in_the_body_and_saves_the_response(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    @Given("The api user verifies that the content of the data {int}, {string}, {string}, {int},{string},{string} in the response body.")
+    public void the_api_user_verifies_that_the_content_of_the_data_in_the_response_body(Integer id, String name, String details, Integer status, String created_at, String updated_at) {
+        jsonPath = API_Methods.response.jsonPath();
+
+        System.out.println("RESPONSE ID---->>> " + jsonPath.getInt("departmentDetails[0].id"));
+
+        Assert.assertEquals(id, (Integer) jsonPath.getInt("departmentDetails[0].id"));
+        Assert.assertEquals(name, jsonPath.getString("departmentDetails[0].name"));
+        Assert.assertEquals(details, jsonPath.getString("departmentDetails[0].details"));
+        Assert.assertEquals(status, (Integer) jsonPath.getInt("departmentDetails[0].status"));
+        Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
+
+    }
 
 
 
 }
+
+
