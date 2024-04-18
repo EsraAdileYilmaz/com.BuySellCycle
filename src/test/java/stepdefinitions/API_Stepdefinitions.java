@@ -13,6 +13,7 @@ import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
+import io.restassured.http.ContentType;
 
 
 import java.util.HashMap;
