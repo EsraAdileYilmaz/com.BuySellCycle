@@ -22,6 +22,7 @@ public class API_Methods {
     public static int id;
 
 
+
     public static Response getResponse() {
         response = given()
                 .spec(spec)
@@ -163,7 +164,7 @@ public class API_Methods {
                 .body("message", equalTo(message));
     }
 
-    public static void pathParamsMethod(String rawPaths) {
+    public static void pathParamsMethod(String rawPaths){
         String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
         System.out.println(Arrays.toString(paths));
@@ -191,33 +192,6 @@ public class API_Methods {
         System.out.println("fullPath = " + fullPath); // /{pp0}/{pp1}
         System.out.println("id : " + id);
 
-    }
-
-    public static int departmentAddId() {
-        /*
-        * {
-            "name": "Marketing 2",
-            "details": "Marketing Department 2",
-            "status": 1
-        }*/
-
-        HooksAPI.setUpApi("admin");
-        spec.pathParams("pp1", "api", "pp2", "departmentAdd");
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("name", "Marketing AYCA");
-        reqBody.put("details", "Marketing DEPARTMENT AYCA");
-        reqBody.put("status", 1453);
-
-        Response response = given()
-                .spec(spec)
-                .contentType(ContentType.JSON)
-                .when()
-                .body(reqBody.toString())
-                .post(fullPath);
-
-        response.prettyPrint();
-        JsonPath jsonPath = response.jsonPath();
-        return jsonPath.getInt("added_item_id");
     }
 
 }
