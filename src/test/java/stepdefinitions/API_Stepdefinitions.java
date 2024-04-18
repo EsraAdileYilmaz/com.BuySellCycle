@@ -2,6 +2,7 @@ package stepdefinitions;
 
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 
 import io.cucumber.java.en.When;
@@ -197,4 +198,24 @@ public class API_Stepdefinitions {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
+    //  Aslis
+    @When("The api user prepares a POST request containing the holiday data {string}, {string}, {string}")
+    public void theApiUserPreparesAPOSTRequestContainingTheHolidayData(String year, String name, String date) {
+        requestBody = new JSONObject();
+        requestBody.put("year",year);
+        requestBody.put("name",name);
+        requestBody.put("date",date);
+
+    }
+
+    @And("The api user send POST request to the  endpoint.")
+    public void theApiUserSendPOSTRequestToTheEndpoint() {
+        API_Methods.postResponse(requestBody.toString());
+    }
+
+    @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+    }
+
+    // Aslis End
 }
