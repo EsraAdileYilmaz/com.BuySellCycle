@@ -34,7 +34,7 @@ public class API_Stepdefinitions {
     public static String fullPath;
     JSONObject requestBody;
     JsonPath jsonPath;
-
+     HashMap<String,Object> reqBody;
 
     //========API Esra Baslangic===================================
 
@@ -127,7 +127,7 @@ public class API_Stepdefinitions {
     public void the_api_users_validates_to_the_response_body_match_the_information(String first_name, String surname, String email) {
        jsonPath= API_Methods.response.jsonPath();
        assertEquals(first_name,jsonPath.getString("user.first_name"));
-       assertEquals(surname,jsonPath.getString("user.last_name"));
+       assertEquals(surname,jsonPath.get("user.last_name"));
        assertEquals(email,jsonPath.getString("user.email"));
 
     }
@@ -207,5 +207,21 @@ public class API_Stepdefinitions {
     public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to api holidayAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_api_endpoint(String year, String name, String date) {
+     reqBody = new HashMap<>();
+
+     reqBody.put("2025",year);
+     reqBody.put("Kerst",name);
+     reqBody.put("2025-01-01",date);
+
+    }
+    @Given("The api user send the POST request and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_send_the_post_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
+        API_Methods.postResponse(reqBody);
+    }
+
+
 
 }
