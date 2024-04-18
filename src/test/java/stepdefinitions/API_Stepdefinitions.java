@@ -40,15 +40,7 @@ public class API_Stepdefinitions {
     public static String fullPath;
     JSONObject requestBody;
     JsonPath jsonPath;
-
-
-
-
     public static int addedDepartmentId;
-
-
- 
-
 
     String endpoint;
     Response response;
@@ -94,14 +86,8 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
 
-       jsonPath= response.jsonPath();
-
+        jsonPath= response.jsonPath();
         jsonPath = API_Methods.response.jsonPath();
-
-
-        jsonPath = API_Methods.response.jsonPath();
-
-
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
         Assert.assertEquals(name, jsonPath.getString("addresses[222].name"));
@@ -159,6 +145,23 @@ public class API_Stepdefinitions {
         assertEquals(((Map) reqBody.get("user")).get("email"),
                 ((Map) responseMap.get("user")).get("email"));
 
+    }
+
+    //US_021=====
+    @When("The api user prepares a DELETE request containing the refund reason {int} to be deleted to send to the api refundReasonDelete endpoint.")
+    public void theApiUserPreparesADELETERequestContainingTheRefundReasonToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @When("The API user records the response from the api refundReasonDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
+    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
+        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
     }
 
 
@@ -417,6 +420,7 @@ public class API_Stepdefinitions {
         Assert.assertEquals(created_at, jsonPath.getString("departmentDetails[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("departmentDetails[0].updated_at"));
     }
+
 
 
 }
