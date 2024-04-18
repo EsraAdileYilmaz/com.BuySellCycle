@@ -14,6 +14,7 @@ import io.restassured.path.json.JsonPath;
 import org.json.JSONObject;
 import utilities.API_Utilities.API_Methods;
 import static org.junit.Assert.*;
+import static utilities.API_Utilities.API_Methods.response;
 
 
 public class API_Stepdefinitions {
@@ -48,7 +49,7 @@ public class API_Stepdefinitions {
 
     @When("The api user verifies the content of the data {int}, {string}, {string} in the response body.")
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
-       jsonPath=API_Methods.response.jsonPath();
+       jsonPath= response.jsonPath();
 
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
@@ -72,12 +73,18 @@ public class API_Stepdefinitions {
 
 
     @Given("The api users validates to  the response body match the {string}, {string}, {string} information")
-    public void the_api_users_validates_to_the_response_body_match_the_information(String name, String surname, String email) {
-       assertEquals(API_Methods.getBodyResponse("first_name"),name);
-       assertEquals(API_Methods.getBodyResponse("last_name"),surname);
-       assertEquals(API_Methods.getBodyResponse("email"),email);
+    public void the_api_users_validates_to_the_response_body_match_the_information(String first_name, String surname, String email) {
+       jsonPath= API_Methods.response.jsonPath();
+       assertEquals(jsonPath.getString("user.first_name"),first_name);
+       assertEquals(jsonPath.getString("user.last_name"),surname);
+       assertEquals(jsonPath.getString("user.email"),email);
 
 
+    }
+
+    @Given("The API user sends a GET request and records the response from the api {string} endpoint.")
+    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_customer_get_user_endpoint(String endPoint) {
+        API_Methods.getResponse();
     }
 
 
