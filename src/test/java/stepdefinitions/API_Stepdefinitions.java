@@ -56,9 +56,14 @@ public class API_Stepdefinitions {
     Faker faker = new Faker();
     Map<String, Object> reqBody;
 
-  //========API Esra Baslangic===================================
 
-    //US_037
+
+
+  //========API Esra Baslangic=================================================================================
+
+    //===US_037 ve US_003===
+
+
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String token) {
         HooksAPI.setUpApi(token);
@@ -85,7 +90,6 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
 
-        jsonPath = response.jsonPath();
         jsonPath = API_Methods.response.jsonPath();
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
@@ -185,6 +189,32 @@ public class API_Stepdefinitions {
 
     }
 
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with mismatched password")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithMismatchedPassword(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation","123456789");
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with fewer than {int} characters password")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithFewerThanCharactersPassword(String firstName, String  lastName, String email, String password, String passwordConfirmation, String userType, String referralCode, int caracter) {
+
+        reqBody = new HashMap<>();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password","123456");
+        reqBody.put("password_confirmation","123456");
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
 
     //US_021=====
     @When("The api user prepares a POST request containing the department id to be deleted to send to the api refund Reason delete endpoint.")
@@ -206,13 +236,27 @@ public class API_Stepdefinitions {
 
     @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
     public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
-        //API_Methods.deleteResponse(requestBody.toString());
         JSONObject requestBody = new JSONObject();
         requestBody.put("id",added_item_id);
         API_Methods.deleteResponse(requestBody.toString());
 
     }
 
+
+
+    //===US_015======
+
+    @When("The api user prepares a PATCH request containing the {string} ,{string} data to send to the api faqs Update endpoint.")
+    public void theApiUserPreparesAPATCHRequestContainingTheDataToSendToTheApiFaqsUpdateEndpoint(String title, String description) {
+        requestBody = new JSONObject();
+        requestBody.put("title", title);
+        requestBody.put("description",description);
+    }
+
+    @When("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
+    public void theApiUserSendsThePATCHRequestAndSavesTheResponseReturnedFromTheApiEndpoint(String endPoint) {
+        API_Methods.patchResponse(requestBody.toString());
+    }
 
     //==========API Esra Sonu======================================
 

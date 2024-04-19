@@ -29,7 +29,7 @@ Scenario: When a GET request body containing valid authorization credentials is 
 
      * The api user constructs the base url with the "invalid" token.
      * The api user sets "api/profile/allCountries" path parameters
-    * The API user sends a GET request and records the response from the api "allCountries" endpoint.
+     * The API user sends a GET request and records the response from the api "allCountries" endpoint.
      * The api user verifies that the status code is 401
      * The api user verifies that the message information in the response body is "Unauthenticated."
 
