@@ -1,6 +1,6 @@
 
 Feature: As an administrator, I want to be able to delete department information with the specified ID number via the API connection.
-  @AYCA
+
   Scenario: Successful deletion of the body containing VALID authorization information and department ID
 
    * The api user constructs the base url with the "admin" token.
@@ -25,7 +25,7 @@ Feature: As an administrator, I want to be able to delete department information
     * The api user sends the DELETE request with incorrect department ID and saves the response returned from the api departmentDelete endpoint.
     * The api user verifies that the status code is 404
     * The api user verifies that the message information in the response body is "department not found"
-
+  @AYCA
   Scenario: DELETE body containing INVALID authorization information and the department ID to be deleted
 
     * The api user constructs the base url with the "invalid" token.
