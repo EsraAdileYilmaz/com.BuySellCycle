@@ -5,25 +5,18 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-
-
-import io.cucumber.java.en.Then;
-
 import static org.hamcrest.Matchers.equalTo;
-
-
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
-import io.restassured.http.ContentType;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,23 +50,21 @@ public class API_Stepdefinitions {
 
     public static JSONObject requestBody;
     public static JsonPath jsonPath;
-
-
     HashMap<Object, String> reqBodyHash;
-
     public static int added_item_id;
-
-    String endpoint;
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-    String password;
 
 
-    //========API Esra Baslangic===================================
 
 
-    //US_037
+  //========API Esra Baslangic=================================================================================
+
+    //===US_037 ve US_003===
+
+
+
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String token) {
         HooksAPI.setUpApi(token);
@@ -100,7 +91,6 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
 
-        jsonPath = response.jsonPath();
         jsonPath = API_Methods.response.jsonPath();
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
@@ -199,6 +189,32 @@ public class API_Stepdefinitions {
 
     }
 
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with mismatched password")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithMismatchedPassword(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation","123456789");
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with fewer than {int} characters password")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithFewerThanCharactersPassword(String firstName, String  lastName, String email, String password, String passwordConfirmation, String userType, String referralCode, int caracter) {
+
+        reqBody = new HashMap<>();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password","123456");
+        reqBody.put("password_confirmation","123456");
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
 
     //US_021=====
     @When("The api user prepares a POST request containing the department id to be deleted to send to the api refund Reason delete endpoint.")
@@ -220,13 +236,27 @@ public class API_Stepdefinitions {
 
     @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
     public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
-        //API_Methods.deleteResponse(requestBody.toString());
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
         API_Methods.deleteResponse(requestBody.toString());
 
     }
 
+
+
+    //===US_015======
+
+    @When("The api user prepares a PATCH request containing the {string} ,{string} data to send to the api faqs Update endpoint.")
+    public void theApiUserPreparesAPATCHRequestContainingTheDataToSendToTheApiFaqsUpdateEndpoint(String title, String description) {
+        requestBody = new JSONObject();
+        requestBody.put("title", title);
+        requestBody.put("description",description);
+    }
+
+    @When("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
+    public void theApiUserSendsThePATCHRequestAndSavesTheResponseReturnedFromTheApiEndpoint(String endPoint) {
+        API_Methods.patchResponse(requestBody.toString());
+    }
 
     //==========API Esra Sonu======================================
 
@@ -519,6 +549,35 @@ public class API_Stepdefinitions {
 
     @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
     public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+
+        JsonPath resJP=response.jsonPath();
+        id= resJP.getInt("id");
+
+    }
+
+    @When("The API user sends a GET request and records the response from  endpoint.")
+    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
+        API_Methods.getResponse();
+
+    }
+
+    @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
+    public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
+
+        jsonPath = API_Methods.response.jsonPath();
+
+        Assert.assertEquals(id, jsonPath.getInt("couponDetails[0].id"));
+        Assert.assertEquals(title, jsonPath.getString("couponDetails[0].title"));
+        Assert.assertEquals(coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
+        Assert.assertEquals(start_date, jsonPath.getString("couponDetails[0].start_date"));
+        Assert.assertEquals(end_date, jsonPath.getString("couponDetails[0].end_date"));
+    }
+
+    @When("The api user sends a GET request containing the id {int}  in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
+        JsonPath resJP=response.jsonPath();
+        resJP.getInt("id");
+
     }
 
     // Aslis End
@@ -664,5 +723,8 @@ public class API_Stepdefinitions {
                 .assertThat().body("updated_Id",equalTo(id));
     }
 }
+
+
+
 
 

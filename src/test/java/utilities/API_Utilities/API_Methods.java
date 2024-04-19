@@ -4,10 +4,17 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import org.apache.http.client.utils.URIBuilder;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static hooks.HooksAPI.spec;
@@ -194,4 +201,10 @@ public class API_Methods {
 
     }
 
+
+
 }
+
+
+
+
