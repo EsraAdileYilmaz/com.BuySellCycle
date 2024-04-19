@@ -1,6 +1,6 @@
 Feature: As an administrator, I want to be able to add a new address record for a customer specified by customer_id via the API connection.
 
-@nk
+
   Scenario Outline: When a POST body containing valid authorization credentials and necessary
   data (customer_id, name, email, address, phone, city, state, country,
   postal_code, address_type) is sent to the /api/profile/addressAdd endpoint,
@@ -22,7 +22,7 @@ Feature: As an administrator, I want to be able to add a new address record for 
   using the customer ID should be verified through the API itself.
 
     * The api user constructs the base url with the "admin" token.
-    * The api user sets "api/addressDetails " path parameters
+    * The api user sets "api/profile/addressDetails " path parameters
     * The api user prepares a GET request containing the addressAdd <id> for which details are to be accessed, to send to the api addressDetails endpoint.
     * The api user sends a GET request and saves the response returned from the api addressDetails endpoint.
     * The api user verifies that the message information in the response body is "success"
@@ -50,7 +50,7 @@ Feature: As an administrator, I want to be able to add a new address record for 
 
 
 
-  @nk
+
   Scenario Outline: When a POST body containing invalid authorization credentials and necessary
   data (customer_id, name, email, address, phone, city, state, country, postal_code, address_type)
   is sent to the /api/profile/addressAdd endpoint, the returned status code should be
