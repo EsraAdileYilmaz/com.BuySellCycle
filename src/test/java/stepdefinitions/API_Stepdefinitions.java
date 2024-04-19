@@ -522,6 +522,7 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_refund_reason_add_endpoint() {
         API_Methods.postResponse(reqBody);
     }
+
     @Given("The api user sends a POST request containing {string},{string},{int} in the body and saves the response")
     public void the_api_user_sends_a_post_request_containing_status_in_the_body_and_saves_the_response(String name, String details, Integer status) {
         requestBody = new JSONObject();
@@ -530,16 +531,33 @@ public class API_Stepdefinitions {
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
     }
+
     @Given("The api user prepares a GET request containing the department id\\(added_item_id)")
     public void the_api_user_prepares_a_get_request_containing_the_department_id_added_item_id() {
         requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
         API_Methods.getBodyResponse(requestBody.toString());
-    }@Given("The api user sends a POST request containing these {string},{string},{int} in the body and saves the response")
+    }
+
+    @Given("The api user sends a POST request containing these {string},{string},{int} in the body and saves the response")
     public void the_api_user_sends_a_post_request_containing_these_in_the_body_and_saves_the_response(String name, String details, Integer status) {
         requestBody = new JSONObject();
         requestBody.put("name", name).put("details", details).put("status", status);
         API_Methods.postResponse(requestBody.toString());
+    }
+
+    @Given("The api user verifies that ID {int}  has the name attribute as {string}.")
+    public void the_api_user_verifies_that_id_has_the_name_attribute_as(Integer id, String name) {
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, (Integer) jsonPath.getInt("addresses[6].id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[6].name"));
+    }
+
+    @Given("The api user sends a GET request containing country_id {int} in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_country_id_in_the_body_and_saves_the_response(Integer countryID) {
+        requestBody = new JSONObject();
+        requestBody.put("country_id", countryID);
+        API_Methods.getBodyResponse(requestBody.toString());
     }
 }
 
