@@ -482,7 +482,7 @@ public class API_Stepdefinitions {
 }
 
     //================================US_42============================================00
-    @Given("The api user prepares a POST request containing the {string}, {string} {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
          reqBodyHash=new HashMap<>();
 
@@ -568,6 +568,20 @@ public class API_Stepdefinitions {
         API_Methods.postResponse(reqBody);
     }
 
+
+    //=======nazime US_42_TC_02
+    @Given("The api user prepares a GET request containing the addressAdd {int} for which details are to be accessed, to send to the api addressDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_address_add_for_which_details_are_to_be_accessed_to_send_to_the_api_address_details_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+
+    }
+
+    @Given("The api user sends a GET request and saves the response returned from the api addressDetails endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_address_details_endpoint() {
+        API_Methods.getResponse().toString();
+
+    }
 
 
 }
