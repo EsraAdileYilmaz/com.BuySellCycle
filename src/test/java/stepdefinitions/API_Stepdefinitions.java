@@ -452,6 +452,35 @@ public class API_Stepdefinitions {
     }
 
 
+    //==================================================ilhan========================================================//
+
+
+    @Given("The API user sends a GET request and records the response from the api getUser endpoint.")
+    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_get_user_endpoint() {
+    API_Methods.getResponse();
+
+
+    }
+
+    @Given("The api user validates the {int}, {string}, {string}, {string},{string},{string}  of the response body with index {int}.")
+    public void the_api_user_validates_the_id_of_the_response_body_with_index(Integer id, String first_name, String username , String email, String phone, String name, Integer dataIndex) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("user["+dataIndex+"].id",equalTo(id))
+                .body("user["+dataIndex+"].first_name",equalTo(first_name))
+                .body("user["+dataIndex+"].username",equalTo(username))
+                .body("user["+dataIndex+"].email",equalTo(email))
+                .body("user["+dataIndex+"].phone",equalTo(phone))
+                .body("user["+dataIndex+"].name",equalTo(name+" "));
+
+    }
+
+    @Given("The api user validates the {int}, {string}, {string}, {int},{string}, {int}, {int}, {string}, {int}, {string}, {string}  of the response body")
+    public void the_api_user_validates_the_of_the_response_body(Integer id, String first_name, String last_name, Integer  role_id, String  email, Integer is_verified, Integer is_active, String lang_code, Integer currency_id, String currency_code, String name) {
+
+
+    }
 
 }
 
