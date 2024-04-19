@@ -19,3 +19,36 @@ Scenario: When a POST body consisting of valid data (first_name, last_name, emai
    * The api user prepares a POST request containing the "first_name", "last_name", "email", "password", "password_confirmation", "user_type", "referral_code" information to send to the api register endpoint.
    * The api user sends the POST request and saves the response returned from the api register endpoint.
    * The api user verifies that the register information in the response body is "first_name", "last_name", "email".
+
+
+ Scenario: When an invalid email (an existing email) from the data is sent in the POST body (first_name, last_name, email, password, password_confirmation, user_type, referral_code)
+           to the /api/register endpoint, the expected status code returned should be 422, and the response message should confirm: "The email has already been taken.".
+
+   * The api user constructs the base url with the "customer" token.
+   * The api user sets "api/register" path parameters
+   * The api user prepares a POST request containing the "first_name", "last_name", "email", "password", "password_confirmation", "user_type", "referral_code" information to send to the api register endpoint for negatif test.
+   * The api user sends the POST request and saves the response returned from the api register endpoint.
+   * The api user verifies that the status code is 422
+   * The api user verifies that the message information in the response body is "The email has already been taken."
+
+
+ Scenario: When a POST body with incomplete data (missing email) consisting of (first_name, last_name, email, password, password_confirmation, user_type, referral_code)
+          is sent to the /api/register endpoint, the expected status code returned should be 422, and the response message should confirm: "The email field is required.".
+
+   * The api user constructs the base url with the "customer" token.
+   * The api user sets "api/register" path parameters
+   * The api user prepares a POST request containing the "first_name", "last_name", "email", "password", "password_confirmation", "user_type", "referral_code" information to send to the api register endpoint with empty email.
+   * The api user sends the POST request and saves the response returned from the api register endpoint.
+   * The api user verifies that the status code is 422
+   * The api user verifies that the message information in the response body is "The email field is required."
+
+  @esra
+ Scenario: When a POST body with incomplete data (missing password) consisting of (first_name, last_name, email, password, password_confirmation, user_type, referral_code)
+           is sent to the /api/register endpoint, the expected status code returned should be 422, and the response message should confirm: "The password field is required.".
+
+   * The api user constructs the base url with the "customer" token.
+   * The api user sets "api/register" path parameters
+   * The api user prepares a POST request containing the "first_name", "last_name", "email", "password", "password_confirmation", "user_type", "referral_code" information to send to the api register endpoint with empty password.
+   * The api user sends the POST request and saves the response returned from the api register endpoint.
+   * The api user verifies that the status code is 422
+   * The api user verifies that the message information in the response body is "The password field is required."

@@ -71,6 +71,7 @@ public class API_Stepdefinitions {
 
 
 
+
   //========API Esra Baslangic===================================
 
     //US_037
@@ -166,18 +167,50 @@ public class API_Stepdefinitions {
 
     }
 
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint for negatif test.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointForNegatifTest(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email","customer.esra@buysellcycle.com");
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty email.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyEmail(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email","");
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty password.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyPassword(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password","");
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+
     //US_021=====
-
-    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
-    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
-        API_Methods.deleteResponse(requestBody.toString());
-    }
-
-    @When("The API user records the response from the api refundReasonDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
-    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
-        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
-    }
-
     @When("The api user prepares a POST request containing the department id to be deleted to send to the api refund Reason delete endpoint.")
     public void theApiUserPreparesAPOSTRequestContainingTheDepartmentIdToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint() {
         JSONObject reqBody = new JSONObject();
@@ -193,6 +226,15 @@ public class API_Stepdefinitions {
         JSONObject requestBody = new JSONObject();
         requestBody.put("id",987654321);
         API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
+        //API_Methods.deleteResponse(requestBody.toString());
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+
     }
 
 
