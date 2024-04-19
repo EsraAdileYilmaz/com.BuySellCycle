@@ -1,12 +1,20 @@
 package utilities.API_Utilities;
+
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import org.apache.http.client.utils.URIBuilder;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static hooks.HooksAPI.spec;
@@ -20,7 +28,6 @@ public class API_Methods {
 
     public static Response response;
     public static int id;
-
 
 
     public static Response getResponse() {
@@ -164,7 +171,7 @@ public class API_Methods {
                 .body("message", equalTo(message));
     }
 
-    public static void pathParamsMethod(String rawPaths){
+    public static void pathParamsMethod(String rawPaths) {
         String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
         System.out.println(Arrays.toString(paths));
@@ -194,4 +201,10 @@ public class API_Methods {
 
     }
 
+
+
 }
+
+
+
+
