@@ -71,6 +71,7 @@ Feature: As an administrator, I want to be able to update the information of the
       * The api user sets "api/faqsUpdate/<id>" path parameters
       * The api user prepares a PATCH request containing the "<title>" ,"<description>" data to send to the api faqs Update endpoint.
       * The api user sends the PATCH request and saves the response returned from the api "faqs update" endpoint.
+      * The api user constructs the base url with the "admin" token.
       * The api user sets "api/faqsDetails" path parameters
       * The api user prepares a GET request containing the department <id> to verify that the record has been updated to send to the api faqsDetails endpoint.
 
