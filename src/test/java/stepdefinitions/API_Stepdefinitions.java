@@ -61,7 +61,10 @@ public class API_Stepdefinitions {
     String password;
 
 
-    //========API Esra Baslangic===================================
+
+
+  //========API Esra Baslangic===================================
+
 
     //US_037
     @Given("The api user constructs the base url with the {string} token.")
@@ -156,18 +159,50 @@ public class API_Stepdefinitions {
 
     }
 
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint for negatif test.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointForNegatifTest(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email","customer.esra@buysellcycle.com");
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty email.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyEmail(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email","");
+        reqBody.put("password",password);
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+    @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty password.")
+    public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyPassword(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
+        reqBody = new HashMap<>();
+        password=faker.internet().password();
+        reqBody.put("first_name",faker.name().firstName());
+        reqBody.put("last_name",faker.name().lastName());
+        reqBody.put("email",faker.internet().emailAddress());
+        reqBody.put("password","");
+        reqBody.put("password_confirmation",password);
+        reqBody.put("user_type","customer");
+        reqBody.put("referral_code","0101010101");
+
+    }
+
+
     //US_021=====
-
-    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
-    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
-        API_Methods.deleteResponse(requestBody.toString());
-    }
-
-    @When("The API user records the response from the api refundReasonDelete endpoint, confirming that the status code is '404' and the reason phrase is Not Found.")
-    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDeleteEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound() {
-        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
-    }
-
     @When("The api user prepares a POST request containing the department id to be deleted to send to the api refund Reason delete endpoint.")
     public void theApiUserPreparesAPOSTRequestContainingTheDepartmentIdToBeDeletedToSendToTheApiRefundReasonDeleteEndpoint() {
         JSONObject reqBody = new JSONObject();
@@ -183,6 +218,15 @@ public class API_Stepdefinitions {
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", 987654321);
         API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @When("The api user sends the DELETE request and saves the response returned from the api refundReasonDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
+        //API_Methods.deleteResponse(requestBody.toString());
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+
     }
 
 
@@ -436,7 +480,7 @@ public class API_Stepdefinitions {
     }
 
     //================================US_42============================================00
-    @Given("The api user prepares a POST request containing the {string}, {string} {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
         reqBodyHash = new HashMap<>();
 
@@ -546,12 +590,28 @@ public class API_Stepdefinitions {
         API_Methods.postResponse(requestBody.toString());
     }
 
+
     @Given("The api user verifies that ID {int}  has the name attribute as {string}.")
     public void the_api_user_verifies_that_id_has_the_name_attribute_as(Integer id, String name) {
         jsonPath = API_Methods.response.jsonPath();
         Assert.assertEquals(id, (Integer) jsonPath.getInt("addresses[6].id"));
         Assert.assertEquals(name, jsonPath.getString("addresses[6].name"));
     }
+
+    //=======nazime US_42_TC_02
+    @Given("The api user prepares a GET request containing the addressAdd {int} for which details are to be accessed, to send to the api addressDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_address_add_for_which_details_are_to_be_accessed_to_send_to_the_api_address_details_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+
+    }
+
+    @Given("The api user sends a GET request and saves the response returned from the api addressDetails endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_address_details_endpoint() {
+        API_Methods.getResponse().toString();
+
+    }
+
 
     @Given("The api user sends a GET request containing country_id {int} in the body and saves the response")
     public void the_api_user_sends_a_get_request_containing_country_id_in_the_body_and_saves_the_response(Integer countryID) {

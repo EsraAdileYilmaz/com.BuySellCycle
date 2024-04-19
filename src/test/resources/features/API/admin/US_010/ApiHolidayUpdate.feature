@@ -5,13 +5,12 @@ Feature: As an administrator, I want to be able to update holiday information fo
 
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/holidayAdd" path parameters
-    * The api user prepares a POST request containing the "<year>", "<name>", "<date>" information to send to api holidayAdd endpoint.
-    * The api user send the POST request and saves the response returned from the api "holidayAdd" endpoint.
-
+    * The api user prepares a POST request containing the holiday data "<year>", "<name>", "<date>"
+    * The api user send POST request to the  endpoint.
 
     Examples:
-    | year | name |    date    |
-    | 2025 | Kerst | 2023-01-01 |
+      | year | name      | date       |
+      | 2025 | Kerst     | 09.12.2025 |
 
   Scenario: When a PATCH request containing valid authorization credentials, the holiday id to be updated, and the
   updated holiday data (year, name, date) is sent to the /api/holidayUpdate/{id} endpoint, the expected status code 
@@ -19,6 +18,6 @@ Feature: As an administrator, I want to be able to update holiday information fo
     
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/holidayUpdate/{id}" path parameters
-    #* The api user send a PATCH request and records the response from the api "holidayUpdate/{id}" endpoint.
+    * The api user sends the POST request and saves the response returned from the api addressAdd endpoint.
     * The api user verifies that the status code is 202
     * The api user verifies that the message information in the response body is "holiday updated successfully"
