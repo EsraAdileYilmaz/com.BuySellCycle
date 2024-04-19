@@ -8,12 +8,6 @@ Feature: As an administrator, I want to be able to add a new department record v
     * The api user sends a POST request containing "Gamze Kozmetik","Kozmetik2",1 in the body and saves the response
     * The api user verifies that the status code is 201
     * The api user verifies that the message information in the response body is "department added successfully"
-
-
-  Scenario: The creation of the new department record via the API should be verified from the API itself.
-  (The creation of the record can be confirmed by sending a GET request to the /api/departmentDetails endpoint with the added_item_id returned in the response body.)
-
-    * The api user constructs the base url with the "admin" token.
     * The api user sets "api/departmentDetails" path parameters
     * The api user prepares a GET request containing the department id(added_item_id)
     * The api user verifies that the status code is 200
@@ -21,7 +15,7 @@ Feature: As an administrator, I want to be able to add a new department record v
   Scenario:  When a POST body containing invalid authorization information and necessary data (name, details, status) is sent to the /api/departmentAdd endpoint, the returned status code should be 401,
   and the message information in the response body should be verified as "Unauthenticated.".
 
-    * The api user constructs the base url with the "invalidToken" token.
+    * The api user constructs the base url with the "invalid" token.
     * The api user sets "api/departmentAdd" path parameters
     * The api user sends a POST request containing these "Gamze Kozmetik","Kozmetik2",1 in the body and saves the response
     * The api user verifies that the status code is 401

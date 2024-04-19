@@ -539,7 +539,7 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_a_post_request_containing_these_in_the_body_and_saves_the_response(String name, String details, Integer status) {
         requestBody = new JSONObject();
         requestBody.put("name", name).put("details", details).put("status", status);
-        API_Methods.tryCatchPost(requestBody);
+        API_Methods.postResponse(requestBody.toString());
     }
 }
 
