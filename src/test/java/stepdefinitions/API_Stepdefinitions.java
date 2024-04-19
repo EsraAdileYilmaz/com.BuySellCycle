@@ -269,11 +269,7 @@ public class API_Stepdefinitions {
 
 
     //============================Nazime===========================
-    @Given("The API user sends a GET request and records the response from the api holidayList endpoint.")
-    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_holiday_list_endpoint() {
-        API_Methods.getResponse();
 
-    }
 
     @Given("The api user validates the {string} and {string} of the response body with index {int}.")
     public void the_api_user_validates_the_and_of_the_response_body_with_index(String year, String name, int dataIndex) {
@@ -283,10 +279,7 @@ public class API_Stepdefinitions {
     }
 
     //========== Gulnur Start ======================================
-    @Given("The API user sends a GET request and records the response from the api faqsList endpoint.")
-    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_faqs_list_endpoint() {
-        API_Methods.getResponse();
-    }
+
 
     @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api faqslist endpoint.")
     public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_faqslist_endpoint(Integer int1) {

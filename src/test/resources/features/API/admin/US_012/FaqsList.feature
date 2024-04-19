@@ -5,7 +5,7 @@ Feature: As an administrator, I want to be able to access the FAQ's list via API
 
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/faqsList" path parameters
-    * The API user sends a GET request and records the response from the api faqsList endpoint.
+    * The API user sends a GET request and records the response from the api "faqsList" endpoint.
     * The api user verifies that the status code is 200
     * The api user verifies that the message information in the response body is "success"
 
@@ -14,7 +14,7 @@ Feature: As an administrator, I want to be able to access the FAQ's list via API
 
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/faqsList" path parameters
-    * The API user sends a GET request and records the response from the api faqsList endpoint.
+    * The API user sends a GET request and records the response from the api "faqsList" endpoint.
     * The api user prepares a GET request containing the <id> for which details are to be accessed, to send to the api faqslist endpoint.
     * The api user sends a GET request and saves the response returned from the api faqslist endpoint.
     * The api user verifies that the message information in the response body is "success"
@@ -29,7 +29,7 @@ Feature: As an administrator, I want to be able to access the FAQ's list via API
 
     * The api user constructs the base url with the "invalid" token.
     * The api user sets "api/faqsList" path parameters
-    * The API user sends a GET request and records the response from the api faqsList endpoint.
+    * The API user sends a GET request and records the response from the api "faqsList" endpoint.
     * The api user verifies that the status code is 401
     * The api user verifies that the message information in the response body is "Unauthenticated."
 
