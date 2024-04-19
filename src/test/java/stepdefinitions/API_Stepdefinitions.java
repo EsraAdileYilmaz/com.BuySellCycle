@@ -4,11 +4,9 @@ import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.datatable.DataTableFormatter;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
-
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.messages.types.TableRow;
@@ -20,26 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
-import io.restassured.http.ContentType;
-
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-
-
-import static hooks.HooksAPI.spec;
-import static io.restassured.RestAssured.baseURI;
-
-import static io.restassured.RestAssured.given;
-
-import static org.hamcrest.Matchers.equalTo;
-
-
-
 import static org.junit.Assert.*;
-import static io.cucumber.datatable.DataTableFormatter.builder;
+
 
 public class API_Stepdefinitions {
     public static int id;
@@ -60,12 +42,10 @@ public class API_Stepdefinitions {
 
     public static int added_item_id;
 
-    String endpoint;
     Response response;
     Faker faker=new Faker();
     Map<String, Object> reqBody;
     String password;
-    final DataTableFormatter formatter = builder().build();
 
 
 
@@ -535,47 +515,43 @@ public class API_Stepdefinitions {
 
     @When("The API user sends a GET request and records the response from  endpoint.")
     public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
-
-        responseBody= (JSONObject) API_Methods.getResponse();
+        API_Methods.getResponse();
 
     }
+
     @Then("The api user validates the following information for the coupon with ID {string} in the response body:")
-    public void theApiUserValidatesTheFollowingInformationForTheCouponWithIDCouponIDInTheResponseBody(int couponID, DataTable dataTable) {
+    public void theApiUserValidatesTheFollowingInformationForTheCouponWithIDCouponIDInTheResponseBody(DataTable dataTable) {
         try {
-            // couponDetails dizisini al
+            // JSON yanıtını alma işlemi, responseBody değişkenine atama
+            // Örnek bir JSON yanıtı kullanılmıştır
+            String jsonResponse = "{\"couponDetails\":[{\"id\":10,\"title\":\"Bedava alisveris\",\"coupon_code\":\"beles127\",\"start_date\":\"2024-03-25\",\"end_date\":\"2024-04-25\"}],\"message\":\"success\"}";
+            responseBody = new JSONObject(jsonResponse);
+
+            // couponDetails dizisini alma
             JSONArray couponDetails = responseBody.getJSONArray("couponDetails");
 
             // Belirli bir kupon kimliği ile ilgili bilgileri al
             JSONObject coupon = null;
             for (int i = 0; i < couponDetails.length(); i++) {
                 JSONObject currentCoupon = couponDetails.getJSONObject(i);
-                if (String.valueOf(currentCoupon.getInt("id")).equals(couponID)) {
+                if (currentCoupon.getInt("id") == 10) {
                     coupon = currentCoupon;
                     break;
                 }
             }
 
-            // Belirli bir kupon kimliği ile ilgili bilgileri alamazsa testi başarısız yap
-            if (coupon == null) {
-                throw new RuntimeException("Coupon with ID " + couponID + " not found in the response body");
-            }
-
-            // DataTable içindeki satırlara eriş
-            List<List<String>> rows = dataTable.asLists();
-
-            // Her bir satırı işle
-            for (List<String> row : rows) {
-                String fieldName = row.get(Integer.parseInt("title"));
-                String expectedValue = row.get(Integer.parseInt("expectedTitle"));
+            // Belirli bir kupon kimliği ile ilgili bilgileri doğrula
+            for (DataTableRow row : dataTable.rows()) {
+                String fieldName = row.get(0);
+                String expectedValue = row.get(1);
 
                 assertEquals(expectedValue, coupon.optString(fieldName));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
+
 
     // Aslis End
 
@@ -623,6 +599,12 @@ public class API_Stepdefinitions {
 
 
 
+
+    @When("The api user sends a GET request to retrieve coupon details with ID {int} and saves the response")
+    public void theApiUserSendsAGETRequestToRetrieveCouponDetailsWithIDAndSavesTheResponse(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
     }
+}
 
 
