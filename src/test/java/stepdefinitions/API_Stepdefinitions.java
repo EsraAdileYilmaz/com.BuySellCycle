@@ -5,25 +5,18 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-
-
-import io.cucumber.java.en.Then;
-
 import static org.hamcrest.Matchers.equalTo;
-
-
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
-import io.restassured.http.ContentType;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,23 +50,13 @@ public class API_Stepdefinitions {
 
     public static JSONObject requestBody;
     public static JsonPath jsonPath;
-
-
     HashMap<Object, String> reqBodyHash;
-
     public static int added_item_id;
-
-    String endpoint;
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-    String password;
-
-
-
 
   //========API Esra Baslangic===================================
-
 
     //US_037
     @Given("The api user constructs the base url with the {string} token.")
@@ -523,6 +506,35 @@ public class API_Stepdefinitions {
 
     @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
     public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
+
+        JsonPath resJP=response.jsonPath();
+        id= resJP.getInt("id");
+
+    }
+
+    @When("The API user sends a GET request and records the response from  endpoint.")
+    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
+        API_Methods.getResponse();
+
+    }
+
+    @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
+    public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
+
+        jsonPath = API_Methods.response.jsonPath();
+
+        Assert.assertEquals(id, jsonPath.getInt("couponDetails[0].id"));
+        Assert.assertEquals(title, jsonPath.getString("couponDetails[0].title"));
+        Assert.assertEquals(coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
+        Assert.assertEquals(start_date, jsonPath.getString("couponDetails[0].start_date"));
+        Assert.assertEquals(end_date, jsonPath.getString("couponDetails[0].end_date"));
+    }
+
+    @When("The api user sends a GET request containing the id {int}  in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
+        JsonPath resJP=response.jsonPath();
+        resJP.getInt("id");
+
     }
 
     // Aslis End
@@ -638,5 +650,8 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 }
+
+
+
 
 
