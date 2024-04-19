@@ -48,9 +48,8 @@ public class API_Stepdefinitions {
     // HashMap<String,Object> reqBody;
 
 
-    public static JSONObject requestBody;
+    public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
-
 
     HashMap<Object, String> reqBodyHash;
 
@@ -263,6 +262,24 @@ public class API_Stepdefinitions {
     @When("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
     public void theApiUserSendsThePATCHRequestAndSavesTheResponseReturnedFromTheApiEndpoint(String endPoint) {
         API_Methods.patchResponse(requestBody.toString());
+    }
+
+    @When("The API user validates the {int} content of the data in the response body returned from the response.")
+    public void theAPIUserValidatesTheContentOfTheDataInTheResponseBodyReturnedFromTheResponse(int id) {
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
+    }
+
+    @When("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api faqsDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheDepartmentIdToVerifyThatTheRecordHasBeenUpdatedToSendToTheApiFaqsDetailsEndpoint(int id) {
+
+        requestBody2 = new JSONObject();
+        requestBody2.put("id",id);
+        System.out.println(requestBody2);
+        API_Methods.getBodyResponse(requestBody2.toString());
+        jsonPath=API_Methods.response.jsonPath();
+        Assert.assertEquals(id,jsonPath.getInt("FaqsDetails[0].id"));
     }
 
     //==========API Esra Sonu======================================
@@ -696,6 +713,9 @@ public class API_Stepdefinitions {
         requestBody.put("country_id", countryID);
         API_Methods.getBodyResponse(requestBody.toString());
     }
+
+
+
 }
 
 
