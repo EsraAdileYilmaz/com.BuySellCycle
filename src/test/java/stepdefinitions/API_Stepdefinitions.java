@@ -70,9 +70,7 @@ public class API_Stepdefinitions {
     String password;
 
 
-
-
-  //========API Esra Baslangic===================================
+    //========API Esra Baslangic===================================
 
 
     //US_037
@@ -113,7 +111,6 @@ public class API_Stepdefinitions {
     public void the_api_user_records_the_response_from_the_api_all_countries_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthenticated() {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
-
 
 
     @When("The api users validates to  the response body match the {string}, {string}, {string},{string},{string} information")
@@ -164,41 +161,41 @@ public class API_Stepdefinitions {
     public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointForNegatifTest(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
 
         reqBody = new HashMap<>();
-        password=faker.internet().password();
-        reqBody.put("first_name",faker.name().firstName());
-        reqBody.put("last_name",faker.name().lastName());
-        reqBody.put("email","customer.esra@buysellcycle.com");
-        reqBody.put("password",password);
-        reqBody.put("password_confirmation",password);
-        reqBody.put("user_type","customer");
-        reqBody.put("referral_code","0101010101");
+        password = faker.internet().password();
+        reqBody.put("first_name", faker.name().firstName());
+        reqBody.put("last_name", faker.name().lastName());
+        reqBody.put("email", "customer.esra@buysellcycle.com");
+        reqBody.put("password", password);
+        reqBody.put("password_confirmation", password);
+        reqBody.put("user_type", "customer");
+        reqBody.put("referral_code", "0101010101");
     }
 
     @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty email.")
     public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyEmail(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
         reqBody = new HashMap<>();
-        password=faker.internet().password();
-        reqBody.put("first_name",faker.name().firstName());
-        reqBody.put("last_name",faker.name().lastName());
-        reqBody.put("email","");
-        reqBody.put("password",password);
-        reqBody.put("password_confirmation",password);
-        reqBody.put("user_type","customer");
-        reqBody.put("referral_code","0101010101");
+        password = faker.internet().password();
+        reqBody.put("first_name", faker.name().firstName());
+        reqBody.put("last_name", faker.name().lastName());
+        reqBody.put("email", "");
+        reqBody.put("password", password);
+        reqBody.put("password_confirmation", password);
+        reqBody.put("user_type", "customer");
+        reqBody.put("referral_code", "0101010101");
 
     }
 
     @When("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api register endpoint with empty password.")
     public void theApiUserPreparesAPOSTRequestContainingTheInformationToSendToTheApiRegisterEndpointWithEmptyPassword(String firstName, String lastName, String email, String password, String passwordConfirmation, String userType, String referralCode) {
         reqBody = new HashMap<>();
-        password=faker.internet().password();
-        reqBody.put("first_name",faker.name().firstName());
-        reqBody.put("last_name",faker.name().lastName());
-        reqBody.put("email",faker.internet().emailAddress());
-        reqBody.put("password","");
-        reqBody.put("password_confirmation",password);
-        reqBody.put("user_type","customer");
-        reqBody.put("referral_code","0101010101");
+        password = faker.internet().password();
+        reqBody.put("first_name", faker.name().firstName());
+        reqBody.put("last_name", faker.name().lastName());
+        reqBody.put("email", faker.internet().emailAddress());
+        reqBody.put("password", "");
+        reqBody.put("password_confirmation", password);
+        reqBody.put("user_type", "customer");
+        reqBody.put("referral_code", "0101010101");
 
     }
 
@@ -225,7 +222,7 @@ public class API_Stepdefinitions {
     public void theApiUserSendsTheDELETERequestAndSavesTheResponseReturnedFromTheApiRefundReasonDeleteEndpoint() {
         //API_Methods.deleteResponse(requestBody.toString());
         JSONObject requestBody = new JSONObject();
-        requestBody.put("id",added_item_id);
+        requestBody.put("id", added_item_id);
         API_Methods.deleteResponse(requestBody.toString());
 
     }
@@ -396,7 +393,7 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_a_get_request_body_and_records_the_response_from_the_api_api_address_list_endpoint() {
 
 
-       response =  API_Methods.getBodyResponse(requestBody.toString());
+        response = API_Methods.getBodyResponse(requestBody.toString());
 
         response = API_Methods.getResponse();
 
@@ -423,7 +420,7 @@ public class API_Stepdefinitions {
     }
 
     @Then("The api user validates the {},{},{string},{string},{string},{string},{string},{string},{string},{string}, {},{},{string},{string} of the response body")
-    public void theApiUserValidatesTheOfTheResponseBody(int id,int customer_id, String name,String email, String phone, String address, String city, String state, String country, String postal_code, int is_shipping_default, int is_billing_default, String created_at, String updated_at) {
+    public void theApiUserValidatesTheOfTheResponseBody(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, int is_shipping_default, int is_billing_default, String created_at, String updated_at) {
 
         jsonPath = API_Methods.response.jsonPath();
 
@@ -446,7 +443,6 @@ public class API_Stepdefinitions {
         Assert.assertEquals(updated_at, jsonPath.getString("addresses[0].updated_at"));
 
     }
-
 
 
     //=============AYCA END OF STEPS=============//
@@ -594,16 +590,13 @@ public class API_Stepdefinitions {
     }
 
 
-
     @When("The API user sends a GET request {int} and records the response from the api {string} endpoint.")
     public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromTheApiEndpoint(int id, String endPoint) {
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("id",id);
+        requestBody.put("id", id);
         API_Methods.getBodyResponse(requestBody.toString());
     }
-
-
 
 
     @Given("The api user verifies that ID {int}  has the name attribute as {string}.")
@@ -627,7 +620,6 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
 
 
-
     }
 
 
@@ -636,6 +628,40 @@ public class API_Stepdefinitions {
         requestBody = new JSONObject();
         requestBody.put("country_id", countryID);
         API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    //===================================US_30=================================
+    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data to send to the api refundReasonUpdate endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+        requestBody = new JSONObject();
+        requestBody.put("title", title);
+        requestBody.put("coupon_code", coupon_code);
+        requestBody.put("coupon_type", coupon_type);
+        requestBody.put("start_date", start_date);
+        requestBody.put("end_date", end_date);
+        requestBody.put("discount", discount);
+        requestBody.put("discount_type", discount_type);
+        requestBody.put("minimum_shopping", minimum_shopping);
+        requestBody.put("maximum_discount", maximum_discount);
+        requestBody.put("is_expire", is_expire);
+        requestBody.put("is_multiple_buy", is_multiple_buy);
+
+
+    }
+
+    @Given("The api user sends the PATCH request and saves the response returned from the api  {string}  endpoint.")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
+        API_Methods.patchResponse(requestBody.toString());
+
+    }
+
+    @Given("The API user validates the  id  content of the data in the response body returned from the response.")
+    public void the_api_user_validates_the_content_of_the_data_in_the_response_body_returned_from_the_response(Integer int1) {
+
+       // jsonPath = API_Methods.response.jsonPath();
+      //  Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
+        API_Methods.response.then()
+                .assertThat().body("updated_Id",equalTo(id));
     }
 }
 
