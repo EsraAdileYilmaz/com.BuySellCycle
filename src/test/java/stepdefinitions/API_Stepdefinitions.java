@@ -5,6 +5,8 @@ import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,9 +24,6 @@ import java.util.Map;
 
 
 import static hooks.HooksAPI.spec;
-import static io.restassured.RestAssured.baseURI;
-
-import static io.restassured.RestAssured.given;
 
 
 
@@ -35,6 +34,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 
 import static org.junit.Assert.*;
+import static utilities.API_Utilities.API_Methods.messageAssert;
 import static utilities.API_Utilities.API_Methods.response;
 
 
@@ -761,6 +761,56 @@ public class API_Stepdefinitions {
         requestBody.put("is_multiple_buy", is_multiple_buy);
 
 
+
+    @Given("The api user prepares a GET request containing the refund reason {int} for which details are to be accessed, to send to the api holidayList endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_holiday_list_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("holiday.id",id);
+    }
+
+
+
+
+    @Given("The api user prepares a PATCH request containing the {string},{string},{string} data to send to the api holidayUpdate endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_holiday_update_endpoint(String year, String name, String date) {
+      requestBody = new JSONObject();
+        requestBody.put("year",year);
+      requestBody.put("name",name);
+      requestBody.put("date",date);
+    }
+
+    @Given("The api user sends the PATCH request and saves the response returned from the api holidayUpdate endpoint.")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_holiday_update_endpoint() {
+       API_Methods.patchResponse(requestBody.toString());
+    }
+
+
+    @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
+    public void the_api_user_verifies_that_the_updated_id_information_in_the_response_body_matches_the_id_path_parameter_specified_in_the_holiday_update_endpoint() {
+    jsonPath = API_Methods.response.jsonPath();
+
+    }
+
+    @Given("The api user send POST request to the {string} endpoint.")
+    public void the_api_user_send_post_request_to_the_endpoint(String endpoint) {
+        API_Methods.postResponse(endpoint);
+    }
+
+
+    @Given("The API user sends a POST request and records the response from the api {string} endpoint.")
+    public void the_api_user_sends_a_post_request_and_records_the_response_from_the_api_endpoint(String endpoint) {
+      API_Methods.postResponse(requestBody);
+    }
+    @Given("The api user prepares a POST request containing the {string}, {string} information to send to the api faqsAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_endpoint(String title, String description) {
+        requestBody = new JSONObject();
+        requestBody.put("title",title);
+        requestBody.put("description",description);
+    }
+    @Given("The API user sends a POST request and records the response from the api faqsAdd endpoint.")
+    public void the_api_user_sends_a_post_request_and_records_the_response_from_the_api_api_faqs_add_endpoint() {
+       API_Methods.postResponse(requestBody.toString());
+
     }
 
     @Given("The api user sends the PATCH request and saves the response returned from the api  {string}  endpoint.")
@@ -776,6 +826,7 @@ public class API_Stepdefinitions {
       //  Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
         API_Methods.response.then()
                 .assertThat().body("updated_Id",equalTo(id));
+
 
     }
 
