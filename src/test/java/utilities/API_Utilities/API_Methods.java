@@ -200,34 +200,7 @@ public class API_Methods {
 
     }
 
-    public static void pathParamsMethodUri(String rawPaths) {
-        String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
-        // Temel URI'yi oluştur
-        URIBuilder uriBuilder = new URIBuilder()
-                .setScheme("http")
-                .setHost(ConfigReader.getProperty("base_url", "api"))
-                .setPath("/api/coupon/couponList");
-
-        // Sorgu parametrelerini ekle
-        for (int i = 0; i < paths.length; i++) {
-            String key = "pp" + i;
-            String value = paths[i].trim();
-            uriBuilder.setParameter(key, value);
-        }
-
-        try {
-            // URI'yi oluştur
-            URI uri = uriBuilder.build();
-
-            // HttpGet isteğini oluştur
-            HttpGet httpGet = new HttpGet(uri);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
 
