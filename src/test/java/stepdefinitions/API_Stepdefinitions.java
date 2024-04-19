@@ -739,11 +739,11 @@ public class API_Stepdefinitions {
         Assert.assertEquals(id, (Integer)jsonPath.getInt("updated_Id"));
 
     }
-    @Given("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
-    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
-        API_Methods.patchResponse(requestBody.toString());
+    //@Given("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
+    //public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
+    //    API_Methods.patchResponse(requestBody.toString());
 
-
+    //}
     //===================================US_30=================================
     @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data to send to the api refundReasonUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
@@ -760,7 +760,7 @@ public class API_Stepdefinitions {
         requestBody.put("is_expire", is_expire);
         requestBody.put("is_multiple_buy", is_multiple_buy);
 
-
+    }
 
     @Given("The api user prepares a GET request containing the refund reason {int} for which details are to be accessed, to send to the api holidayList endpoint.")
     public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_holiday_list_endpoint(Integer id) {
@@ -779,10 +779,10 @@ public class API_Stepdefinitions {
       requestBody.put("date",date);
     }
 
-    @Given("The api user sends the PATCH request and saves the response returned from the api holidayUpdate endpoint.")
-    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_holiday_update_endpoint() {
-       API_Methods.patchResponse(requestBody.toString());
-    }
+    //@Given("The api user sends the PATCH request and saves the response returned from the api holidayUpdate endpoint.")
+    //public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_holiday_update_endpoint() {
+     //  API_Methods.patchResponse(requestBody.toString());
+    //}
 
 
     @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
@@ -813,11 +813,6 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user sends the PATCH request and saves the response returned from the api  {string}  endpoint.")
-    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
-        API_Methods.patchResponse(requestBody.toString());
-
-    }
 
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
     public void the_api_user_validates_the_content_of_the_data_in_the_response_body_returned_from_the_response(Integer int1) {
