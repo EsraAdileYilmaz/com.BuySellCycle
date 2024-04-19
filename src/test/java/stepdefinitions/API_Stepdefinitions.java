@@ -636,7 +636,9 @@ public class API_Stepdefinitions {
 
     @Given("The api user sends a GET request and saves the response returned from the api addressDetails endpoint.")
     public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_address_details_endpoint() {
-        API_Methods.getResponse().toString();
+        API_Methods.getBodyResponse(requestBody.toString());
+
+
 
     }
 
