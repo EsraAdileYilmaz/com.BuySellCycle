@@ -11,12 +11,11 @@ Feature: Testing the Coupon List API
   @coupon
   Scenario Outline: Validate information for coupon with specific ID in the response body
     Given The api user constructs the base url with the "admin" token.
-    And   The api user sets "api/coupon/couponList" path parameters
-    When  The api user sends a GET request to retrieve coupon details with ID 10 and saves the response
-    Then  The api user validates the following information for the coupon with ID '10' in the response body:
-      | Field            | Expected Value     |
-      | Title            | 'Bedava alisveris'  |
-      | Coupon Code      | 'beles127'         |
-      | Start Date       | '2024-03-25'       |
-      | End Date         | '2024-04-25'       |
+    And   The api user sets "api/coupon/couponDetails" path parameters
+    When  The api user sends a GET request containing the <id> in the body and saves the response
+    Then  The api user verifies that the content of the data <id>, "<title>" , "<coupon_code>" , "<start_date>" ,"<end_date>" in the response body.
+
+  Examples:
+     | id |title            |  coupon_code | start_date   | end_date     |
+     | 10 |Bedava alisveris |  beles127   |  2024-03-25   |  2024-04-25  |
 

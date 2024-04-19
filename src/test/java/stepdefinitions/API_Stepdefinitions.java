@@ -520,39 +520,24 @@ public class API_Stepdefinitions {
 
     }
 
-    @Then("The api user validates the following information for the coupon with ID {string} in the response body:")
-    public void theApiUserValidatesTheFollowingInformationForTheCouponWithIDCouponIDInTheResponseBody(DataTable dataTable) {
-        try {
-            // JSON yanıtını alma işlemi, responseBody değişkenine atama
-            // Örnek bir JSON yanıtı kullanılmıştır
-            String jsonResponse = "{\"couponDetails\":[{\"id\":10,\"title\":\"Bedava alisveris\",\"coupon_code\":\"beles127\",\"start_date\":\"2024-03-25\",\"end_date\":\"2024-04-25\"}],\"message\":\"success\"}";
-            responseBody = new JSONObject(jsonResponse);
+    @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
+    public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
-            // couponDetails dizisini alma
-            JSONArray couponDetails = responseBody.getJSONArray("couponDetails");
+        jsonPath = API_Methods.response.jsonPath();
 
-            // Belirli bir kupon kimliği ile ilgili bilgileri al
-            JSONObject coupon = null;
-            for (int i = 0; i < couponDetails.length(); i++) {
-                JSONObject currentCoupon = couponDetails.getJSONObject(i);
-                if (currentCoupon.getInt("id") == 10) {
-                    coupon = currentCoupon;
-                    break;
-                }
-            }
-
-            // Belirli bir kupon kimliği ile ilgili bilgileri doğrula
-            for (DataTableRow row : dataTable.rows()) {
-                String fieldName = row.get(0);
-                String expectedValue = row.get(1);
-
-                assertEquals(expectedValue, coupon.optString(fieldName));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Assert.assertEquals(id, jsonPath.getInt("couponDetails[0].id"));
+        Assert.assertEquals(title, jsonPath.getString("couponDetails[0].title"));
+        Assert.assertEquals(coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
+        Assert.assertEquals(start_date, jsonPath.getString("couponDetails[0].start_date"));
+        Assert.assertEquals(end_date, jsonPath.getString("couponDetails[0].end_date"));
     }
 
+    @When("The api user sends a GET request containing the id {int}  in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
+        JsonPath resJP=response.jsonPath();
+        resJP.getInt("id");
+
+    }
 
     // Aslis End
 
@@ -615,11 +600,7 @@ public class API_Stepdefinitions {
 
 
 
-    @When("The api user sends a GET request to retrieve coupon details with ID {int} and saves the response")
-    public void theApiUserSendsAGETRequestToRetrieveCouponDetailsWithIDAndSavesTheResponse(int id) {
-        requestBody = new JSONObject();
-        requestBody.put("id", id);
-    }
-}
 
+
+}
 
