@@ -48,13 +48,19 @@ public class API_Stepdefinitions {
     // HashMap<String,Object> reqBody;
 
 
-    public static JSONObject requestBody;
+    public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
+
     HashMap<Object, String> reqBodyHash;
+
     public static int added_item_id;
+
+    String endpoint;
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
+    String password;
+
 
 
 
@@ -258,6 +264,24 @@ public class API_Stepdefinitions {
         API_Methods.patchResponse(requestBody.toString());
     }
 
+    @When("The API user validates the {int} content of the data in the response body returned from the response.")
+    public void theAPIUserValidatesTheContentOfTheDataInTheResponseBodyReturnedFromTheResponse(int id) {
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
+    }
+
+    @When("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api faqsDetails endpoint.")
+    public void theApiUserPreparesAGETRequestContainingTheDepartmentIdToVerifyThatTheRecordHasBeenUpdatedToSendToTheApiFaqsDetailsEndpoint(int id) {
+
+        requestBody2 = new JSONObject();
+        requestBody2.put("id",id);
+        System.out.println(requestBody2);
+        API_Methods.getBodyResponse(requestBody2.toString());
+        jsonPath=API_Methods.response.jsonPath();
+        Assert.assertEquals(id,jsonPath.getInt("FaqsDetails[0].id"));
+    }
+
     //==========API Esra Sonu======================================
 
 
@@ -423,9 +447,7 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_a_get_request_body_and_records_the_response_from_the_api_api_address_list_endpoint() {
 
 
-        response = API_Methods.getBodyResponse(requestBody.toString());
-
-        response = API_Methods.getResponse();
+       response =  API_Methods.getResponse();
 
     }
 
@@ -433,7 +455,7 @@ public class API_Stepdefinitions {
     public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiDepartmentDeleteEndpoint() {
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("id", 572894875);
+        requestBody.put("id",572894875);
         API_Methods.deleteResponse(requestBody.toString());
 
     }
@@ -689,6 +711,10 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
+
+
+
+
     @Given("The api user prepares a PATCH request containing the {string}, {string}, {string} data to send to the api departmentUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_department_update_endpoint(String name, String details, String status) {
         requestBody = new JSONObject();
@@ -752,7 +778,27 @@ public class API_Stepdefinitions {
                 .assertThat().body("updated_Id",equalTo(id));
 
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,3 @@
-@esraaa
 Feature: As an administrator, I want to be able to access all the country information registered in the system via the API connection.
 
 Scenario: When a GET request body containing valid authorization credentials is sent to the /api/profile/allCountries endpoint,
