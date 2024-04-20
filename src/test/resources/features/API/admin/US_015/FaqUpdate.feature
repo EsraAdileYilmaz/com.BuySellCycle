@@ -63,7 +63,7 @@ Feature: As an administrator, I want to be able to update the information of the
 
 
 
-  @esra
+
     Scenario Outline:The update of the record can be verified by sending a GET request to the /api/faqsDetails endpoint
                      with the updated_Id returned in the response body.
 
