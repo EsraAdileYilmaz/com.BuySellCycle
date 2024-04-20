@@ -846,6 +846,9 @@ public class API_Stepdefinitions {
 
     }
 
+    @And("The api user verifies that the content of the data <id>, {string} , {string} , <coupon_type> ,{string}, {string}, {string} , {string} ,{string} ,<maximum_discount> , <created_by> ,{string}, <is_expire> , <is_multiple_buy> ,{string} {string} , {string} in the response body.")
+    public void verifyThatTheContentOfTheCouponDetailDataInTheResponseBody(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) {
+    }
 }
 
 
