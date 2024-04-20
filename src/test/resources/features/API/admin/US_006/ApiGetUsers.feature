@@ -17,7 +17,6 @@ the expected status code returned should be 200, and the message in the response
   | 4  |   3        | Admin      |  1234567895 | admin@buysellcycle.com | 1234567895  | Admin  |
 
 
-  @IP
   Scenario Outline: When a GET request containing valid authorization credentials and the customer id data for the
   desired detailed information is sent to the /api/get-user endpoint, the user information returned in the response body
   (id, first_name, last_name, role_id, email, is_verified, is_active, lang_code, currency_id, currency_code, name) should be validated.

@@ -481,6 +481,30 @@ public class API_Stepdefinitions {
 
 
     }
+    @Given("The api user sends a GET request containing the <id> in the body and saves the response")
+    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response() {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+
+    @Given("The API user sends a GET request, the returned response verifies the {int}, {string}, {string}, {int}, {string}, {string}, {string} data information.")
+    public void the_api_user_sends_a_get_request_the_returned_response_verifies_the_data_information(int id, String year, String name, int type, String date, String created_at, String updated_at) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("holidayDetails[0].id",equalTo(id))
+                .body("holidayDetails[0].year",equalTo(year))
+                .body("holidayDetails[0].name",equalTo(name))
+                .body("holidayDetails[0].type",equalTo(type))
+                .body("holidayDetails[0].date",equalTo(date))
+                .body("holidayDetails[0].name",equalTo(created_at))
+                .body("holidayDetails[0].name",equalTo(updated_at));
+
+    }
+
+
 
 }
 
