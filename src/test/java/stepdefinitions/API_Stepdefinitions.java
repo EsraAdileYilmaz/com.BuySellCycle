@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import com.beust.ah.A;
 import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
@@ -22,6 +23,8 @@ import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import static hooks.HooksAPI.spec;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -826,12 +829,17 @@ public class API_Stepdefinitions {
         requestBody = new JSONObject();
         requestBody.put("title",title);
         requestBody.put("description",description);
+
+
     }
     @Given("The API user sends a POST request and records the response from the api faqsAdd endpoint.")
     public void the_api_user_sends_a_post_request_and_records_the_response_from_the_api_api_faqs_add_endpoint() {
        API_Methods.postResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
 
-    }
+
+       }
 
 
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
@@ -844,6 +852,26 @@ public class API_Stepdefinitions {
 
 
     }
+
+    @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint(String endpoint) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", added_item_id);
+        API_Methods.getBodyResponse(requestBody.toString());
+        assertEquals(id,jsonPath.getInt("FaqsDetails[0].added_item_id"));
+    }
+
+    @Given("The api user prepares a GET request containing the refund reason {string} for which details are to be accessed, to send to the api {string} endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_endpoint(String id, String endpoint) {
+        requestBody = new JSONObject();
+        requestBody.put("added_item_id",id);
+        API_Methods.getBodyResponse(requestBody.toString());
+        //requestBody.put("id", added_item_id);
+        //API_Methods.deleteResponse(requestBody.toString());
+    }
+
+
+
     @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api departmentDetails endpoint.")
     public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_department_details_endpoint(Integer id) {
         requestBody = new JSONObject();
@@ -851,6 +879,21 @@ public class API_Stepdefinitions {
     }
     @Given("The api user sends a GET request and saves the response returned from the api {string} endpoint.")
     public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+    @Given("The api user verifies the content of the data {int},{string} in the response body.")
+    public void the_api_user_verifies_the_content_of_the_data_in_the_response_body(int id, String name) {
+
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("addresses[12].id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[12].name"));
+    }
+
+    @Given("The api user sends a GET request with {int} in the body and saves the response")
+    public void the_api_user_sends_a_get_request_with_in_the_body_and_saves_the_response(Integer state_id) {
+        requestBody = new JSONObject();
+        requestBody.put("state_id", state_id);
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
@@ -893,6 +936,44 @@ public class API_Stepdefinitions {
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
+
+
+    @Given("The api user validates the {int}, {string}, {string}, {string},{string},{string}  of the response body with index {int}.")
+    public void the_api_user_validates_the_id_of_the_response_body_with_index(Integer id, String first_name, String username , String email, String phone, String name, Integer dataIndex) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("user["+dataIndex+"].id",equalTo(id))
+                .body("user["+dataIndex+"].first_name",equalTo(first_name))
+                .body("user["+dataIndex+"].username",equalTo(username))
+                .body("user["+dataIndex+"].email",equalTo(email))
+                .body("user["+dataIndex+"].phone",equalTo(phone))
+                .body("user["+dataIndex+"].name",equalTo(name+" "));
+
+    }
+
+    @Given("The api user validates the {int}, {string}, {string}, {int},{string}, {int}, {int}, {string}, {int}, {string}, {string}  of the response body")
+    public void the_api_user_validates_the_of_the_response_body(Integer id, String first_name, String last_name, Integer  role_id, String  email, Integer is_verified, Integer is_active, String lang_code, Integer currency_id, String currency_code, String name) {
+
+
+    }
+
+    @Given("The API user sends a GET request, the returned response verifies the {int}, {string}, {string}, {int}, {string}, {string}, {string} data information.")
+    public void the_api_user_sends_a_get_request_the_returned_response_verifies_the_data_information(int id, String year, String name, int type, String date, String created_at, String updated_at) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("holidayDetails[0].id",equalTo(id))
+                .body("holidayDetails[0].year",equalTo(year))
+                .body("holidayDetails[0].name",equalTo(name))
+                .body("holidayDetails[0].type",equalTo(type))
+                .body("holidayDetails[0].date",equalTo(date))
+                .body("holidayDetails[0].name",equalTo(created_at))
+                .body("holidayDetails[0].name",equalTo(updated_at));
+
+    }
+
 
 }
 
