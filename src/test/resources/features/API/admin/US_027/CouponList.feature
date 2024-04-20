@@ -1,4 +1,3 @@
-
 Feature: Testing the Coupon List API
 
   Scenario: Retrieve coupon list with valid authorization credentials
@@ -11,7 +10,7 @@ Feature: Testing the Coupon List API
   @coupon
   Scenario Outline: Validate information for coupon with specific ID in the response body
     Given The api user constructs the base url with the "admin" token.
-    And   The api user sets "api/coupon/couponDetails" path parameters
+    And   The api user sets "api/coupon/couponList" path parameters
     When  The api user sends a GET request containing the <id> in the body and saves the response
     Then  The api user verifies that the content of the data <id>, "<title>" , "<coupon_code>" , "<start_date>" ,"<end_date>" in the response body.
 

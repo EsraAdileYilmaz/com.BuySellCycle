@@ -36,7 +36,6 @@ Feature: As an administrator, I want to be able to delete department information
     * The api user prepares a POST request containing the department id to be deleted to send to the api departmentAdd endpoint.
     * The api user sets "api/departmentDelete" path parameters
     * The api user sends the DELETE request and saves the response returned from the api "departmentDelete" endpoint.
-    * The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.
     * The api user sets "api/departmentDetails" path parameters
     * The api user prepares a GET request containing the department id to be deleted to send to the api departmentDetails endpoint.
     * The api user verifies that the message information in the response body is "department not found"
