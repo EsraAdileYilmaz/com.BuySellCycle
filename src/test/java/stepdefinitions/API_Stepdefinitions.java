@@ -583,12 +583,6 @@ public class API_Stepdefinitions {
 
     }
 
-    @When("The API user sends a GET request and records the response from  endpoint.")
-    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
-        API_Methods.getResponse();
-
-    }
-
     @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
     public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
@@ -601,26 +595,15 @@ public class API_Stepdefinitions {
         Assert.assertEquals(end_date, jsonPath.getString("couponDetails[0].end_date"));
     }
 
-    @When("The api user sends a GET request containing the id {int}  in the body and saves the response")
-    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
-        JsonPath resJP=response.jsonPath();
-        resJP.getInt("id");
-
-    }
-  
- 
     @And("The api user verifies the response with the following JSON:")
     public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
 
         JsonPath actualJsonPath = new JsonPath(API_Methods.response.getBody().asString());
         JsonPath expectedJsonPath = new JsonPath(expectedJsonBody);
-
-
-
         assertEquals(expectedJsonPath.getMap(""), actualJsonPath.getMap("couponDetails[0]"));
 
-
     }
+
     @When("The API user sends a PATCH request to the endpoint with the following body:")
     public void theAPIUserSendsAPATCHRequestToTheEndpointWithTheFollowingBody(String requestBody) {
 
@@ -636,7 +619,10 @@ public class API_Stepdefinitions {
 
         API_Methods.patchResponse(requestBody);
 
+    }
 
+    @When("The API user sends a PATCH request with invalid email to the endpoint with the following body:")
+    public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody() {
     }
     // Aslis End
 
@@ -906,7 +892,6 @@ public class API_Stepdefinitions {
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
-
 
 }
 
