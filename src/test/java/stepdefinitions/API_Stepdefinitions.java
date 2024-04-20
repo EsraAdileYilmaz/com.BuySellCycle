@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import static hooks.HooksAPI.spec;
 import static org.hamcrest.Matchers.*;
@@ -40,18 +41,13 @@ public class API_Stepdefinitions {
 
     public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
-
     HashMap<Object, String> reqBodyHash;
-
     public static int added_item_id;
 
-    String endpoint;
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-    String password;
-
-
+    private String jsonResponse;
 
 
 
@@ -842,9 +838,45 @@ public class API_Stepdefinitions {
     }
 
 
-    @And("The api user verifies that the content of the data <id>, {string} , {string} , <coupon_type> ,{string}, {string}, {string} , {string} ,{string} ,<maximum_discount> , <created_by> ,{string}, <is_expire> , <is_multiple_buy> ,{string} {string} , {string} in the response body.")
-    public void verifyThatTheContentOfTheCouponDetailDataInTheResponseBody(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) {
+    @And("The api user verifies that the content of the data {int}, {string} , {string} , {int} ,{string}, {string}, {string} , {string} ,{string} ,{int} , {int} ,{string}, {int} , {int} ,{string} {string} , {string} in the response body.")
+    public void theApiUserVerifiesThatTheContentOfTheDataIdCoupon_typeMaximum_discountCreated_byIs_expireIs_multiple_buyInTheResponseBody(int id ,String title, String coupon_code, int coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, int maximum_discount, int created_by, String updated_by, int is_expire , int is_multiple_buy,  String multiple_buy_limit, String created_at, String updated_at) {
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals("id hatali",id, jsonPath.getInt("couponDetails[0].id"));
+        Assert.assertEquals("title hatali",title, jsonPath.getString("couponDetails[0].title"));
+        Assert.assertEquals("coupon_code hatali",coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
+        Assert.assertEquals("coupon_type hatali",coupon_type, jsonPath.getInt("couponDetails[0].coupon_type"));
+        Assert.assertEquals("start_date hatali",start_date, jsonPath.getString("couponDetails[0].start_date"));
+        Assert.assertEquals("end_date hatali",end_date, jsonPath.getString("couponDetails[0].end_date"));
+        Assert.assertNull( discount, jsonPath.getString("couponDetails[0].discount"));
+        Assert.assertNull( discount_type, jsonPath.getString("couponDetails[0].discount_type"));
+        Assert.assertNull( minimum_shopping, jsonPath.getString("couponDetails[0].minimum_shopping"));
+        Assert.assertEquals("maximum_discount hatali",maximum_discount, jsonPath.getInt("couponDetails[0].maximum_discount"));
+        Assert.assertEquals("created_by hatali",created_by, jsonPath.getInt("couponDetails[0].created_by"));
+        Assert.assertNull(updated_by, jsonPath.getString("couponDetails[0].updated_by"));
+        Assert.assertEquals("is_expire hatali",is_expire, jsonPath.getInt("couponDetails[0].is_expire"));
+        Assert.assertEquals("is_multiple_buy hatali",is_multiple_buy, jsonPath.getInt("couponDetails[0].is_expire"));
+        Assert.assertNull(multiple_buy_limit, jsonPath.getString("couponDetails[0].multiple_buy_limit"));
+        Assert.assertEquals("created_at hatali",created_at, jsonPath.getString("couponDetails[0].created_at"));
+        Assert.assertEquals("updated_at hatali",updated_at, jsonPath.getString("couponDetails[0].updated_at"));
+
+
     }
+
+    @And("The api user verifies the response with the following JSON:")
+    public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
+
+        JsonPath actualJsonPath = new JsonPath(API_Methods.response.getBody().asString());
+        JsonPath expectedJsonPath = new JsonPath(expectedJsonBody);
+
+
+
+        assertEquals(expectedJsonPath.getMap(""), actualJsonPath.getMap("couponDetails[0]"));
+
+
+    }
+
+
 }
 
 
