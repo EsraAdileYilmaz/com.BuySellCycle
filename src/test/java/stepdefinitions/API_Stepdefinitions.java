@@ -739,11 +739,8 @@ public class API_Stepdefinitions {
         Assert.assertEquals(id, (Integer)jsonPath.getInt("updated_Id"));
 
     }
-    @Given("The api user sends the PATCH request and saves the response returned from the api {string} endpoint.")
-    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
-        API_Methods.patchResponse(requestBody.toString());
-    }
 
+  
     //===================================US_30=================================
     @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data to send to the api refundReasonUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
@@ -779,10 +776,10 @@ public class API_Stepdefinitions {
       requestBody.put("date",date);
     }
 
-    @Given("The api user sends the PATCH request and saves the response returned from the api holidayUpdate endpoint.")
-    public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_holiday_update_endpoint() {
-       API_Methods.patchResponse(requestBody.toString());
-    }
+    //@Given("The api user sends the PATCH request and saves the response returned from the api holidayUpdate endpoint.")
+    //public void the_api_user_sends_the_patch_request_and_saves_the_response_returned_from_the_api_holiday_update_endpoint() {
+     //  API_Methods.patchResponse(requestBody.toString());
+    //}
 
 
     @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
@@ -812,7 +809,6 @@ public class API_Stepdefinitions {
        API_Methods.postResponse(requestBody.toString());
 
     }
-
 
 
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
