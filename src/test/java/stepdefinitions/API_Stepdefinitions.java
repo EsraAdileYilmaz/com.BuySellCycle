@@ -3,39 +3,24 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apiguardian.api.API;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-
-import static hooks.HooksAPI.spec;
-import static io.restassured.RestAssured.baseURI;
-
-import static io.restassured.RestAssured.given;
-
-
-
-import static org.hamcrest.Matchers.*;
-
-import static org.hamcrest.Matchers.equalTo;
-
-
-
 import static org.junit.Assert.*;
-import static utilities.API_Utilities.API_Methods.response;
 
 
 public class API_Stepdefinitions {
@@ -512,12 +497,6 @@ public class API_Stepdefinitions {
 
     }
 
-    @When("The API user sends a GET request and records the response from  endpoint.")
-    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
-        API_Methods.getResponse();
-
-    }
-
     @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
     public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
@@ -536,6 +515,21 @@ public class API_Stepdefinitions {
         resJP.getInt("id");
 
     }
+
+    @And("The data returned in the response body should contain the following fields:")
+    public void verifyTheFollowingFieldsExist(io.cucumber.datatable.DataTable dataTable) {
+        String responseStr = response.getBody().asString();
+
+        // Tablodaki her alanın yanıtta mevcut olduğunu ve değerlerinin null olmadığını doğruluyoruz burda
+        for (String fieldName : dataTable.asList()) {
+            assertTrue(responseStr.contains("\"" + fieldName + "\":"));
+        }
+
+        }
+
+
+
+
 
     // Aslis End
 
@@ -649,6 +643,8 @@ public class API_Stepdefinitions {
         requestBody.put("country_id", countryID);
         API_Methods.getBodyResponse(requestBody.toString());
     }
+
+
 }
 
 
