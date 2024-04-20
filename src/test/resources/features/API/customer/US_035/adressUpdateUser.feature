@@ -47,6 +47,7 @@ Feature: Updating customer address information
 
   Scenario: Handling PATCH request with invalid email
     Given The api user constructs the base url with the "aslicustomer" token.
+    And The api user sets "api/profile/customerAddressUpdate/25" path parameters
     When The API user sends a PATCH request with invalid email to the endpoint with the following body:
       """
       {
@@ -67,6 +68,7 @@ Feature: Updating customer address information
 
   Scenario: Sending PATCH request with invalid authorization credentials
     Given The api user constructs the base url with the "invalid" token.
+    And The api user sets "api/profile/customerAddressUpdate/25" path parameters
     When The API user sends a PATCH request to the endpoint with the following body:
       """
       {
@@ -83,3 +85,27 @@ Feature: Updating customer address information
       """
     Then The api user verifies that the status code is 401
     And The api user verifies that the message information in the response body is "Unauthenticated."
+
+
+  @adressUpdateUser
+    Scenario Outline: Verify updated ID matches the ID in the path parameter
+      Given The api user constructs the base url with the "aslicustomer" token.
+      And The api user sets "api/profile/customerAddressUpdate/<id>" path parameters
+      When The API user sends a PATCH request to the endpoint with the following body:
+        """
+        {
+          "name": "<newName>",
+          "email": "<newEmail>",
+          "address": "<newAddress>",
+          "phone": "<newPhone>",
+          "city": "<newCity>",
+          "state": "<newState>",
+          "country": "<newCountry>",
+          "postal_code": "<newPostalCode>",
+          "address_type": "<newAddressType>"
+        }
+        """
+      Then The updated_id information in the response body should match the id specified in the path parameter "/api/profile/customerAddressUpdate/<id>"
+      Examples:
+        | id |
+        | 25 |

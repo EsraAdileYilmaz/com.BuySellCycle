@@ -32,7 +32,9 @@ import static utilities.API_Utilities.API_Methods.response;
 public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
-
+    private String requestJSONBody;
+    private int idInPath;
+    private int updatedIdInResponse;
 
 
     public static JSONObject requestBody,requestBody2;
@@ -587,7 +589,6 @@ public class API_Stepdefinitions {
     public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
         jsonPath = API_Methods.response.jsonPath();
-
         Assert.assertEquals(id, jsonPath.getInt("couponDetails[0].id"));
         Assert.assertEquals(title, jsonPath.getString("couponDetails[0].title"));
         Assert.assertEquals(coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
@@ -624,6 +625,17 @@ public class API_Stepdefinitions {
     @When("The API user sends a PATCH request with invalid email to the endpoint with the following body:")
     public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody(String requestBody) {
         API_Methods.patchResponse(requestBody);
+    }
+
+    @And("The updated_id information in the response body should match the id specified in the path parameter {string}")
+    public void theUpdated_idInformationInTheResponseBodyShouldMatchTheIdSpecifiedInThePathParameter(String pathParameter) {
+        idInPath = Integer.parseInt(pathParameter.replaceAll("\\D", ""));
+        System.out.println(idInPath);
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+        System.out.println(updatedIdInResponse);
+        assertEquals(updatedIdInResponse, idInPath);
+
     }
     // Aslis End
 
@@ -733,10 +745,6 @@ public class API_Stepdefinitions {
         requestBody.put("country_id", countryID);
         API_Methods.getBodyResponse(requestBody.toString());
     }
-
-
-
-
 
     @Given("The api user prepares a PATCH request containing the {string}, {string}, {string} data to send to the api departmentUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_department_update_endpoint(String name, String details, String status) {
@@ -893,6 +901,7 @@ public class API_Stepdefinitions {
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
 
 }
 
