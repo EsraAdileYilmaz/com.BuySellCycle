@@ -504,6 +504,15 @@ public class API_Stepdefinitions {
 
     }
 
+    @Given("The API user sends a GET request {int} and records the response from the api {string} endpoint.")
+    public void the_api_user_sends_a_get_request_and_records_the_response_from_the_api_endpoint(int id, String holidayDetails) {
+
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        requestBody.put("holidayDetails", holidayDetails);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
 
 
 }
