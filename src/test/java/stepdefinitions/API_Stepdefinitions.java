@@ -21,18 +21,8 @@ import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
 import java.util.Map;
-
-
 import static hooks.HooksAPI.spec;
-
-
-
 import static org.hamcrest.Matchers.*;
-
-import static org.hamcrest.Matchers.equalTo;
-
-
-
 import static org.junit.Assert.*;
 import static utilities.API_Utilities.API_Methods.messageAssert;
 import static utilities.API_Utilities.API_Methods.response;
@@ -835,7 +825,23 @@ public class API_Stepdefinitions {
 
     }
 
-}
+    @When("The api user verifies the content of the data {int}, {int}, {string} ,{string} , {string} ,{string} ,{string} ,{string} ,{string} ,{string} in the response body.")
+    public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code) {
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("addresses[0].id"));
+        Assert.assertEquals(customer_id, jsonPath.getInt("addresses[0].customer_id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
+        Assert.assertEquals(email, jsonPath.getString("addresses[0].email"));
+        Assert.assertEquals(phone, jsonPath.getString("addresses[0].phone"));
+        Assert.assertEquals(address, jsonPath.getString("addresses[0].address"));
+        Assert.assertEquals(city, jsonPath.getString("addresses[0].city"));
+        Assert.assertEquals(state, jsonPath.getString("addresses[0].state"));
+        Assert.assertEquals(country, jsonPath.getString("addresses[0].country"));
+        Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
+
+    }
+ }
+
 
 
 
