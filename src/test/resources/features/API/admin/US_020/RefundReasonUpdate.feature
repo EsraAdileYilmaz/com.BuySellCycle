@@ -1,7 +1,7 @@
-@refund
+
 Feature: As an administrator, I want to be able to update the Refund&Reason information with the specified ID number via the
   API connection.
-
+  @refund
   Scenario Outline: When a PATCH request body containing valid authorization information, the Refund&Reason ID to be updated,
   and necessary data (reason) is sent to the /api/refundReasonUpdate/{id} endpoint, the returned status code
   should be 202, and the message information in the response body should be verified as "refundReason updated successfully".
@@ -16,7 +16,7 @@ Feature: As an administrator, I want to be able to update the Refund&Reason info
 
     Examples:
       | id | reason                 |
-      | 25 | Product arrived lately |
+      | 20 | Product arrived lately |
 
 
   Scenario Outline: When a PATCH request body containing valid authorization information and an incorrect (non-existent in the
@@ -27,7 +27,8 @@ Feature: As an administrator, I want to be able to update the Refund&Reason info
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/refundReasonUpdate/<id>" path parameters
     * The api user prepares a PATCH request containing the "<reason>" data to send to the api refundReasonUpdate endpoint.
-    * The API user records the response from the api refundReasonUpdate endpoint, confirming that the status code is '404' and the reason phrase is Not Found.
+    * The api user verifies that the status code is 404
+    * The api user verifies that the message information in the response body is "refundReason not found"
 
     Examples:
       | id | reason                 |
@@ -42,8 +43,8 @@ Feature: As an administrator, I want to be able to update the Refund&Reason info
     * The api user constructs the base url with the "invalid" token.
     * The api user sets "api/refundReasonUpdate/<id>" path parameters
     * The api user prepares a PATCH request containing the "<reason>" data to send to the api refundReasonUpdate endpoint.
-    * The API user records the response from the api refundReasonUpdate endpoint, confirming that the status code is '401' and the reason phrase is Unauthorized.
-
+    * The api user verifies that the status code is 401
+    * The api user verifies that the message information in the response body is "Unauthenticated."
     Examples:
       | id | reason                 |
       | 25 | Product arrived lately |
