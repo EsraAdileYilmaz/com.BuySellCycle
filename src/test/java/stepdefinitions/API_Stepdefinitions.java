@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import static hooks.HooksAPI.spec;
 import static org.hamcrest.Matchers.*;
@@ -36,18 +37,13 @@ public class API_Stepdefinitions {
 
     public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
-
     HashMap<Object, String> reqBodyHash;
-
     public static int added_item_id;
 
-    String endpoint;
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-    String password;
-
-
+    private String jsonResponse;
 
   //========API Esra Baslangic=================================================================================
 
@@ -611,6 +607,20 @@ public class API_Stepdefinitions {
         resJP.getInt("id");
 
     }
+  
+ 
+    @And("The api user verifies the response with the following JSON:")
+    public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
+
+        JsonPath actualJsonPath = new JsonPath(API_Methods.response.getBody().asString());
+        JsonPath expectedJsonPath = new JsonPath(expectedJsonBody);
+
+
+
+        assertEquals(expectedJsonPath.getMap(""), actualJsonPath.getMap("couponDetails[0]"));
+
+
+    }
 
     // Aslis End
 
@@ -857,8 +867,10 @@ public class API_Stepdefinitions {
 
     }
 
-
 }
+
+
+
 
 
 

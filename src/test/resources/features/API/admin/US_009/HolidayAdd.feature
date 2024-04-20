@@ -20,7 +20,7 @@ Feature: Adding and Verifying holidays via API
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/holidayDetails" path parameters
     When  The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.
-    And   The API user sends <id> a GET request and records the response from the api "api/holidayDetails" endpoint.
+    And   The api user sends a GET request containing the <id> in the body and saves the response
     Then  The api user verifies that the message information in the response body is "success"
 
 
