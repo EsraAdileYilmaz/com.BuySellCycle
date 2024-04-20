@@ -622,7 +622,8 @@ public class API_Stepdefinitions {
     }
 
     @When("The API user sends a PATCH request with invalid email to the endpoint with the following body:")
-    public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody() {
+    public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody(String requestBody) {
+        API_Methods.patchResponse(requestBody);
     }
     // Aslis End
 
