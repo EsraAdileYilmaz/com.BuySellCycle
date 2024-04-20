@@ -350,16 +350,16 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user sends the POST request and saves the response returned from the api change-password endpoint.")
-    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint() {
+    @Given("The api user sends the POST request and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint(String endpoint) {
 
 
         API_Methods.postResponse(requestBody.toString());
 
     }
 
-    @Given("The api user prepares a POST request containing the department id to be deleted to send to the api departmentDelete endpoint.")
-    public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_delete_endpoint() {
+    @Given("The api user prepares a POST request containing the department id to be deleted to send to the api departmentAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_add_endpoint() {
 
 
         JSONObject reqBody = new JSONObject();
@@ -372,8 +372,8 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user sends the DELETE request and saves the response returned from the api departmentDelete endpoint.")
-    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_department_delete_endpoint() {
+    @Given("The api user sends the DELETE request and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_department_delete_endpoint(String endPoint) {
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
@@ -451,11 +451,11 @@ public class API_Stepdefinitions {
 
     }
 
-    @When("The api user sends the DELETE request with incorrect department ID and saves the response returned from the api departmentDelete endpoint.")
-    public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiDepartmentDeleteEndpoint() {
+    @When("The api user sends the DELETE request with incorrect ID {int} and saves the response returned from the api departmentDelete endpoint.")
+    public void theApiUserSendsTheDELETERequestWithIncorrectDepartmentIDAndSavesTheResponseReturnedFromTheApiDepartmentDeleteEndpoint(int departmentID) {
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("id",572894875);
+        requestBody.put("id", departmentID);
         API_Methods.deleteResponse(requestBody.toString());
 
     }
@@ -493,6 +493,19 @@ public class API_Stepdefinitions {
         Assert.assertEquals(is_billing_default, jsonPath.getInt("addresses[0].is_billing_default"));
         Assert.assertEquals(created_at, jsonPath.getString("addresses[0].created_at"));
         Assert.assertEquals(updated_at, jsonPath.getString("addresses[0].updated_at"));
+
+    }
+
+    @When("The api user prepares a POST request containing the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheDepartmentIdToBeDeletedToSendToTheApiHolidayAddEndpoint() {
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("year", "2025");
+        reqBody.put("name", "ILHAN Holiday Hotel");
+        reqBody.put("date", "2024-04-23");
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
 
     }
 
@@ -740,7 +753,7 @@ public class API_Stepdefinitions {
 
     }
 
-  
+
     //===================================US_30=================================
     @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data to send to the api refundReasonUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
@@ -823,6 +836,9 @@ public class API_Stepdefinitions {
     }
 
 }
+
+
+
 
 
 
