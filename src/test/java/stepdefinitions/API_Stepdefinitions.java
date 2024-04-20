@@ -34,10 +34,6 @@ public class API_Stepdefinitions {
     public static String fullPath;
 
 
-    //JSONObject requestBody;
-    //JsonPath jsonPath;
-    // HashMap<String,Object> reqBody;
-
 
     public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
@@ -48,8 +44,6 @@ public class API_Stepdefinitions {
     Faker faker = new Faker();
     Map<String, Object> reqBody;
     private String jsonResponse;
-
-
 
   //========API Esra Baslangic=================================================================================
 
@@ -329,6 +323,7 @@ public class API_Stepdefinitions {
 
     @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to the api change-password endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_change_password_endpoint(String oldPassword, String password, String passwordConfirmation) {
+
         requestBody = new JSONObject();
         requestBody.put("old_password", oldPassword);
         requestBody.put("password", password);
@@ -348,11 +343,11 @@ public class API_Stepdefinitions {
     public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_add_endpoint() {
 
 
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("name", "Marketing AYCA");
-        reqBody.put("details", "Marketing DEPARTMENT AYCA");
-        reqBody.put("status", 1453);
-        API_Methods.postResponse(reqBody.toString());
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", "Marketing AYCA");
+        requestBody.put("details", "Marketing DEPARTMENT AYCA");
+        requestBody.put("status", 1453);
+        API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
 
@@ -452,7 +447,7 @@ public class API_Stepdefinitions {
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
-        API_Methods.deleteResponse(requestBody.toString());
+        //API_Methods.deleteResponse(requestBody.toString());
         API_Methods.getBodyResponse(requestBody.toString());
 
     }
@@ -487,12 +482,24 @@ public class API_Stepdefinitions {
 
         JSONObject reqBody = new JSONObject();
         reqBody.put("year", "2025");
-        reqBody.put("name", "ILHAN Holiday Hotel");
+        reqBody.put("name", "DILAN Holiday Hotel");
         reqBody.put("date", "2024-04-23");
         API_Methods.postResponse(reqBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
 
+    }
+
+    @When("The api user prepares a POST request containing {string},{string},{string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheHolidayIdToBeDeletedToSendToTheApiHolidayAddEndpoint(String year, String name, String date) {
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("year", year);
+        reqBody.put("name", name);
+        reqBody.put("date", date);
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
     }
 
 
@@ -598,6 +605,20 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
         JsonPath resJP=response.jsonPath();
         resJP.getInt("id");
+
+    }
+  
+ 
+    @And("The api user verifies the response with the following JSON:")
+    public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
+
+        JsonPath actualJsonPath = new JsonPath(API_Methods.response.getBody().asString());
+        JsonPath expectedJsonPath = new JsonPath(expectedJsonBody);
+
+
+
+        assertEquals(expectedJsonPath.getMap(""), actualJsonPath.getMap("couponDetails[0]"));
+
 
     }
 
@@ -820,6 +841,15 @@ public class API_Stepdefinitions {
 
 
     }
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api departmentDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_department_details_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+    @Given("The api user sends a GET request and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
 
     @When("The api user verifies the content of the data {int}, {int}, {string} ,{string} , {string} ,{string} ,{string} ,{string} ,{string} ,{string} in the response body.")
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code) {
@@ -837,47 +867,8 @@ public class API_Stepdefinitions {
 
     }
 
-
-    @And("The api user verifies that the content of the data {int}, {string} , {string} , {int} ,{string}, {string}, {string} , {string} ,{string} ,{int} , {int} ,{string}, {int} , {int} ,{string} {string} , {string} in the response body.")
-    public void theApiUserVerifiesThatTheContentOfTheDataIdCoupon_typeMaximum_discountCreated_byIs_expireIs_multiple_buyInTheResponseBody(int id ,String title, String coupon_code, int coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, int maximum_discount, int created_by, String updated_by, int is_expire , int is_multiple_buy,  String multiple_buy_limit, String created_at, String updated_at) {
-
-        jsonPath = API_Methods.response.jsonPath();
-        Assert.assertEquals("id hatali",id, jsonPath.getInt("couponDetails[0].id"));
-        Assert.assertEquals("title hatali",title, jsonPath.getString("couponDetails[0].title"));
-        Assert.assertEquals("coupon_code hatali",coupon_code, jsonPath.getString("couponDetails[0].coupon_code"));
-        Assert.assertEquals("coupon_type hatali",coupon_type, jsonPath.getInt("couponDetails[0].coupon_type"));
-        Assert.assertEquals("start_date hatali",start_date, jsonPath.getString("couponDetails[0].start_date"));
-        Assert.assertEquals("end_date hatali",end_date, jsonPath.getString("couponDetails[0].end_date"));
-        Assert.assertNull( discount, jsonPath.getString("couponDetails[0].discount"));
-        Assert.assertNull( discount_type, jsonPath.getString("couponDetails[0].discount_type"));
-        Assert.assertNull( minimum_shopping, jsonPath.getString("couponDetails[0].minimum_shopping"));
-        Assert.assertEquals("maximum_discount hatali",maximum_discount, jsonPath.getInt("couponDetails[0].maximum_discount"));
-        Assert.assertEquals("created_by hatali",created_by, jsonPath.getInt("couponDetails[0].created_by"));
-        Assert.assertNull(updated_by, jsonPath.getString("couponDetails[0].updated_by"));
-        Assert.assertEquals("is_expire hatali",is_expire, jsonPath.getInt("couponDetails[0].is_expire"));
-        Assert.assertEquals("is_multiple_buy hatali",is_multiple_buy, jsonPath.getInt("couponDetails[0].is_expire"));
-        Assert.assertNull(multiple_buy_limit, jsonPath.getString("couponDetails[0].multiple_buy_limit"));
-        Assert.assertEquals("created_at hatali",created_at, jsonPath.getString("couponDetails[0].created_at"));
-        Assert.assertEquals("updated_at hatali",updated_at, jsonPath.getString("couponDetails[0].updated_at"));
-
-
-    }
-
-    @And("The api user verifies the response with the following JSON:")
-    public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
-
-        JsonPath actualJsonPath = new JsonPath(API_Methods.response.getBody().asString());
-        JsonPath expectedJsonPath = new JsonPath(expectedJsonBody);
-
-
-
-        assertEquals(expectedJsonPath.getMap(""), actualJsonPath.getMap("couponDetails[0]"));
-
-
-    }
-
-
 }
+
 
 
 
