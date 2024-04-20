@@ -858,6 +858,27 @@ public class API_Stepdefinitions {
     }
 
 
+    @When("The api user validates the {string} of the response body with index {int}.")
+    public void theApiUserValidatesTheOfTheResponseBodyWithIndex(String reason,int dataIndex) {
+        API_Methods.response.then()
+                .assertThat()
+                .body("refundReason[" + dataIndex + "].reason", equalTo(reason));
+    }
+
+    @When("The API user records the response from the api refundReasonList endpoint, confirming that the status code is '401' and the reason phrase is Unauthorized.")
+    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonListEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
+        Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    }
+
+    @When("The API user records the response from the api refundReasonDetails endpoint, verifying that the status code is '404' and the reason phrase is Not Found.")
+    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointVerifyingThatTheStatusCodeIsAndTheReasonPhraseIsNotFound(int arg0) {
+        Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+    }
+
+    @When("The API user records the response from the api refundReasonDetails endpoint, confirming that the status code is '401' and the reason phrase is Unauthorized.")
+    public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
+        Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
+    }
 }
 
 
