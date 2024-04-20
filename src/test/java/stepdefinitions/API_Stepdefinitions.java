@@ -33,10 +33,6 @@ public class API_Stepdefinitions {
     public static String fullPath;
 
 
-    //JSONObject requestBody;
-    //JsonPath jsonPath;
-    // HashMap<String,Object> reqBody;
-
 
     public static JSONObject requestBody,requestBody2;
     public static JsonPath jsonPath;
@@ -50,8 +46,6 @@ public class API_Stepdefinitions {
     Faker faker = new Faker();
     Map<String, Object> reqBody;
     String password;
-
-
 
 
 
@@ -333,6 +327,7 @@ public class API_Stepdefinitions {
 
     @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to the api change-password endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_change_password_endpoint(String oldPassword, String password, String passwordConfirmation) {
+
         requestBody = new JSONObject();
         requestBody.put("old_password", oldPassword);
         requestBody.put("password", password);
@@ -352,11 +347,11 @@ public class API_Stepdefinitions {
     public void the_api_user_prepares_a_post_request_containing_the_department_to_be_deleted_to_send_to_the_api_department_add_endpoint() {
 
 
-        JSONObject reqBody = new JSONObject();
-        reqBody.put("name", "Marketing AYCA");
-        reqBody.put("details", "Marketing DEPARTMENT AYCA");
-        reqBody.put("status", 1453);
-        API_Methods.postResponse(reqBody.toString());
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", "Marketing AYCA");
+        requestBody.put("details", "Marketing DEPARTMENT AYCA");
+        requestBody.put("status", 1453);
+        API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
 
@@ -456,7 +451,7 @@ public class API_Stepdefinitions {
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
-        API_Methods.deleteResponse(requestBody.toString());
+        //API_Methods.deleteResponse(requestBody.toString());
         API_Methods.getBodyResponse(requestBody.toString());
 
     }
@@ -491,12 +486,24 @@ public class API_Stepdefinitions {
 
         JSONObject reqBody = new JSONObject();
         reqBody.put("year", "2025");
-        reqBody.put("name", "ILHAN Holiday Hotel");
+        reqBody.put("name", "DILAN Holiday Hotel");
         reqBody.put("date", "2024-04-23");
         API_Methods.postResponse(reqBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
 
+    }
+
+    @When("The api user prepares a POST request containing {string},{string},{string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void theApiUserPreparesAPOSTRequestContainingTheHolidayIdToBeDeletedToSendToTheApiHolidayAddEndpoint(String year, String name, String date) {
+
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("year", year);
+        reqBody.put("name", name);
+        reqBody.put("date", date);
+        API_Methods.postResponse(reqBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
     }
 
 
@@ -840,7 +847,9 @@ public class API_Stepdefinitions {
         Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
 
     }
- }
+
+
+}
 
 
 

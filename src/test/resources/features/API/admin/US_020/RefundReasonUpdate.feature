@@ -1,7 +1,7 @@
-@refund
+
 Feature: As an administrator, I want to be able to update the Refund&Reason information with the specified ID number via the
   API connection.
-
+  @refund
   Scenario Outline: When a PATCH request body containing valid authorization information, the Refund&Reason ID to be updated,
   and necessary data (reason) is sent to the /api/refundReasonUpdate/{id} endpoint, the returned status code
   should be 202, and the message information in the response body should be verified as "refundReason updated successfully".
@@ -16,7 +16,7 @@ Feature: As an administrator, I want to be able to update the Refund&Reason info
 
     Examples:
       | id | reason                 |
-      | 10  | Product arrived lately |
+      | 20 | Product arrived lately |
 
 
   Scenario Outline: When a PATCH request body containing valid authorization information and an incorrect (non-existent in the
