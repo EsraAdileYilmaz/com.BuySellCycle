@@ -621,7 +621,23 @@ public class API_Stepdefinitions {
 
 
     }
+    @When("The API user sends a PATCH request to the endpoint with the following body:")
+    public void theAPIUserSendsAPATCHRequestToTheEndpointWithTheFollowingBody(String requestBody) {
 
+        requestBody = requestBody.replace("<newName>", Faker.instance().name().fullName())
+                .replace("<newEmail>", Faker.instance().internet().emailAddress())
+                .replace("<newAddress>", Faker.instance().address().streetAddress())
+                .replace("<newPhone>", Faker.instance().phoneNumber().cellPhone())
+                .replace("<newCity>", Faker.instance().address().city())
+                .replace("<newState>", Faker.instance().address().state())
+                .replace("<newCountry>", Faker.instance().address().country())
+                .replace("<newPostalCode>", Faker.instance().address().zipCode())
+                .replace("<newAddressType>", "Home"); // Assume static value for address type
+
+        API_Methods.patchResponse(requestBody);
+
+
+    }
     // Aslis End
 
 
@@ -890,6 +906,7 @@ public class API_Stepdefinitions {
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
 
 }
 
