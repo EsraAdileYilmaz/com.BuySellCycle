@@ -9,7 +9,7 @@ Feature: As an administrator, I want to be able to update coupon information wit
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/coupon/couponUpdate/<id>" path parameters
     * The api user prepares a PATCH request containing the "<title>","<coupon_code>","<coupon_type>","<start_date>","<end_date>","<discount>","<discount_type>","<minimum_shopping>","<maximum_discount>","<is_expire>","<is_multiple_buy>" data to send to the api refundReasonUpdate endpoint.
-    * The api user sends the PATCH request and saves the response returned from the api  "couponUpdate"  endpoint.
+    * The api user sends the PATCH request and saves the response returned from the api "couponUpdate" endpoint.
     * The api user verifies that the status code is 202
     * The api user verifies that the message information in the response body is "coupon updated successfully"
 
