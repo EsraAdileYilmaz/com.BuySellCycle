@@ -22,6 +22,8 @@ import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import static hooks.HooksAPI.spec;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -850,6 +852,21 @@ public class API_Stepdefinitions {
     public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_endpoint(String string) {
         API_Methods.getBodyResponse(requestBody.toString());
     }
+    @Given("The api user verifies the content of the data {int},{string} in the response body.")
+    public void the_api_user_verifies_the_content_of_the_data_in_the_response_body(int id, String name) {
+
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("addresses[12].id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[12].name"));
+    }
+
+    @Given("The api user sends a GET request with {int} in the body and saves the response")
+    public void the_api_user_sends_a_get_request_with_in_the_body_and_saves_the_response(Integer state_id) {
+        requestBody = new JSONObject();
+        requestBody.put("state_id", state_id);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
 
     @When("The api user verifies the content of the data {int}, {int}, {string} ,{string} , {string} ,{string} ,{string} ,{string} ,{string} ,{string} in the response body.")
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code) {
@@ -890,6 +907,7 @@ public class API_Stepdefinitions {
     public void theAPIUserRecordsTheResponseFromTheApiRefundReasonDetailsEndpointConfirmingThatTheStatusCodeIsAndTheReasonPhraseIsUnauthorized() {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
+
 
 }
 
