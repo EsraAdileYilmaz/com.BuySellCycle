@@ -13,28 +13,16 @@ import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.hamcrest.Matcher;
+import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-
 import static hooks.HooksAPI.spec;
-
-
-
 import static org.hamcrest.Matchers.*;
-
-import static org.hamcrest.Matchers.equalTo;
-
-
-
 import static org.junit.Assert.*;
 import static utilities.API_Utilities.API_Methods.messageAssert;
 import static utilities.API_Utilities.API_Methods.response;
@@ -592,6 +580,12 @@ public class API_Stepdefinitions {
 
     }
 
+    @When("The API user sends a GET request and records the response from  endpoint.")
+    public void theAPIUserSendsAGETRequestAndRecordsTheResponseFromEndpoint() {
+        API_Methods.getResponse();
+
+    }
+
     @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
     public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
@@ -610,21 +604,6 @@ public class API_Stepdefinitions {
         resJP.getInt("id");
 
     }
-
-    @And("The data returned in the response body should contain the following fields:")
-    public void verifyTheFollowingFieldsExist(io.cucumber.datatable.DataTable dataTable) {
-        String responseStr = response.getBody().asString();
-
-        // Tablodaki her alanın yanıtta mevcut olduğunu ve değerlerinin null olmadığını doğruluyoruz burda
-        for (String fieldName : dataTable.asList()) {
-            assertTrue(responseStr.contains("\"" + fieldName + "\":"));
-        }
-
-        }
-
-
-
-
 
     // Aslis End
 
@@ -845,6 +824,23 @@ public class API_Stepdefinitions {
 
 
     }
+
+    @When("The api user verifies the content of the data {int}, {int}, {string} ,{string} , {string} ,{string} ,{string} ,{string} ,{string} ,{string} in the response body.")
+    public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code) {
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id, jsonPath.getInt("addresses[0].id"));
+        Assert.assertEquals(customer_id, jsonPath.getInt("addresses[0].customer_id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
+        Assert.assertEquals(email, jsonPath.getString("addresses[0].email"));
+        Assert.assertEquals(phone, jsonPath.getString("addresses[0].phone"));
+        Assert.assertEquals(address, jsonPath.getString("addresses[0].address"));
+        Assert.assertEquals(city, jsonPath.getString("addresses[0].city"));
+        Assert.assertEquals(state, jsonPath.getString("addresses[0].state"));
+        Assert.assertEquals(country, jsonPath.getString("addresses[0].country"));
+        Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
+
+    }
+
 
     @And("The api user verifies that the content of the data <id>, {string} , {string} , <coupon_type> ,{string}, {string}, {string} , {string} ,{string} ,<maximum_discount> , <created_by> ,{string}, <is_expire> , <is_multiple_buy> ,{string} {string} , {string} in the response body.")
     public void verifyThatTheContentOfTheCouponDetailDataInTheResponseBody(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7, String arg8, String arg9, String arg10) {
