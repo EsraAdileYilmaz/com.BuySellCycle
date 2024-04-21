@@ -25,3 +25,10 @@ Feature: Testing the Coupon List API
     When  The API user sends a GET request and records the response from the api "api/coupon/couponList" endpoint.
     Then  The api user verifies that the status code is 401
     And   The api user verifies that the message information in the response body is "Unauthenticated."
+
+  Scenario: Retrieve coupon list with invalid authorization credentials
+    Given The api user constructs the base url with the "invalid" token.
+    And   The api user sets "api/coupon/couponList" path parameters
+    When  The API user sends a GET request and records the response from the api "api/coupon/couponList" endpoint.
+    Then  The api user verifies that the status code is 401
+    And   The api user verifies that the message information in the response body is "Unauthenticated."
