@@ -35,7 +35,9 @@ import static utilities.API_Utilities.API_Methods.response;
 public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
-
+    private String requestJSONBody;
+    private int idInPath;
+    private int updatedIdInResponse;
 
 
     public static JSONObject requestBody, requestBody2;
@@ -52,6 +54,7 @@ public class API_Stepdefinitions {
 
 
     private String jsonResponse;
+    private String updatedReqBody;
 
   //========API Esra Baslangic=================================================================================
 
@@ -632,12 +635,42 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
+        updatedReqBody=requestBody;
 
     }
 
     @When("The API user sends a PATCH request with invalid email to the endpoint with the following body:")
     public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody(String requestBody) {
         API_Methods.patchResponse(requestBody);
+    }
+
+    @And("The updated_id information in the response body should match the id specified in the path parameter {string}")
+    public void theUpdated_idInformationInTheResponseBodyShouldMatchTheIdSpecifiedInThePathParameter(String pathParameter) {
+        idInPath = Integer.parseInt(pathParameter.replaceAll("\\D", ""));
+        System.out.println(idInPath);
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+        System.out.println(updatedIdInResponse);
+        assertEquals(updatedIdInResponse, idInPath);
+
+    }
+
+
+    @And("The api user record the updated_Id from the response body")
+    public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+
+        System.out.println(updatedReqBody);
+    }
+
+    @Then("The api verifies that Get Response Body matches with the updated Adress")
+    public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+
+        JSONObject expectedJson = new JSONObject(API_Methods.response);
+        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+
     }
     // Aslis End
 
@@ -748,7 +781,6 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
-
     @Given("The api user prepares a PATCH request containing the {string}, {string}, {string} data to send to the api departmentUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_department_update_endpoint(String name, String details, String status) {
         requestBody = new JSONObject();
@@ -811,7 +843,7 @@ public class API_Stepdefinitions {
         requestBody.put("date", date);
     }
 
-   
+
 
     @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
     public void the_api_user_verifies_that_the_updated_id_information_in_the_response_body_matches_the_id_path_parameter_specified_in_the_holiday_update_endpoint() {
@@ -851,19 +883,7 @@ public class API_Stepdefinitions {
         added_item_id = jsonPath.getInt("added_item_id");
 
 
-
-       }
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
     @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
@@ -882,7 +902,6 @@ public class API_Stepdefinitions {
         //requestBody.put("id", added_item_id);
         //API_Methods.deleteResponse(requestBody.toString());
     }
-
 
 
     @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api departmentDetails endpoint.")
@@ -925,7 +944,6 @@ public class API_Stepdefinitions {
         Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
 
     }
-
 
 
     @When("The api user validates the {string} of the response body with index {int}.")
@@ -995,10 +1013,6 @@ public class API_Stepdefinitions {
     }
 
 }
-
-
-
-
 
 
 
