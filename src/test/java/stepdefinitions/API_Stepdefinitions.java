@@ -36,7 +36,7 @@ public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
 
-
+    int updated_Id;
 
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
@@ -992,6 +992,47 @@ public class API_Stepdefinitions {
     public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint(Integer id) {
         jsonPath = API_Methods.response.jsonPath();
 
+    }
+    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
+    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String address_type) {
+        requestBody = new JSONObject();
+        requestBody.put("customer_id", customer_id);
+        requestBody.put("name", name);
+        requestBody.put("email", email);
+        requestBody.put("phone", phone);
+        requestBody.put("address", address);
+        requestBody.put("city", city);
+        requestBody.put("state", state);
+        requestBody.put("country", country);
+        requestBody.put("postal_code", postal_code);
+        requestBody.put("address_type", address_type);
+    }
+
+    @Given("The api user sends the PATCH request and saves the response")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response() {
+        API_Methods.patchResponse(requestBody.toString());
+    }
+
+    @Given("The api user verifies equality the content of the updated Id in the response body and {int}")
+    public void the_api_user_verifies_equality_the_content_of_the_updated_id_in_the_response_body_and(Integer id) {
+        jsonPath = API_Methods.response.jsonPath();
+        updated_Id = jsonPath.getInt("updated_Id");
+        Assert.assertEquals(id, (Integer) jsonPath.getInt("updated_Id"));
+    }
+
+    @Given("The API user sends a GET request  using updated_Id and verify  that the {string} has been updated")
+    public void the_api_user_sends_a_get_request_using_updated_id_and_verify_that_the_record_has_been_updated(String name) {
+        requestBody = new JSONObject();
+        requestBody.put("id", updated_Id);
+        API_Methods.getBodyResponse(requestBody);
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
+    }
+
+
+    @Given("The API user sends a GET request and records the response")
+    public void the_api_user_sends_a_get_request_and_records_the_response() {
+        API_Methods.getResponse();
     }
 
 }
