@@ -43,21 +43,14 @@ public class API_Stepdefinitions {
     private int idInPath;
     private int updatedIdInResponse;
 
-
-
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
     HashMap<Object, String> reqBodyHash;
     public static int added_item_id;
-
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-
     String password;
-
-
-
     private String jsonResponse;
     private String updatedReqBody;
 
@@ -66,9 +59,9 @@ public class API_Stepdefinitions {
 
     //===US_037 ve US_003===
 
-
     @Given("The api user constructs the base url with the {string} token.")
     public void the_api_user_constructs_the_base_url_with_the_token(String token) {
+
         HooksAPI.setUpApi(token);
     }
 
@@ -92,16 +85,10 @@ public class API_Stepdefinitions {
     @When("The api user verifies the content of the data {int}, {string}, {string} in the response body.")
     public void theApiUserVerifiesTheContentOfTheDataInTheResponseBody(int id, String code, String name) {
 
-
         jsonPath = API_Methods.response.jsonPath();
         Assert.assertEquals(id, jsonPath.getInt("addresses[222].id"));
         Assert.assertEquals(code, jsonPath.getString("addresses[222].code"));
         Assert.assertEquals(name, jsonPath.getString("addresses[222].name"));
-    }
-
-    @Given("The API user records the response from the api allCountries endpoint, confirming that the status code is '401' and the reason phrase is Unauthenticated.")
-    public void the_api_user_records_the_response_from_the_api_all_countries_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthenticated() {
-        Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
 
@@ -326,7 +313,6 @@ public class API_Stepdefinitions {
 
     //========== Gulnur Start ======================================
 
-
     @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api faqslist endpoint.")
     public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_faqslist_endpoint(Integer int1) {
         requestBody = new JSONObject();
@@ -334,7 +320,6 @@ public class API_Stepdefinitions {
     }
 
     //=============AYCA START POINT==============//
-
 
     @Given("The api user prepares a POST request containing the {string}, {string}, {string} information to send to the api change-password endpoint.")
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_change_password_endpoint(String oldPassword, String password, String passwordConfirmation) {
@@ -348,7 +333,6 @@ public class API_Stepdefinitions {
 
     @Given("The api user sends the POST request and saves the response returned from the api {string} endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_change_password_endpoint(String endpoint) {
-
 
         API_Methods.postResponse(requestBody.toString());
 
@@ -442,7 +426,6 @@ public class API_Stepdefinitions {
     @Given("The API user sends a GET request body and records the response from the api address-list endpoint.")
     public void the_api_user_sends_a_get_request_body_and_records_the_response_from_the_api_api_address_list_endpoint() {
 
-
         response = API_Methods.getResponse();
 
     }
@@ -473,7 +456,6 @@ public class API_Stepdefinitions {
         jsonPath = API_Methods.response.jsonPath();
 
         //System.out.println("RESPONSE ID---->>> " + jsonPath.getInt("addresses[0].id"));
-
 
         Assert.assertEquals(id, jsonPath.getInt("addresses[0].id"));
         Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
@@ -849,7 +831,6 @@ public class API_Stepdefinitions {
     }
 
 
-
     @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
     public void the_api_user_verifies_that_the_updated_id_information_in_the_response_body_matches_the_id_path_parameter_specified_in_the_holiday_update_endpoint() {
         jsonPath = API_Methods.response.jsonPath();
@@ -871,11 +852,8 @@ public class API_Stepdefinitions {
     public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_endpoint(String title, String description) {
         requestBody = new JSONObject();
 
-
         requestBody.put("title",title);
         requestBody.put("description",description);
-
-
 
     }
 
@@ -886,7 +864,6 @@ public class API_Stepdefinitions {
        API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
-
 
     }
 
