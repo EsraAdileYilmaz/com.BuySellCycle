@@ -1,4 +1,4 @@
-@Ilhan
+
 Feature: As an administrator, I should be able to access detailed information of the user with the specified id number via API connection.
 
   Scenario Outline: When a GET request containing valid authorization credentials and the customer

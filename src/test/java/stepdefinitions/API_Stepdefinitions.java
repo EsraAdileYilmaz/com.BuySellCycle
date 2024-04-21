@@ -924,7 +924,7 @@ public class API_Stepdefinitions {
         Assert.assertTrue(API_Methods.tryCatchGetBody(requestBody.toString()).equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
-
+//======================================================ilhan========================================================//
     @Given("The api user validates the {int}, {string}, {string}, {string},{string},{string}  of the response body with index {int}.")
     public void the_api_user_validates_the_id_of_the_response_body_with_index(Integer id, String first_name, String username , String email, String phone, String name, Integer dataIndex) {
 
@@ -960,6 +960,57 @@ public class API_Stepdefinitions {
 
     }
 
+    @Given("The api user prepares a POST request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} information to send to the api couponAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_coupon_add_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+
+       reqBody = new HashMap<>();
+        reqBody.put("title", title);
+        reqBody.put("coupon_code", coupon_code);
+        reqBody.put("coupon_type", coupon_type);
+        reqBody.put("start_date", start_date);
+        reqBody.put("end_date", end_date);
+        reqBody.put("discount", discount);
+        reqBody.put("discount_type", discount_type);
+        reqBody.put("minimum_shopping", minimum_shopping);
+        reqBody.put("maximum_discount", maximum_discount);
+        reqBody.put("is_expire", is_expire);
+        reqBody.put("is_multiple_buy", is_multiple_buy);
+
+    }
+    @Given("The api user sends the POST request and saves the response returned from the api couponAdd endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_coupon_add_endpoint() {
+        API_Methods.postResponse(reqBody);
+    }
+
+    @Given("The api user prepares a GET request containing the refund reason {int} for which details are to be accessed, to send to the api couponDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_coupon_details_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+    @Given("The api user sends a GET request and saves the response returned from the api couponDetails endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_coupon_details_endpoint() {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api refundReasonAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_refund_reason_add_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+        reqBody = new HashMap<>();
+        reqBody.put("title", title);
+        reqBody.put("coupon_code", coupon_code);
+        reqBody.put("coupon_type", coupon_type);
+        reqBody.put("start_date", start_date);
+        reqBody.put("end_date", end_date);
+        reqBody.put("discount", discount);
+        reqBody.put("discount_type", discount_type);
+        reqBody.put("minimum_shopping", minimum_shopping);
+        reqBody.put("maximum_discount", maximum_discount);
+        reqBody.put("is_expire", is_expire);
+        reqBody.put("is_multiple_buy", is_multiple_buy);
+    }
+
+
+
+//=====================================================ilhan End========================================================//
 }
 
 

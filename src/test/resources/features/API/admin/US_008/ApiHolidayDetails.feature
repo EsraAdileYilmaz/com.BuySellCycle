@@ -31,7 +31,7 @@ Feature: As an administrator, I should be able to access detailed information ab
     * The api user verifies that the status code is 404
     * The api user verifies that the message information in the response body is "holiday not found"
 
-  @IP
+
   Scenario: When a GET request containing invalid authorization credentials and the holiday id data for the desired
   detailed information is sent to the /api/holidayDetails endpoint, the expected status code returned should be 401,
   and the message in the response body should confirm: "Unauthenticated.".
