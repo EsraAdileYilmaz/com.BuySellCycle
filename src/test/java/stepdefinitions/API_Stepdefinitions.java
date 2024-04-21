@@ -667,24 +667,9 @@ public class API_Stepdefinitions {
     @Then("The api verifies that Get Response Body matches with the updated Adress")
     public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
 
-      /* {
-            "name": "Mrs. Cuc Mayer",
-                "email": "cyril.schaden@gmail.com",
-                "address": "28849 Majorie Flats",
-                "phone": "279.006.7676",
-                "city": "New Garnettchester",
-                "state": "Illinois",
-                "country": "Taiwan",
-                "postal_code": "99605",
-                "address_type": "Home"
-        }
-
-       */
-
         JSONObject expectedJson = new JSONObject(API_Methods.response);
         JSONObject actualJson = new JSONObject(updatedReqBody);
 
-        // Mesaj alanını karşılaştırmadan geri kalanı karşılaştırın
 
     }
     // Aslis End
