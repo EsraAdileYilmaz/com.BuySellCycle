@@ -850,9 +850,7 @@ public class API_Stepdefinitions {
        API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
-
-
-       }
+    }
 
 
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
@@ -866,7 +864,7 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
+    @Given("The api user sends the GET request and saves the response returned from the api faqsDetails endpoint.")
     public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint(String endpoint) {
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
@@ -985,6 +983,45 @@ public class API_Stepdefinitions {
                 .body("holidayDetails[0].name",equalTo(updated_at));
 
     }
+
+    @Given("The api user prepares a POST request containing the {string},{string},{int},{string},{string},{int},{int},{int},{int},{int},{int} information to send to the api couponAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_faqs_add_endpoint(String title, String coupon_code,Integer coupon_type, String start_date, String end_date,Integer discount,Integer discount_type,Integer minimum_shopping,Integer maximum_discount,Integer is_expire,Integer is_multiple_buy ) {
+
+        requestBody = new JSONObject();
+        requestBody.put("title", title);
+        requestBody.put("coupon_code", coupon_code);
+        requestBody.put("coupon_type", coupon_type);
+        requestBody.put("start_date", start_date);
+        requestBody.put("end_date", end_date);
+        requestBody.put("discount", discount);
+        requestBody.put("discount_type", discount_type);
+        requestBody.put("minimum_shopping", minimum_shopping);
+        requestBody.put("maximum_discount", maximum_discount);
+        requestBody.put("is_expire", is_expire);
+        requestBody.put("is_multiple_buy", is_multiple_buy);
+        API_Methods.postResponse(requestBody.toString());
+
+
+    }
+
+
+
+    @Given("The api user sends the DELETE request and saves the response returned from the api couponDelete endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_coupon_delete_endpoint() {
+        API_Methods.deleteResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+    }
+
+
+    @Given("The api user sends the DELETE request with incorrect ID {int} and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_with_incorrect_id_and_saves_the_response_returned_from_the_api_coupon_delete_endpoint(Integer id, String endpoint) {
+         JSONObject requestBody = new JSONObject();
+         requestBody.put("id", id);
+         API_Methods.deleteResponse(requestBody.toString());
+    }
+
+
 
 
 }
