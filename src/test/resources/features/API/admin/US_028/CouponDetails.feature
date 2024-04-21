@@ -1,22 +1,20 @@
 
 Feature: Accessing Coupon Details with Valid Authorization
 
-  Scenario Outline: Validate information for coupon with specific ID in the response body
+  Scenario: Validate information for coupon with specific ID in the response body
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/coupon/couponDetails" path parameters
-    When  The api user sends a GET request containing the <id> in the body and saves the response
+    When  The api user sends a GET request containing the 10 in the body and saves the response
     Then  The api user verifies that the status code is 200
     And   The api user verifies that the message information in the response body is "success"
-    Examples:
-      | id |
-      | 10 |
 
 
-  @coupondetails
-  Scenario Outline: Validating data returned in the response body2
+
+  @asliCoupon
+  Scenario: Validating data returned in the response body2
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/coupon/couponDetails" path parameters
-    When  The api user sends a GET request containing the <id> in the body and saves the response
+    When  The api user sends a GET request containing the 10 in the body and saves the response
     Then The api user verifies that the status code is 200
     And  The api user verifies the response with the following JSON:
 """
@@ -40,7 +38,19 @@ Feature: Accessing Coupon Details with Valid Authorization
   "updated_at": "2024-03-25T10:21:45.000000Z"
   }
   """
-    Examples:
-      | id |
-      | 10 |
 
+
+  Scenario: Verify response for incorrect coupon ID
+    Given The api user constructs the base url with the "admin" token.
+    And   The api user sets "api/coupon/couponDetails" path parameters
+    When  The api user sends a GET request containing the 2 in the body and saves the response
+    Then  The api user verifies that the status code is 404
+    And   The api user verifies that the message information in the response body is "coupon not found"
+
+
+  Scenario: Verify response for invalid authorization and valid coupon ID
+    Given The api user constructs the base url with the "admin" token.
+    And   The api user sets "api/coupon/couponDetails" path parameters
+    When  The api user sends a GET request containing the 10 in the body and saves the response
+    Then  The api user verifies that the status code is 401
+    And   The api user verifies that the message information in the response body is "Unauthenticated."
