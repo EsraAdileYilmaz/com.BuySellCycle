@@ -36,7 +36,14 @@ public class API_Stepdefinitions {
     public static int id;
     public static String fullPath;
 
+
     int updated_Id;
+
+    private String requestJSONBody;
+    private int idInPath;
+    private int updatedIdInResponse;
+
+
 
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
@@ -52,6 +59,7 @@ public class API_Stepdefinitions {
 
 
     private String jsonResponse;
+    private String updatedReqBody;
 
   //========API Esra Baslangic=================================================================================
 
@@ -632,12 +640,42 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
+        updatedReqBody=requestBody;
 
     }
 
     @When("The API user sends a PATCH request with invalid email to the endpoint with the following body:")
     public void theAPIUserSendsAPATCHRequestWithInvalidEmailToTheEndpointWithTheFollowingBody(String requestBody) {
         API_Methods.patchResponse(requestBody);
+    }
+
+    @And("The updated_id information in the response body should match the id specified in the path parameter {string}")
+    public void theUpdated_idInformationInTheResponseBodyShouldMatchTheIdSpecifiedInThePathParameter(String pathParameter) {
+        idInPath = Integer.parseInt(pathParameter.replaceAll("\\D", ""));
+        System.out.println(idInPath);
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+        System.out.println(updatedIdInResponse);
+        assertEquals(updatedIdInResponse, idInPath);
+
+    }
+
+
+    @And("The api user record the updated_Id from the response body")
+    public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+
+        System.out.println(updatedReqBody);
+    }
+
+    @Then("The api verifies that Get Response Body matches with the updated Adress")
+    public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+
+        JSONObject expectedJson = new JSONObject(API_Methods.response);
+        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+
     }
     // Aslis End
 
@@ -748,7 +786,6 @@ public class API_Stepdefinitions {
         API_Methods.getBodyResponse(requestBody.toString());
     }
 
-
     @Given("The api user prepares a PATCH request containing the {string}, {string}, {string} data to send to the api departmentUpdate endpoint.")
     public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_department_update_endpoint(String name, String details, String status) {
         requestBody = new JSONObject();
@@ -811,7 +848,7 @@ public class API_Stepdefinitions {
         requestBody.put("date", date);
     }
 
-   
+
 
     @Given("The api user verifies that the updated id information in the response body matches the id path parameter specified in the holidayUpdate endpoint.")
     public void the_api_user_verifies_that_the_updated_id_information_in_the_response_body_matches_the_id_path_parameter_specified_in_the_holiday_update_endpoint() {
@@ -851,19 +888,7 @@ public class API_Stepdefinitions {
         added_item_id = jsonPath.getInt("added_item_id");
 
 
-
-       }
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
     @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
@@ -882,7 +907,6 @@ public class API_Stepdefinitions {
         //requestBody.put("id", added_item_id);
         //API_Methods.deleteResponse(requestBody.toString());
     }
-
 
 
     @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api departmentDetails endpoint.")
@@ -925,7 +949,6 @@ public class API_Stepdefinitions {
         Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
 
     }
-
 
 
     @When("The api user validates the {string} of the response body with index {int}.")
@@ -987,6 +1010,22 @@ public class API_Stepdefinitions {
 
     }
 
+
+    @Given("The api user prepares a POST request containing the {int} to be deleted to send to the {string} endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_to_be_deleted_to_send_to_the_endpoint(Integer int1, String string) {
+        requestBody = new JSONObject();
+        requestBody.put("name", "Gulnur");
+        requestBody.put("email", "gugu@gmail.com");
+        requestBody.put("address", "Rue des Intellos");
+        requestBody.put("phone", "0606060606");
+        requestBody.put("city", "Valence");
+        requestBody.put("state", "RhoneAlpes");
+        requestBody.put("country", "France");
+        requestBody.put("postal_code", "26000");
+        requestBody.put("address_type","11");
+        API_Methods.postResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+
     //US_30/TC_04
     @Given("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api couponDetails endpoint.")
     public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint(Integer id) {
@@ -1035,11 +1074,30 @@ public class API_Stepdefinitions {
         API_Methods.getResponse();
     }
 
+
+    }
+    @Given("The api user sends the DELETE request and saves the response returned from the {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_endpoint(String string) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+    @Given("The api user prepares a DELETE request containing the {int} to be deleted to send to the {string} endpoint.")
+    public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_endpoint(Integer int1, String string) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+    @Given("The api user prepares a POST request containing {string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_holiday_id_to_be_deleted_to_send_to_the_api_holiday_add_endpoint(String Deleted_Id) {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("Deleted_Id", Deleted_Id);
+    }
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api profile customerDetailsAddress endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_profile_customer_details_address_endpoint(Integer int1) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
 }
-
-
-
-
 
 
 
