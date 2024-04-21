@@ -1005,82 +1005,169 @@ public class API_Stepdefinitions {
         API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
     }
-        //US_30/TC_04
-        @Given("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api couponDetails endpoint.")
-        public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint
-        (Integer id){
-            jsonPath = API_Methods.response.jsonPath();
 
-        }
-        @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
-        public void the_api_user_prepares_a_patch_request_containing_the_data (String customer_id, String name, String
-        email, String phone, String address, String city, String state, String country, String postal_code, String
-        address_type){
-            requestBody = new JSONObject();
-            requestBody.put("customer_id", customer_id);
-            requestBody.put("name", name);
-            requestBody.put("email", email);
-            requestBody.put("phone", phone);
-            requestBody.put("address", address);
-            requestBody.put("city", city);
-            requestBody.put("state", state);
-            requestBody.put("country", country);
-            requestBody.put("postal_code", postal_code);
-            requestBody.put("address_type", address_type);
-        }
+    //US_30/TC_04
+    @Given("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api couponDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint
+    (Integer id) {
+        jsonPath = API_Methods.response.jsonPath();
 
-        @Given("The api user sends the PATCH request and saves the response")
-        public void the_api_user_sends_the_patch_request_and_saves_the_response () {
-            API_Methods.patchResponse(requestBody.toString());
-        }
+    }
 
-        @Given("The api user verifies equality the content of the updated Id in the response body and {int}")
-        public void the_api_user_verifies_equality_the_content_of_the_updated_id_in_the_response_body_and (Integer id){
-            jsonPath = API_Methods.response.jsonPath();
-            updated_Id = jsonPath.getInt("updated_Id");
-            Assert.assertEquals(id, (Integer) jsonPath.getInt("updated_Id"));
-        }
+    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
+    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String
+            email, String phone, String address, String city, String state, String country, String postal_code, String
+                                                                                  address_type) {
+        requestBody = new JSONObject();
+        requestBody.put("customer_id", customer_id);
+        requestBody.put("name", name);
+        requestBody.put("email", email);
+        requestBody.put("phone", phone);
+        requestBody.put("address", address);
+        requestBody.put("city", city);
+        requestBody.put("state", state);
+        requestBody.put("country", country);
+        requestBody.put("postal_code", postal_code);
+        requestBody.put("address_type", address_type);
+    }
 
-        @Given("The API user sends a GET request  using updated_Id and verify  that the {string} has been updated")
-        public void the_api_user_sends_a_get_request_using_updated_id_and_verify_that_the_record_has_been_updated
-        (String name){
-            requestBody = new JSONObject();
-            requestBody.put("id", updated_Id);
-            API_Methods.getBodyResponse(requestBody);
-            jsonPath = API_Methods.response.jsonPath();
-            Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
-        }
+    @Given("The api user sends the PATCH request and saves the response")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response() {
+        API_Methods.patchResponse(requestBody.toString());
+    }
 
+    @Given("The api user verifies equality the content of the updated Id in the response body and {int}")
+    public void the_api_user_verifies_equality_the_content_of_the_updated_id_in_the_response_body_and(Integer id) {
+        jsonPath = API_Methods.response.jsonPath();
+        updated_Id = jsonPath.getInt("updated_Id");
+        Assert.assertEquals(id, (Integer) jsonPath.getInt("updated_Id"));
+    }
 
-        @Given("The API user sends a GET request and records the response")
-        public void the_api_user_sends_a_get_request_and_records_the_response () {
-            API_Methods.getResponse();
-        }
+    @Given("The API user sends a GET request  using updated_Id and verify  that the {string} has been updated")
+    public void the_api_user_sends_a_get_request_using_updated_id_and_verify_that_the_record_has_been_updated
+            (String name) {
+        requestBody = new JSONObject();
+        requestBody.put("id", updated_Id);
+        API_Methods.getBodyResponse(requestBody);
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
+    }
 
 
-        @Given("The api user sends the DELETE request and saves the response returned from the {string} endpoint.")
-        public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_endpoint (String string){
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("id", added_item_id);
-            API_Methods.deleteResponse(requestBody.toString());
-        }
-        @Given("The api user prepares a DELETE request containing the {int} to be deleted to send to the {string} endpoint.")
-        public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_endpoint (Integer int1, String string){
-            requestBody = new JSONObject();
-            requestBody.put("id", id);
-        }
-        @Given("The api user prepares a POST request containing {string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
-        public void the_api_user_prepares_a_post_request_containing_the_holiday_id_to_be_deleted_to_send_to_the_api_holiday_add_endpoint (String Deleted_Id){
-            JSONObject reqBody = new JSONObject();
-            reqBody.put("Deleted_Id", Deleted_Id);
-        }
-        @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api profile customerDetailsAddress endpoint.")
-        public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_profile_customer_details_address_endpoint (Integer int1){
-            requestBody = new JSONObject();
-            requestBody.put("id", id);
-        }
+    @Given("The API user sends a GET request and records the response")
+    public void the_api_user_sends_a_get_request_and_records_the_response() {
+        API_Methods.getResponse();
+    }
 
+
+    @Given("The api user sends the DELETE request and saves the response returned from the {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_endpoint(String string) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a DELETE request containing the {int} to be deleted to send to the {string} endpoint.")
+    public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_endpoint(Integer int1, String string) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The api user prepares a POST request containing {string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_holiday_id_to_be_deleted_to_send_to_the_api_holiday_add_endpoint(String Deleted_Id) {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("Deleted_Id", Deleted_Id);
+    }
+
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api profile customerDetailsAddress endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_profile_customer_details_address_endpoint(Integer int1) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+   /* @Given("The api user validates the {int}, {String}, {string}, {string}, {int}, {string}, {string}  of the response body with index {int}")
+    public void the_api_user_validates_the_of_the_response_body_with_index_data_index(int id, String user_id, String title, String description, int status, String created_at, String updated_at, int dataIndex) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("FaqsDetails[" + dataIndex + "].id", equalTo(id))
+                .body("FaqsDetails[" + dataIndex + "].user_id", equalTo(user_id))
+                .body("FaqsDetails[" + dataIndex + "].title", equalTo(title))
+                .body("FaqsDetails[" + dataIndex + "].description", equalTo(description))
+                .body("FaqsDetails[" + dataIndex + "].status", equalTo(status))
+                .body("FaqsDetails[" + dataIndex + "].created_at", equalTo(created_at))
+                .body("FaqsDetails[" + dataIndex + "].updated_at", equalTo(updated_at));
+
+    }*/
+
+    @Given("The api user prepares a POST request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} information to send to the api couponAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_coupon_add_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+
+        reqBody = new HashMap<>();
+        reqBody.put("title", title);
+        reqBody.put("coupon_code", coupon_code);
+        reqBody.put("coupon_type", coupon_type);
+        reqBody.put("start_date", start_date);
+        reqBody.put("end_date", end_date);
+        reqBody.put("discount", discount);
+        reqBody.put("discount_type", discount_type);
+        reqBody.put("minimum_shopping", minimum_shopping);
+        reqBody.put("maximum_discount", maximum_discount);
+        reqBody.put("is_expire", is_expire);
+        reqBody.put("is_multiple_buy", is_multiple_buy);
+
+    }
+    @Given("The api user sends the POST request and saves the response returned from the api couponAdd endpoint.")
+    public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_coupon_add_endpoint() {
+        API_Methods.postResponse(reqBody);
+    }
+
+    @Given("The api user prepares a GET request containing the refund reason {int} for which details are to be accessed, to send to the api couponDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_refund_reason_for_which_details_are_to_be_accessed_to_send_to_the_api_coupon_details_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+    @Given("The api user sends a GET request and saves the response returned from the api couponDetails endpoint.")
+    public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_coupon_details_endpoint() {
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a POST request containing the {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api refundReasonAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_refund_reason_add_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+        reqBody = new HashMap<>();
+        reqBody.put("title", title);
+        reqBody.put("coupon_code", coupon_code);
+        reqBody.put("coupon_type", coupon_type);
+        reqBody.put("start_date", start_date);
+        reqBody.put("end_date", end_date);
+        reqBody.put("discount", discount);
+        reqBody.put("discount_type", discount_type);
+        reqBody.put("minimum_shopping", minimum_shopping);
+        reqBody.put("maximum_discount", maximum_discount);
+        reqBody.put("is_expire", is_expire);
+        reqBody.put("is_multiple_buy", is_multiple_buy);
+    }
+
+
+    @When("The api user validates the {int}, {string}, {string}, {string}, {int}, {string}, {string}  of the response body with index {int}")
+    public void theApiUserValidatesTheOfTheResponseBodyWithIndex(int id, String user_id, String title, String description, int status, String created_at, String updated_at, int dataIndex) {
+
+        API_Methods.response.then()
+                .assertThat()
+                .body("FaqsDetails[" + dataIndex + "].id", equalTo(id))
+                .body("FaqsDetails[" + dataIndex + "].user_id", equalTo(user_id))
+                .body("FaqsDetails[" + dataIndex + "].title", equalTo(title))
+                .body("FaqsDetails[" + dataIndex + "].description", equalTo(description))
+                .body("FaqsDetails[" + dataIndex + "].status", equalTo(status))
+                .body("FaqsDetails[" + dataIndex + "].created_at", equalTo(created_at))
+                .body("FaqsDetails[" + dataIndex + "].updated_at", equalTo(updated_at));
+
+    }
 }
+
+
+
+
 
 
 
