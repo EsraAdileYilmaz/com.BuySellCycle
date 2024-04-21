@@ -48,7 +48,7 @@ public class API_Stepdefinitions {
     Response response;
     Faker faker = new Faker();
     Map<String, Object> reqBody;
-    private String jsonResponse;
+    private String updatedReqBody;
 
   //========API Esra Baslangic=================================================================================
 
@@ -623,6 +623,7 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
+        updatedReqBody=requestBody;
 
     }
 
@@ -639,6 +640,39 @@ public class API_Stepdefinitions {
         updatedIdInResponse = resJP.getInt("updated_Id");
         System.out.println(updatedIdInResponse);
         assertEquals(updatedIdInResponse, idInPath);
+
+    }
+
+
+    @And("The api user record the updated_Id from the response body")
+    public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
+        JsonPath resJP=new JsonPath(API_Methods.response.getBody().asString());
+        updatedIdInResponse = resJP.getInt("updated_Id");
+
+        System.out.println(updatedReqBody);
+    }
+
+    @Then("The api verifies that Get Response Body matches with the updated Adress")
+    public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+
+      /* {
+            "name": "Mrs. Cuc Mayer",
+                "email": "cyril.schaden@gmail.com",
+                "address": "28849 Majorie Flats",
+                "phone": "279.006.7676",
+                "city": "New Garnettchester",
+                "state": "Illinois",
+                "country": "Taiwan",
+                "postal_code": "99605",
+                "address_type": "Home"
+        }
+
+       */
+
+        JSONObject expectedJson = new JSONObject(API_Methods.response);
+        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+        // Mesaj alanını karşılaştırmadan geri kalanı karşılaştırın
 
     }
     // Aslis End
