@@ -34,7 +34,7 @@ Feature: Adding and Verifying holidays via API
     And   The api user verifies that the message information in the response body is "dublicate holiday request"
 
     Examples:
-      | year | name      | date       |
+      | year | name   | date       |
       | 2025 | Sos    | 29.12.2025 |
 
 
