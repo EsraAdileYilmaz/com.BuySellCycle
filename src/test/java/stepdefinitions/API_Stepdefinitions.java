@@ -861,12 +861,15 @@ public class API_Stepdefinitions {
     @Given("The API user sends a POST request and records the response from the api faqsAdd endpoint.")
     public void the_api_user_sends_a_post_request_and_records_the_response_from_the_api_api_faqs_add_endpoint() {
 
-
-        API_Methods.postResponse(requestBody.toString());
+       API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
-
     }
+
+
+
+
+
 
 
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
@@ -885,6 +888,17 @@ public class API_Stepdefinitions {
     @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
 
     public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint(String endpoint) {
+        API_Methods.postResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+
+
+    }
+
+    @Given("The api user sends the GET request and saves the response returned from the api faqsDetails endpoint.")
+
+    public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint() {
+
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
         API_Methods.getBodyResponse(requestBody.toString());
