@@ -1099,6 +1099,23 @@ public class API_Stepdefinitions {
                 .body("FaqsDetails[" + dataIndex + "].updated_at", equalTo(updated_at));
 
     }
+    @Given("The api user prepares a DELETE request containing the  {int} to be deleted to send to the api to the api end point")
+    public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_api_to_the_api_end_point(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The api user sends the DELETE request and saves the response returned from to the api to the api end point")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_to_the_api_to_the_api_end_point() {
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a GET request containing {int} for which details are to be accessed, to send to the api endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_for_which_details_are_to_be_accessed_to_send_to_the_api_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+
+    }
 
 
 
