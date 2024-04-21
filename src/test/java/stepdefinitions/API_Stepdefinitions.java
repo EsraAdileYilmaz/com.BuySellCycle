@@ -779,8 +779,8 @@ public class API_Stepdefinitions {
 
 
     //===================================US_30=================================
-    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data to send to the api refundReasonUpdate endpoint.")
-    public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, String coupon_type, String start_date, String end_date, String discount, String discount_type, String minimum_shopping, String maximum_discount, String is_expire, String is_multiple_buy) {
+    @Given("The api user prepares a PATCH request containing the {string},{string},{int},{string},{string},{int},{int},{int},{string},{int},{int} data to send to the api couponUpdate endpoint.")
+    public void the_api_user_prepares_a_patch_request_containing_the_data_to_send_to_the_api_refund_reason_update_endpoint(String title, String coupon_code, int coupon_type, String start_date, String end_date, int discount, int discount_type, int minimum_shopping, String maximum_discount, int is_expire, int is_multiple_buy) {
         requestBody = new JSONObject();
         requestBody.put("title", title);
         requestBody.put("coupon_code", coupon_code);
@@ -987,8 +987,17 @@ public class API_Stepdefinitions {
 
     }
 
+    //US_30/TC_04
+    @Given("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api couponDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint(Integer id) {
+        jsonPath = API_Methods.response.jsonPath();
+
+    }
 
 }
+
+
+
 
 
 
