@@ -973,6 +973,25 @@ public class API_Stepdefinitions {
                 .body("holidayDetails[0].name",equalTo(updated_at));
 
     }
+    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
+    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String address_type) {
+       requestBody = new JSONObject();
+       requestBody.put("customer_id",customer_id);
+       requestBody.put("name",name);
+       requestBody.put("email",email);
+       requestBody.put("phone",phone);
+       requestBody.put("address",address);
+       requestBody.put("city",city);
+       requestBody.put("state",state);
+       requestBody.put("country",country);
+       requestBody.put("postal_code",postal_code);
+       requestBody.put("address_type",address_type);
+    }
+    @Given("The api user sends the PATCH request and saves the response")
+    public void the_api_user_sends_the_patch_request_and_saves_the_response() {
+       API_Methods.patchResponse(requestBody.toString());
+    }
+
 
 
 }
