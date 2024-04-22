@@ -23,6 +23,8 @@ import utilities.API_Utilities.API_Methods;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -574,15 +576,7 @@ public class API_Stepdefinitions {
     public void theApiUserSendPOSTRequestToTheEndpoint() {
         API_Methods.postResponse(requestBody.toString());
     }
-
-    @When("The api user prepares a GET request containing the refund reason <id> for which details are to be accessed, to send to the api holidayDetails endpoint.")
-    public void theApiUserPreparesAGETRequestContainingTheRefundReasonIdForWhichDetailsAreToBeAccessedToSendToTheApiHolidayDetailsEndpoint() {
-
-        JsonPath resJP = response.jsonPath();
-        id = resJP.getInt("id");
-
-    }
-
+    
     @Then("The api user verifies that the content of the data {int}, {string} , {string} , {string} ,{string} in the response body.")
     public void theApiUserVerifiesThatTheContentOfTheDataIdInTheResponseBody(int id, String title, String coupon_code, String start_date, String end_date) {
 
@@ -594,14 +588,6 @@ public class API_Stepdefinitions {
         Assert.assertEquals(start_date, jsonPath.getString("couponDetails[0].start_date"));
         Assert.assertEquals(end_date, jsonPath.getString("couponDetails[0].end_date"));
     }
-
-
-    @When("The api user sends a GET request containing the id {int}  in the body and saves the response")
-    public void the_api_user_sends_a_get_request_containing_the_id_in_the_body_and_saves_the_response(Integer id) {
-        JsonPath resJP = response.jsonPath();
-        resJP.getInt("id");
-    }
-
     @And("The api user verifies the response with the following JSON:")
     public void theApiUserVerifiesTheResponseWithTheFollowingJSON(String expectedJsonBody) {
 
@@ -626,7 +612,7 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
-        updatedReqBody = requestBody;
+        requestJSONBody= requestBody;
 
     }
 
@@ -647,27 +633,68 @@ public class API_Stepdefinitions {
     }
 
 
-    @And("The api user record the updated_Id from the response body")
-    public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
-        JsonPath resJP = new JsonPath(API_Methods.response.getBody().asString());
-        updatedIdInResponse = resJP.getInt("updated_Id");
-
-        System.out.println(updatedReqBody);
-    }
-
     @Then("The api verifies that Get Response Body matches with the updated Adress")
     public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+        JSONObject jsonObject = new JSONObject(API_Methods.response);
+        JSONArray addressesArray = jsonObject.getJSONArray("addresses");
+        JSONObject firstAddress = addressesArray.getJSONObject(0);
+        JSONObject reqJSONBodyObject = new JSONObject(requestJSONBody);
+        assertEquals(reqJSONBodyObject.get("name") ,firstAddress.getString("name"));
 
-        JSONObject expectedJson = new JSONObject(API_Methods.response);
-        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+        /* {
+            "name": "Miss Lavern Kshlerin",
+                "email": "vicente.daugherty@yahoo.com",
+                "address": "7435 Moore Prairie",
+                "phone": "795-007-5654",
+                "city": "East Lowellfurt",
+                "state": "Nevada",
+                "country": "El Salvador",
+                "postal_code": "63976-9408",
+                "address_type": "Home"
+        }
+
+        */
+
+
+
+
+
+/*
+        {
+            "addresses": [
+            {
+                "id": 25,
+                    "customer_id": 124,
+                    "name": "Miss Lavern Kshlerin",
+                    "email": "vicente.daugherty@yahoo.com",
+                    "phone": "795-007-5654",
+                    "address": "7435 Moore Prairie",
+                    "city": "East Lowellfurt",
+                    "state": "Nevada",
+                    "country": "El Salvador",
+                    "postal_code": "63976-9408",
+                    "is_shipping_default": 0,
+                    "is_billing_default": 0,
+                    "created_at": "2024-03-22T21:00:33.000000Z",
+                    "updated_at": "2024-04-22T12:21:22.000000Z",
+                    "get_country": null,
+                    "get_state": null,
+                    "get_city": null
+            }
+    ],
+            "message": "success"
+        }
+
+ */
+
 
     }
 
     @When("The api user sends a POST request with the following JSON:")
     public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        requestJSONBody = requestJSONBody.replace("<newYear>", faker.number().numberBetween(2024, 2040) + "")
-                            .replace("<newName>", Faker.instance().name().fullName());
+        
+        API_Methods.postResponse(requestJSONBody);
     }
     // Aslis End
 
@@ -1305,6 +1332,13 @@ public class API_Stepdefinitions {
        API_Methods.deleteResponse(requestBody.toString());
     }
 
+
+    @When("The api user sends a GET request containing {int} to send to endpoint")
+    public void theApiUserSendsAGETRequestContainingIdToSendToEndpoint(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
+    }
 }
 
 

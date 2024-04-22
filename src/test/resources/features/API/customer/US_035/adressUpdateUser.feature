@@ -110,7 +110,7 @@ Feature: Updating customer address information
         | id |
         | 25 |
 
-  @asli_adressUser
+  @asliAdress
   Scenario: Verify updated ID matches the ID in the path parameter
     Given The api user constructs the base url with the "aslicustomer" token.
     And The api user sets "api/profile/customerAddressUpdate/25" path parameters
@@ -128,6 +128,5 @@ Feature: Updating customer address information
           "address_type": "<newAddressType>"
         }
         """
-    And The api user record the updated_Id from the response body
     And The api user sets "api/profile/customerDetailsAddres" path parameters
     Then The api verifies that Get Response Body matches with the updated Adress
