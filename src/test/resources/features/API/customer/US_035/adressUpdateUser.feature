@@ -84,7 +84,7 @@ Feature: Updating customer address information
       }
       """
     Then The api user verifies that the status code is 401
-    And The api user verifies that the message information in the response body is "Unauthenticated."
+    But The api user verifies that the message information in the response body is "Unauthenticated."
 
 
 
@@ -130,4 +130,5 @@ Feature: Updating customer address information
         """
     And The api user record the updated_Id from the response body
     And The api user sets "api/profile/customerDetailsAddres" path parameters
+    And The api user prepares a GET request containing updated_Id for which details are to be accessed, to send to the  endpoint.
     Then The api verifies that Get Response Body matches with the updated Adress

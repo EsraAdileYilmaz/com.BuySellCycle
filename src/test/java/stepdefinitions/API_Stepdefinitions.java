@@ -641,17 +641,22 @@ public class API_Stepdefinitions {
         idInPath = Integer.parseInt(pathParameter.replaceAll("\\D", ""));
         System.out.println(idInPath);
         JsonPath resJP = new JsonPath(API_Methods.response.getBody().asString());
-        updatedIdInResponse = resJP.getInt("updated_Id");
-        System.out.println(updatedIdInResponse);
-        assertEquals(updatedIdInResponse, idInPath);
+        updated_Id = resJP.getInt("updated_Id");
+        System.out.println(updated_Id);
+        assertEquals(updated_Id, idInPath);
     }
 
     @And("The api user record the updated_Id from the response body")
     public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
         JsonPath resJP = new JsonPath(API_Methods.response.getBody().asString());
-        updatedIdInResponse = resJP.getInt("updated_Id");
+        updated_Id = resJP.getInt("updated_Id");
 
         System.out.println(updatedReqBody);
+    }
+
+    @And("The api user prepares a GET request containing updated_Id for which details are to be accessed, to send to the  endpoint.")
+    public void theApiUserPreparesAGETRequestContainingUpdated_IdForWhichDetailsAreToBeAccessedToSendToTheEndpoint() {
+        API_Methods.getBodyResponse(updated_Id);
     }
 
     @Then("The api verifies that Get Response Body matches with the updated Adress")
@@ -1368,7 +1373,6 @@ public class API_Stepdefinitions {
 
 
     }
-
 
 }
 
