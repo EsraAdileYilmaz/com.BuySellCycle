@@ -1,34 +1,23 @@
 package stepdefinitions;
 
-import com.beust.ah.A;
 import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-
-import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import static hooks.HooksAPI.spec;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static utilities.API_Utilities.API_Methods.messageAssert;
-import static utilities.API_Utilities.API_Methods.response;
 
 
 public class API_Stepdefinitions {
@@ -36,7 +25,8 @@ public class API_Stepdefinitions {
     public static String fullPath;
     int updated_Id;
     private int idInPath;
-    private int updatedIdInResponse;
+    private  String reqJSONBodyDocStr;
+    private String updatedReqBody;
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
     HashMap<Object, String> reqBodyHash;
@@ -45,7 +35,6 @@ public class API_Stepdefinitions {
     Faker faker = new Faker();
     Map<String, Object> reqBody;
 
-    private String updatedReqBody;
 
     //========API Esra Baslangic=================================================================================
 
@@ -627,7 +616,7 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
-        updatedReqBody = requestBody;
+        reqJSONBodyDocStr= requestBody;
 
     }
 
@@ -641,26 +630,94 @@ public class API_Stepdefinitions {
         idInPath = Integer.parseInt(pathParameter.replaceAll("\\D", ""));
         System.out.println(idInPath);
         JsonPath resJP = new JsonPath(API_Methods.response.getBody().asString());
-        updatedIdInResponse = resJP.getInt("updated_Id");
-        System.out.println(updatedIdInResponse);
-        assertEquals(updatedIdInResponse, idInPath);
+        updated_Id = resJP.getInt("updated_Id");
+        System.out.println(updated_Id);
+        assertEquals(updated_Id, idInPath);
     }
 
     @And("The api user record the updated_Id from the response body")
     public void theApiUserRecordTheUpdated_IdFromTheResponseBody() {
         JsonPath resJP = new JsonPath(API_Methods.response.getBody().asString());
-        updatedIdInResponse = resJP.getInt("updated_Id");
+        updated_Id = resJP.getInt("updated_Id");
 
         System.out.println(updatedReqBody);
     }
 
+    @And("The api user prepares a GET request containing updated_Id for which details are to be accessed, to send to the  endpoint.")
+    public void theApiUserPreparesAGETRequestContainingUpdated_IdForWhichDetailsAreToBeAccessedToSendToTheEndpoint() {
+        API_Methods.getBodyResponse(updated_Id);
+    }
+
     @Then("The api verifies that Get Response Body matches with the updated Adress")
     public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+        JSONObject jsonObject = new JSONObject(API_Methods.response);
+        JSONArray addressesArray = jsonObject.getJSONArray("addresses");
+        JSONObject firstAddress = addressesArray.getJSONObject(0);
+        JSONObject reqJSONBodyObject = new JSONObject(reqJSONBodyDocStr);
+        assertEquals(reqJSONBodyObject.get("name") ,firstAddress.getString("name"));
 
-        JSONObject expectedJson = new JSONObject(API_Methods.response);
-        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+        /* {
+            "name": "Miss Lavern Kshlerin",
+                "email": "vicente.daugherty@yahoo.com",
+                "address": "7435 Moore Prairie",
+                "phone": "795-007-5654",
+                "city": "East Lowellfurt",
+                "state": "Nevada",
+                "country": "El Salvador",
+                "postal_code": "63976-9408",
+                "address_type": "Home"
+        }
+
+        */
 
 
+
+
+
+/*
+        {
+            "addresses": [
+            {
+                "id": 25,
+                    "customer_id": 124,
+                    "name": "Miss Lavern Kshlerin",
+                    "email": "vicente.daugherty@yahoo.com",
+                    "phone": "795-007-5654",
+                    "address": "7435 Moore Prairie",
+                    "city": "East Lowellfurt",
+                    "state": "Nevada",
+                    "country": "El Salvador",
+                    "postal_code": "63976-9408",
+                    "is_shipping_default": 0,
+                    "is_billing_default": 0,
+                    "created_at": "2024-03-22T21:00:33.000000Z",
+                    "updated_at": "2024-04-22T12:21:22.000000Z",
+                    "get_country": null,
+                    "get_state": null,
+                    "get_city": null
+            }
+    ],
+            "message": "success"
+        }
+
+ */
+
+
+    }
+
+    @When("The api user sends a POST request with the following JSON:")
+    public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
+
+        API_Methods.postResponse(requestJSONBody);
+    }
+
+
+    @When("The api user sends a GET request containing {int} to send to endpoint")
+    public void theApiUserSendsAGETRequestContainingIdToSendToEndpoint(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
     }
     // Aslis End
 
@@ -1305,7 +1362,6 @@ public class API_Stepdefinitions {
 
 
     }
-
 
 }
 
