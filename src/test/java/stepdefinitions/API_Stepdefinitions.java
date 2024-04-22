@@ -37,6 +37,7 @@ public class API_Stepdefinitions {
     int updated_Id;
     private int idInPath;
     private int updatedIdInResponse;
+    private  String reqJSONBodyDocStr;
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
     HashMap<Object, String> reqBodyHash;
@@ -626,7 +627,7 @@ public class API_Stepdefinitions {
                 .replace("<newAddressType>", "Home"); // Assume static value for address type
 
         API_Methods.patchResponse(requestBody);
-        updatedReqBody = requestBody;
+        reqJSONBodyDocStr= requestBody;
 
     }
 
@@ -655,11 +656,74 @@ public class API_Stepdefinitions {
 
     @Then("The api verifies that Get Response Body matches with the updated Adress")
     public void theApiVerifiesThatGetResponseBodyMatchesWithTheUpdatedAdress() {
+        JSONObject jsonObject = new JSONObject(API_Methods.response);
+        JSONArray addressesArray = jsonObject.getJSONArray("addresses");
+        JSONObject firstAddress = addressesArray.getJSONObject(0);
+        JSONObject reqJSONBodyObject = new JSONObject(reqJSONBodyDocStr);
+        assertEquals(reqJSONBodyObject.get("name") ,firstAddress.getString("name"));
 
-        JSONObject expectedJson = new JSONObject(API_Methods.response);
-        JSONObject actualJson = new JSONObject(updatedReqBody);
+
+        /* {
+            "name": "Miss Lavern Kshlerin",
+                "email": "vicente.daugherty@yahoo.com",
+                "address": "7435 Moore Prairie",
+                "phone": "795-007-5654",
+                "city": "East Lowellfurt",
+                "state": "Nevada",
+                "country": "El Salvador",
+                "postal_code": "63976-9408",
+                "address_type": "Home"
+        }
+
+        */
 
 
+
+
+
+/*
+        {
+            "addresses": [
+            {
+                "id": 25,
+                    "customer_id": 124,
+                    "name": "Miss Lavern Kshlerin",
+                    "email": "vicente.daugherty@yahoo.com",
+                    "phone": "795-007-5654",
+                    "address": "7435 Moore Prairie",
+                    "city": "East Lowellfurt",
+                    "state": "Nevada",
+                    "country": "El Salvador",
+                    "postal_code": "63976-9408",
+                    "is_shipping_default": 0,
+                    "is_billing_default": 0,
+                    "created_at": "2024-03-22T21:00:33.000000Z",
+                    "updated_at": "2024-04-22T12:21:22.000000Z",
+                    "get_country": null,
+                    "get_state": null,
+                    "get_city": null
+            }
+    ],
+            "message": "success"
+        }
+
+ */
+
+
+    }
+
+    @When("The api user sends a POST request with the following JSON:")
+    public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
+
+        API_Methods.postResponse(requestJSONBody);
+    }
+
+
+    @When("The api user sends a GET request containing {int} to send to endpoint")
+    public void theApiUserSendsAGETRequestContainingIdToSendToEndpoint(int id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
     }
     // Aslis End
 
