@@ -45,9 +45,6 @@ Feature: As an administrator, I want to be able to update holiday information fo
 
 
 
-
-
-
   Scenario: /api/holidayUpdate/{id} endpoint'ine gecerli authorization bilgileri ile yanlis (sistemde bulunmayan)
   holiday id ve güncel holiday verilerini (year, name, date) iceren bir PATCH body gönderildiginde dönen status code'in
   404 ve response body'deki message bilgisinin "holiday not found" oldugu dogrulanmali.
