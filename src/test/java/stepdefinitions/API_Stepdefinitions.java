@@ -361,11 +361,11 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.")
-    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body() {
+    @Given("The api user verifies that the Deleted id information in the response body is the same as the {int} information in the request body.")
+    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body(int id) {
 
         jsonPath = API_Methods.response.jsonPath();
-        Assert.assertEquals(added_item_id, jsonPath.getInt("Deleted_Id"));
+        Assert.assertEquals(id, jsonPath.getInt("Deleted_Id"));
 
     }
 
@@ -1230,6 +1230,14 @@ public class API_Stepdefinitions {
                 .body("FaqsDetails[" + dataIndex + "].updated_at", equalTo(updated_at));
 
     }
+
+    @Given("The api user sends the DELETE request and saves the response with {int} from the api {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_with_from_the_api_endpoint(int Deleted_Id, String endpoint) {
+       JSONObject requestBody = new JSONObject();
+       requestBody.put("id", Deleted_Id);
+       API_Methods.deleteResponse(requestBody.toString());
+    }
+
 }
 
 
