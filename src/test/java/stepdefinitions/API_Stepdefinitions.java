@@ -1062,8 +1062,8 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
-    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String address_type) {
+    @Given("The api user prepares a PATCH request containing the {int},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
+    public void the_api_user_prepares_a_patch_request_containing_the_data(int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String address_type) {
         requestBody = new JSONObject();
         requestBody.put("customer_id", customer_id);
         requestBody.put("name", name);
@@ -1090,11 +1090,11 @@ public class API_Stepdefinitions {
     }
 
     @Given("The API user sends a GET request  using updated_Id and verify  that the {string} has been updated")
-    public void the_api_user_sends_a_get_request_using_updated_id_and_verify_that_the_record_has_been_updated
-            (String name) {
+    public void the_api_user_sends_a_get_request_using_updated_id_and_verify_that_the_record_has_been_updated(String name) {
         requestBody = new JSONObject();
+
         requestBody.put("id", updated_Id);
-        API_Methods.getBodyResponse(requestBody);
+       API_Methods.getBodyResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
     }
