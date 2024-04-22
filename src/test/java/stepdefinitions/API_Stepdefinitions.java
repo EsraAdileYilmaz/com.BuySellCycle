@@ -1083,16 +1083,13 @@ public class API_Stepdefinitions {
 
     //US_30/TC_04
     @Given("The api user prepares a GET request containing the department {int} to verify that the record has been updated to send to the api couponDetails endpoint.")
-    public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint
-    (Integer id) {
+    public void the_api_user_prepares_a_get_request_containing_the_department_to_verify_that_the_record_has_been_updated_to_send_to_the_api_coupon_details_endpoint(Integer id) {
         jsonPath = API_Methods.response.jsonPath();
 
     }
 
     @Given("The api user prepares a PATCH request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string} data")
-    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String
-            email, String phone, String address, String city, String state, String country, String postal_code, String
-                                                                                  address_type) {
+    public void the_api_user_prepares_a_patch_request_containing_the_data(String customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String address_type) {
         requestBody = new JSONObject();
         requestBody.put("customer_id", customer_id);
         requestBody.put("name", name);
@@ -1192,6 +1189,7 @@ public class API_Stepdefinitions {
         reqBody.put("is_multiple_buy", is_multiple_buy);
 
     }
+
     @Given("The api user sends the POST request and saves the response returned from the api couponAdd endpoint.")
     public void the_api_user_sends_the_post_request_and_saves_the_response_returned_from_the_api_coupon_add_endpoint() {
         API_Methods.postResponse(reqBody);
@@ -1202,6 +1200,7 @@ public class API_Stepdefinitions {
         requestBody = new JSONObject();
         requestBody.put("id", id);
     }
+
     @Given("The api user sends a GET request and saves the response returned from the api couponDetails endpoint.")
     public void the_api_user_sends_a_get_request_and_saves_the_response_returned_from_the_api_coupon_details_endpoint() {
         API_Methods.getBodyResponse(requestBody.toString());
@@ -1239,12 +1238,80 @@ public class API_Stepdefinitions {
 
     }
 
+    @Given("The api user prepares a DELETE request containing the addresses {string} to be deleted to send to the api deleteAddress endpoint.")
+    public void the_api_user_prepares_a_delete_request_containing_the_addresses_to_be_deleted_to_send_to_the_api_delete_address_endpoint(String id) {
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+
+    }
+
+    @Given("The api user sends the DELETE request and saves the response returned from the api deleteAddress endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_delete_address_endpoint() {
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    //US_44/TC_02
+    @Given("The API user records the response from the api deleteAddress endpoint, confirming that the status code is {string} and {string}.")
+    public void the_api_user_records_the_response_from_the_api_delete_address_endpoint_confirming_that_the_status_code_is_and(String string, String string2) {
+        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+
+
+    }
+
+    //TC_03
+    @Given("The api user prepares a DELETE request containing the address {int} to be deleted to send to the api deleteAddress endpoint.")
+    public void the_api_user_prepares_a_delete_request_containing_the_address_to_be_deleted_to_send_to_the_api_delete_address_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The API user saves the response from the api deleteAddress endpoint, verifying that the status code is {string} and the reason phrase is Unauthorized.")
+    public void the_api_user_saves_the_response_from_the_api_delete_address_endpoint_verifying_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
+        Assert.assertTrue(API_Methods.tryCatchDelete(requestBody.toString()).equals(ConfigReader.getProperty("notFoundExceptionMessage", "api")));
+    }
+
+    //Tc01
+
+    @Given("The api user prepares a POST request containing the {int},{string},{string},{string},{string},{string},{string},{string},{string},{string} information to send the api addressAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_the_api_address_add_endpoint(int customer_id, String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
+        requestBody = new JSONObject();
+        requestBody.put("customer_id", customer_id);
+        requestBody.put("name", name);
+        requestBody.put("email", email);
+        requestBody.put("address", address);
+        requestBody.put("phone", phone);
+        requestBody.put("city", city);
+        requestBody.put("state", state);
+        requestBody.put("country", country);
+        requestBody.put("postal_code", postal_code);
+        requestBody.put("address_type", address_type);
+
+        API_Methods.postResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+
+
+    }
+
+    //TC_04
+    @Given("The api user prepares a GET request containing the  id to be deleted to send to the api addressDetails endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_id_to_be_deleted_to_send_to_the_api_address_details_endpoint() {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+        API_Methods.getBodyResponse(requestBody.toString());
+
+
+    }
+
     @Given("The api user sends the DELETE request and saves the response with {int} from the api {string} endpoint.")
     public void the_api_user_sends_the_delete_request_and_saves_the_response_with_from_the_api_endpoint(int Deleted_Id, String endpoint) {
        JSONObject requestBody = new JSONObject();
        requestBody.put("id", Deleted_Id);
        API_Methods.deleteResponse(requestBody.toString());
     }
+
 
     @Given("The api user prepares a DELETE request containing the  {int} to be deleted to send to the api to the api end point")
     public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_api_to_the_api_end_point(Integer id) {
@@ -1277,7 +1344,10 @@ public class API_Stepdefinitions {
 
 
     }
+
 }
+
+
 
 
 
