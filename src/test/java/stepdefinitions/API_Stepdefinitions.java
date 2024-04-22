@@ -361,6 +361,14 @@ public class API_Stepdefinitions {
 
     }
 
+    @Given("The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.")
+    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body() {
+
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(added_item_id, jsonPath.getInt("Deleted_Id"));
+
+    }
+
     @Given("The api user verifies that the Deleted id information in the response body is the same as the {int} information in the request body.")
     public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body(int id) {
 
@@ -1304,7 +1312,39 @@ public class API_Stepdefinitions {
        API_Methods.deleteResponse(requestBody.toString());
     }
 
-  
+
+    @Given("The api user prepares a DELETE request containing the  {int} to be deleted to send to the api to the api end point")
+    public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_api_to_the_api_end_point(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The api user sends the DELETE request and saves the response returned from to the api to the api end point")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_to_the_api_to_the_api_end_point() {
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a GET request containing {int} for which details are to be accessed, to send to the api endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_for_which_details_are_to_be_accessed_to_send_to_the_api_endpoint(Integer id) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+
+    @When("The api user verifies the data in the response body")
+    public void theApiUserVerifiesTheDataInTheResponseBody() {
+
+
+
+    }
+
+    @When("The api user prepares a GET request containing {} for which details are to be accessed, to send to the api endpoint.")
+    public void theApiUserPreparesAGETRequestContainingForWhichDetailsAreToBeAccessedToSendToTheApiEndpoint(String arg0) {
+
+
+
+    }
+
 }
 
 
