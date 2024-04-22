@@ -2,17 +2,19 @@
 Feature: Adding and Verifying holidays via API
 
 
-  Scenario Outline: Successfully add a holiday with valid authorization and data
+  Scenario: Successfully add a holiday with valid authorization and data
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/holidayAdd" path parameters
-    When  The api user prepares a POST request containing the holiday data "<year>", "<name>", "<date>"
-    And   The api user send POST request to the  endpoint.
+    When  The api user sends a POST request with the following JSON:
+    """
+    {
+    "year": "<newYear>",
+    "name": "<newName>",
+    "date": "<newDate>"
+    }
+    """
     Then  The api user verifies that the status code is 201
     And   The api user verifies that the message information in the response body is "holiday added successfully"
-
-    Examples:
-      | year | name      | date       |
-      | 2025 | Sos    | 29.12.2025 |
 
 
 

@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -658,7 +661,13 @@ public class API_Stepdefinitions {
         JSONObject expectedJson = new JSONObject(API_Methods.response);
         JSONObject actualJson = new JSONObject(updatedReqBody);
 
+    }
 
+    @When("The api user sends a POST request with the following JSON:")
+    public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        requestJSONBody = requestJSONBody.replace("<newYear>", faker.number().numberBetween(2024, 2040) + "")
+                            .replace("<newName>", Faker.instance().name().fullName());
     }
     // Aslis End
 
@@ -760,7 +769,6 @@ public class API_Stepdefinitions {
 
 
     }
-
 
     @Given("The api user sends a GET request containing country_id {int} in the body and saves the response")
     public void the_api_user_sends_a_get_request_containing_country_id_in_the_body_and_saves_the_response(Integer countryID) {
@@ -867,11 +875,6 @@ public class API_Stepdefinitions {
     }
 
 
-
-
-
-
-
     @Given("The API user validates the  id  content of the data in the response body returned from the response.")
     public void the_api_user_validates_the_content_of_the_data_in_the_response_body_returned_from_the_response(Integer int1) {
 
@@ -882,8 +885,6 @@ public class API_Stepdefinitions {
 
 
     }
-
-
 
     @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
 
@@ -1304,7 +1305,6 @@ public class API_Stepdefinitions {
        API_Methods.deleteResponse(requestBody.toString());
     }
 
-  
 }
 
 
