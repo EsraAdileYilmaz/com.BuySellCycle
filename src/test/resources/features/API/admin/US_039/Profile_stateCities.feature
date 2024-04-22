@@ -49,7 +49,7 @@ Feature: As an administrator, I want to be able to access the city information r
       | state_id |
       | 9009     |
 
-  @gt1
+
   Scenario Outline: When a GET request body containing invalid authorization credentials
   and the desired state_id to access city information is sent to the /api/profile/stateCities endpoint,
   the returned status code should be validated as 401,
