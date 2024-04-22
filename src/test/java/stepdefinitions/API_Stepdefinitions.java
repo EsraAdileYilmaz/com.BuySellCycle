@@ -1,34 +1,23 @@
 package stepdefinitions;
 
-import com.beust.ah.A;
 import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-
-import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.apiguardian.api.API;
 import org.hamcrest.Matchers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import static hooks.HooksAPI.spec;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static utilities.API_Utilities.API_Methods.messageAssert;
-import static utilities.API_Utilities.API_Methods.response;
 
 
 public class API_Stepdefinitions {
@@ -36,8 +25,8 @@ public class API_Stepdefinitions {
     public static String fullPath;
     int updated_Id;
     private int idInPath;
-    private int updatedIdInResponse;
     private  String reqJSONBodyDocStr;
+    private String updatedReqBody;
     public static JSONObject requestBody, requestBody2;
     public static JsonPath jsonPath;
     HashMap<Object, String> reqBodyHash;
@@ -46,7 +35,6 @@ public class API_Stepdefinitions {
     Faker faker = new Faker();
     Map<String, Object> reqBody;
 
-    private String updatedReqBody;
 
     //========API Esra Baslangic=================================================================================
 
