@@ -58,8 +58,6 @@ public class DB_Stepdefinitions {
         DBUtils.closeConnection();
     }
 
-
-    //==Esra=====
     @When("Query01 is prepared and executed.")
     public void query01IsPreparedAndExecuted() throws SQLException {
         query=manage.getQuery01();
@@ -90,12 +88,24 @@ public class DB_Stepdefinitions {
     public void query05IsPreparedAndExecuted() throws SQLException {
         query=manage.getQuery05();
         preparedStatement=DBUtils.getPraperedStatement(query);
-        preparedStatement.setString(1,"Herkese kolay gelsin");
         rowCount=preparedStatement.executeUpdate();
     }
 
+    @When("Query27 is prepared and executed.")
+    public void query27IsPreparedAndExecuted() throws SQLException {
+        query=manage.getQuery27();
+        resultSet = DBUtils.getStatement().executeQuery(query);
 
 
+    }
+
+    @When("ResultSet27 results are processed.")
+    public void resultset27ResultsAreProcessed() throws SQLException {
+        resultSet.next();
+        List<String> descriptions=new ArrayList<>();
+        descriptions.add(resultSet.getString("description"));
+        System.out.println(descriptions);
+    }
 
 
     @When("Query07 is prepared and executed.")
@@ -173,6 +183,7 @@ public class DB_Stepdefinitions {
         System.out.println("deleted id :"+id);
         //assertEquals(1,rowCount);
     }
+
 
 
 }
