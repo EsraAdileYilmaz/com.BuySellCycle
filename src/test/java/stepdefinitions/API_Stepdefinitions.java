@@ -305,7 +305,8 @@ public class API_Stepdefinitions {
     public void the_api_user_validates_the_and_of_the_response_body_with_index(String year, String name, int dataIndex) {
         API_Methods.response.then()
                 .assertThat()
-                .body("holiday[" + dataIndex + "].year", Matchers.equalTo(year));
+                .body("holiday[" + dataIndex + "].year", Matchers.equalTo(year))
+                .body("holiday[" + dataIndex + "].name", Matchers.equalTo(name));
     }
 
     //========== Gulnur Start ======================================
@@ -516,8 +517,8 @@ public class API_Stepdefinitions {
 
     //========== Gulnur Finish ======================================
 
-    @Given("The API user records the response from the api holidayList endpoint, confirming that the status code is {string} and the reason phrase is Unauthorized.")
-    public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthorized(String string) {
+    @Given("The API user records the response from the api holidayList endpoint, confirming that the status code is {string} and the reason phrase is Unauthenticated.")
+    public void the_api_user_records_the_response_from_the_api_holiday_list_endpoint_confirming_that_the_status_code_is_and_the_reason_phrase_is_unauthenticated(String string) {
         Assert.assertTrue(API_Methods.tryCatchGet().equals(ConfigReader.getProperty("unauthorizedExceptionMessage", "api")));
     }
 
