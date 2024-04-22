@@ -37,5 +37,5 @@ Feature: As an administrator, I want to be able to access detailed information a
 
     Examples:
       | id  |
-      | 100 |
-      | 160 |
+      | 1000000|
+      | 1600000 |

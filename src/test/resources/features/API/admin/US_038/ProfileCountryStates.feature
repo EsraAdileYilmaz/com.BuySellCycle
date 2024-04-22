@@ -1,4 +1,4 @@
-@API2
+@Gamze
 Feature: As an administrator, I want to be able to access the state information registered
   in the system with the specified country_id via the API connection.
 

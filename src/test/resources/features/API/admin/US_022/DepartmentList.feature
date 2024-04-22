@@ -1,5 +1,5 @@
 Feature: As an administrator, I want to be able to access departments via the API connection
-
+  @Gamze
   Scenario Outline:  When a GET request containing valid authorization information is sent to the /api/departmentList endpoint, the returned status code should be 200,
   and the message information in the response body should be verified as "success".
 
