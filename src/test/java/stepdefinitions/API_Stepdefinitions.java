@@ -361,11 +361,11 @@ public class API_Stepdefinitions {
 
     }
 
-    @Given("The api user verifies that the Deleted id information in the response body is the same as the id information in the request body.")
-    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body() {
+    @Given("The api user verifies that the Deleted id information in the response body is the same as the {int} information in the request body.")
+    public void the_api_user_verifies_that_the_deleted_id_information_in_the_response_body_is_the_same_as_the_id_information_in_the_request_body(int id) {
 
         jsonPath = API_Methods.response.jsonPath();
-        Assert.assertEquals(added_item_id, jsonPath.getInt("Deleted_Id"));
+        Assert.assertEquals(id, jsonPath.getInt("Deleted_Id"));
 
     }
 
@@ -861,16 +861,44 @@ public class API_Stepdefinitions {
     @Given("The API user sends a POST request and records the response from the api faqsAdd endpoint.")
     public void the_api_user_sends_a_post_request_and_records_the_response_from_the_api_api_faqs_add_endpoint() {
 
-
-        API_Methods.postResponse(requestBody.toString());
+       API_Methods.postResponse(requestBody.toString());
         jsonPath = API_Methods.response.jsonPath();
         added_item_id = jsonPath.getInt("added_item_id");
+    }
+
+
+
+
+
+
+
+    @Given("The API user validates the  id  content of the data in the response body returned from the response.")
+    public void the_api_user_validates_the_content_of_the_data_in_the_response_body_returned_from_the_response(Integer int1) {
+
+       // jsonPath = API_Methods.response.jsonPath();
+      //  Assert.assertEquals(id, jsonPath.getInt("updated_Id"));
+        API_Methods.response.then()
+                .assertThat().body("updated_Id",equalTo(id));
+
 
     }
 
 
+
     @Given("The api user sends the GET request and saves the response returned from the api {string} endpoint.")
+
     public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint(String endpoint) {
+        API_Methods.postResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+
+
+    }
+
+    @Given("The api user sends the GET request and saves the response returned from the api faqsDetails endpoint.")
+
+    public void the_api_user_sends_the_get_request_and_saves_the_response_returned_from_the_api_endpoint() {
+
         JSONObject requestBody = new JSONObject();
         requestBody.put("id", added_item_id);
         API_Methods.getBodyResponse(requestBody.toString());
@@ -988,6 +1016,45 @@ public class API_Stepdefinitions {
                 .body("holidayDetails[0].name", equalTo(updated_at));
 
     }
+
+    @Given("The api user prepares a POST request containing the {string},{string},{int},{string},{string},{int},{int},{int},{int},{int},{int} information to send to the api couponAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_faqs_add_endpoint(String title, String coupon_code,Integer coupon_type, String start_date, String end_date,Integer discount,Integer discount_type,Integer minimum_shopping,Integer maximum_discount,Integer is_expire,Integer is_multiple_buy ) {
+
+        requestBody = new JSONObject();
+        requestBody.put("title", title);
+        requestBody.put("coupon_code", coupon_code);
+        requestBody.put("coupon_type", coupon_type);
+        requestBody.put("start_date", start_date);
+        requestBody.put("end_date", end_date);
+        requestBody.put("discount", discount);
+        requestBody.put("discount_type", discount_type);
+        requestBody.put("minimum_shopping", minimum_shopping);
+        requestBody.put("maximum_discount", maximum_discount);
+        requestBody.put("is_expire", is_expire);
+        requestBody.put("is_multiple_buy", is_multiple_buy);
+        API_Methods.postResponse(requestBody.toString());
+
+
+    }
+
+
+
+    @Given("The api user sends the DELETE request and saves the response returned from the api couponDelete endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_api_coupon_delete_endpoint() {
+        API_Methods.deleteResponse(requestBody.toString());
+        jsonPath = API_Methods.response.jsonPath();
+        added_item_id = jsonPath.getInt("added_item_id");
+    }
+
+
+    @Given("The api user sends the DELETE request with incorrect ID {int} and saves the response returned from the api {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_with_incorrect_id_and_saves_the_response_returned_from_the_api_coupon_delete_endpoint(Integer id, String endpoint) {
+         JSONObject requestBody = new JSONObject();
+         requestBody.put("id", id);
+         API_Methods.deleteResponse(requestBody.toString());
+    }
+
+
 
 
     @Given("The api user prepares a POST request containing the {int} to be deleted to send to the {string} endpoint.")
@@ -1229,6 +1296,15 @@ public class API_Stepdefinitions {
 
 
     }
+
+    @Given("The api user sends the DELETE request and saves the response with {int} from the api {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_with_from_the_api_endpoint(int Deleted_Id, String endpoint) {
+       JSONObject requestBody = new JSONObject();
+       requestBody.put("id", Deleted_Id);
+       API_Methods.deleteResponse(requestBody.toString());
+    }
+
+  
 }
 
 
