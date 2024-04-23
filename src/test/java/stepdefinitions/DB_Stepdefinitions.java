@@ -25,7 +25,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -172,6 +175,38 @@ public class DB_Stepdefinitions {
         rowCount = preparedStatement.executeUpdate();
         System.out.println("deleted id :"+id);
         //assertEquals(1,rowCount);
+    }
+
+    @Given("Query30 is prepared and executed.")
+    public void query30_is_prepared_and_executed() throws SQLException {
+        query=manage.getQuery30();
+        resultSet=DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet30 results are processed.")
+    public void result_set30_results_are_processed() {
+        System.out.println("total price");
+    }
+    @Given("Query25 is prepared and executed.")
+    public void query25_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery25();
+        resultSet=DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet25 results are processed.")
+    public void result_set25_results_are_processed() throws SQLException {
+        Map<String,Double> resultMap = new LinkedHashMap<>();
+        while(resultSet.next()) {
+            String txnId = resultSet.getString(("txn_id"));
+            double amount = resultSet.getDouble("amount");
+            resultMap.put(txnId, amount);
+        }
+        //To group and sort of the result
+        System.out.println("txn_id - amount");
+        for (Map.Entry<String, Double> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+
+
+
     }
 
 
