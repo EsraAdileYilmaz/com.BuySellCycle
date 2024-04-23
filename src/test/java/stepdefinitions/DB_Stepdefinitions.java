@@ -1,16 +1,9 @@
 package stepdefinitions;
 
 import com.github.javafaker.Faker;
-import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-
-import lombok.Data;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
 import utilities.DB_Utilities.DBUtils;
@@ -18,43 +11,35 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
 import static org.junit.Assert.assertEquals;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-
 
 @Data
 @Slf4j
+@Getter
+@Setter
 public class DB_Stepdefinitions {
 
-
+    Manage manage = new Manage();
+    Faker faker = new Faker();
     ResultSet resultSet; //select sorgulari resultset döndurur.
     PreparedStatement preparedStatement; //update sorgusunda kullandik.
     String query;
     int rowCount;
-    Faker faker = new Faker();
     int id;
     String city;
     String updateLog;
     int supportMessageId;
-    Manage manage = new Manage();
 
     @When("Database connection is established.")
     public void databaseConnectionIsEstablished() {
-
         DBUtils.createConnection();
-
     }
 
     @When("The database connection is closed.")
     public void theDatabaseConnectionIsClosed() {
-
         DBUtils.closeConnection();
     }
 
@@ -95,8 +80,6 @@ public class DB_Stepdefinitions {
     public void query27IsPreparedAndExecuted() throws SQLException {
         query=manage.getQuery27();
         resultSet = DBUtils.getStatement().executeQuery(query);
-
-
     }
 
     @When("ResultSet27 results are processed.")
@@ -107,13 +90,10 @@ public class DB_Stepdefinitions {
         System.out.println(descriptions);
     }
 
-
     @When("Query07 is prepared and executed.")
     public void query07_is_prepared_and_executed() throws SQLException {
-
         query = manage.getQuery07();
         resultSet = DBUtils.getStatement().executeQuery(query);
-
     }
     @When("ResultSet07 results are processed.")
     public void result_set07_results_are_processed() throws SQLException {
@@ -133,26 +113,25 @@ public class DB_Stepdefinitions {
     }
     @Given("Query02 is prepared and executed.")
     public void query02_is_prepared_and_executed() throws SQLException {
-
+        city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
+        id=faker.number().numberBetween(100011,100099);
         query= manage.getQuery02();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        preparedStatement.setInt(1,100008);
-        preparedStatement.setString(2,"Cannes");
+        preparedStatement.setInt(1,id);
+        preparedStatement.setString(2,city);
         preparedStatement.setInt(3,110);
         preparedStatement.setInt(4,1);
         preparedStatement.setDate(5,Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-
+        System.out.println("id : "+id);
     }
     @Given("ResultSet02 results are processed.")
     public void result_set02_results_are_processed() {
         assertEquals(1,rowCount);
-
     }
 
     @Given("Query03 is prepared and executed.")
     public void query03_is_prepared_and_executed() throws SQLException {
-
         city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
         id=faker.number().numberBetween(90010,100010);
         query= manage.getQuery03();
@@ -163,17 +142,9 @@ public class DB_Stepdefinitions {
         preparedStatement.setInt(4,1);
         preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-       /* int flag=0;
-        if (rowCount>0){
-            flag++;
-        }
-        rowCount = 0;
-        assertEquals(1,flag);*/
+        assertEquals(1,rowCount);
         System.out.println("id : "+id);
-
-
     }
-
     @Given("Delete the data on Query03 and verify deletion")
     public void delete_the_data_on_query03_and_verify_deletion() throws SQLException {
         query=manage.getPreparedQuery03Delete();

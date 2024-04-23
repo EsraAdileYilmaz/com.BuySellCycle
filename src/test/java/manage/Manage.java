@@ -1,14 +1,12 @@
 package manage;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
 @Getter
+@Setter
 public class Manage {
 
     private String Query07= "select phone from customer_addresses where phone like '%5%' order by id limit 3;";
