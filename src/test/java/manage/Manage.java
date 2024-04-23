@@ -38,4 +38,9 @@ public class Manage {
     private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
 
 
+    private String Query13 = "";
+
+    private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
+
+    private String Query29 = "";
 }
