@@ -18,7 +18,7 @@ Feature: As an administrator, I want to be able to create a new FAQ record via A
 
       * The api user constructs the base url with the "admin" token.
       * The api user sets "api/faqsDetails" path parameters
-      * The api user sends the GET request and saves the response returned from the api "faqsDetails" endpoint.
+      * The api user sends the GET request and saves the response returned from the api faqsDetails endpoint.
 
 
 
