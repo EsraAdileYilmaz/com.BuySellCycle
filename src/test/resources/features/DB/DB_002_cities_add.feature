@@ -1,4 +1,4 @@
-@query02
+@smoke
 Feature: Add a data in cities table
   Background: Database connection
     * Database connection is established.
