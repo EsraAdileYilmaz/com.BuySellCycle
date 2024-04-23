@@ -18,11 +18,7 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -219,5 +215,45 @@ public class DB_Stepdefinitions {
             int totalCount = resultSet.getInt("total_count");
             Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
+    }
+    @Given("Query12 is prepared and executed.")
+    public void query12_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery12();
+       preparedStatement = DBUtils.getPraperedStatement(query);
+        resultSet = preparedStatement.executeQuery();
+    }
+    @Given("ResultSet12 results are processed.")
+    public void result_set12_results_are_processed() throws SQLException {
+    Map<String,List<String>> notes = new HashMap<>();
+    Map<String,List<String>> dates = new HashMap<>();
+    while(resultSet.next()){
+        String day  = resultSet.getString("dates");
+        String[] uniqueNotes = resultSet.getString("unique_notes").split(", ");
+        String[] uniqueDays = resultSet.getString("dates").split(", ");
+
+        //Unique notes processed for each day
+        String[] uniqueNotesArray = uniqueNotes;
+        for (String note : uniqueNotes) {
+            notes.computeIfAbsent(day, k -> new ArrayList<>()).add(note);
+        }
+
+        // Unique days processed for each note
+        String[] uniqueDaysArray = uniqueDays;
+        for (String note : uniqueNotes){
+            dates.computeIfAbsent(note, k -> new ArrayList<>()).addAll(Arrays.asList(uniqueDaysArray));
+        }
+
+
+
+    }
+
+        // Write days for each each unique notes
+        for (Map.Entry<String, List<String>> entry : notes.entrySet()) {
+            String note = entry.getKey();
+            List<String> day = entry.getValue();
+            System.out.println("Days: " + note + ", Unique Notes: " + String.join(", ", day));
+        }
+
+
     }
 }

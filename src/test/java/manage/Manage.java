@@ -22,10 +22,11 @@ public class Manage {
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
 
-    private String Query05="INSERT INTO contacts (message) VALUES (?)";
+
 
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
     private String Query25="SELECT txn_id, MAX(amount) AS amount FROM order_payments WHERE txn_id != 'none' AND amount > 9000 GROUP BY txn_id ORDER BY amount DESC;";
+    private String Query12="SELECT DATE(day) AS day, GROUP_CONCAT(DISTINCT note ORDER BY note ASC SEPARATOR ', ') AS unique_notes, GROUP_CONCAT(DISTINCT day ORDER BY day ASC SEPARATOR ', ') AS dates FROM attendances GROUP BY DATE(day), note;";
 
 
     private String Query05="UPDATE contacts SET message = 'Herkese kolay gelsin';";
