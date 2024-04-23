@@ -1,11 +1,10 @@
-@esraSmoke1
-Feature: SELECT QUERY EXECUTE
+Feature: Calculate the total cost of products with is_buy_now=1 before 2024-03-30 in the carts table
 
   Background: Database connection
     * Database connection is established.
 
   Scenario:Verify the name value of a categorie with 'slug = fashion' in the Categories table.
 
-    * Query01 is prepared and executed.
-    * ResultSet01 results are processed.
+    * Query30 is prepared and executed.
+    * ResultSet30 results are processed.
     * The database connection is closed.

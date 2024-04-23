@@ -33,4 +33,18 @@ public class ConfigReader {
         }
     }
 
+    private static Properties properties;
+
+    static {
+        try (FileInputStream fis = new FileInputStream("src/test/java/config_Requirements/db.properties")) {
+            properties = new Properties();
+            properties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
 }
