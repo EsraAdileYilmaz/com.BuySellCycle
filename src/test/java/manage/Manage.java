@@ -15,13 +15,14 @@ public class Manage {
 
     private String Query03 ="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
-    private String preparedQuery03Delete = "delete cities where id =?;";
+    private String preparedQuery03Delete = "delete from cities where id = ? and name = ?;";
+
+    private String selectQuery03="select * from cities where id = ? and name = ?";
 
 
     private String Query01="SELECT name FROM categories where slug='fashion'";
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
-
 
 
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
@@ -39,4 +40,9 @@ public class Manage {
     private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
 
 
+    private String Query13 = "";
+
+    private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
+
+    private String Query29 = "";
 }
