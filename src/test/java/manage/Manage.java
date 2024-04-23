@@ -1,16 +1,12 @@
 package manage;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-
 @Getter
-
+@Setter
 public class Manage {
 
     private String Query07= "select phone from customer_addresses where phone like '%5%' order by id limit 3;";
@@ -23,10 +19,20 @@ public class Manage {
 
 
     private String Query01="SELECT name FROM categories where slug='fashion'";
+
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
+
     private String Query05="INSERT INTO contacts (message) VALUES (?)";
 
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
     private String Query25="SELECT txn_id, MAX(amount) AS amount FROM order_payments WHERE txn_id != 'none' AND amount > 9000 GROUP BY txn_id ORDER BY amount DESC;";
+
+
+    private String Query05="UPDATE contacts SET message = 'Herkese kolay gelsin';";
+
+    private String Query27="SELECT description FROM transactions WHERE payment_method IN ('Stripe', 'Cash On Delivery') GROUP BY description HAVING COUNT(DISTINCT payment_method) = 2";
+
+    private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
+
 
 }

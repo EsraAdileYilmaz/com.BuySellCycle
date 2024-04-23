@@ -1349,19 +1349,41 @@ public class API_Stepdefinitions {
     }
 
 
-    @When("The api user verifies the data in the response body")
-    public void theApiUserVerifiesTheDataInTheResponseBody() {
-
-
-
+    @Given("The api user verifies the content of the data {int}, {int}, {string}, {string},{string}, {string},{string},{string},{string},{string},{double},{string},{string}  in the response body.")
+    public void the_api_user_verifies_the_content_of_the_data_in_the_response_body(int id, int customer_id, String name, String email, String phone, String address, String city, String state, String country, String postal_code, String is_shipping_default, String is_billing_default, String created_at, String updated_at) {
+        jsonPath = API_Methods.response.jsonPath();
+        Assert.assertEquals(id,jsonPath.getInt("addresses[0].id"));
+        Assert.assertEquals(customer_id, jsonPath.getInt("addresses[0].customer_id"));
+        Assert.assertEquals(name, jsonPath.getString("addresses[0].name"));
+        Assert.assertEquals(email, jsonPath.getString("addresses[0].email"));
+        Assert.assertEquals(phone, jsonPath.getString("addresses[0].phone"));
+        Assert.assertEquals(address, jsonPath.getString("addresses[0].address"));
+        Assert.assertEquals(city, jsonPath.getString("addresses[0].city"));
+        Assert.assertEquals(state, jsonPath.getString("addresses[0].state"));
+        Assert.assertEquals(country, jsonPath.getString("addresses[0].country"));
+        Assert.assertEquals(postal_code, jsonPath.getString("addresses[0].postal_code"));
+        Assert.assertEquals(is_shipping_default, jsonPath.getString("addresses[0].is_shipping_default"));
+        Assert.assertEquals(is_billing_default, jsonPath.getString("addresses[0].is_billing_default"));
+        Assert.assertEquals(created_at, jsonPath.getString("addresses[0].created_at"));
+        Assert.assertEquals(updated_at, jsonPath.getString("addresses[0].updated_at"));
     }
 
-    @When("The api user prepares a GET request containing {} for which details are to be accessed, to send to the api endpoint.")
-    public void theApiUserPreparesAGETRequestContainingForWhichDetailsAreToBeAccessedToSendToTheApiEndpoint(String arg0) {
 
+    @Given("The api user prepares a POST request containing the {string}, {string},{string}, {string}, {string}, {string}, {string}, {string}, {string} information to send to the api addressAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_information_to_send_to_the_api_address_add_endpoint(String name, String email, String address, String phone, String city, String state, String country, String postal_code, String address_type) {
+        reqBodyHash = new HashMap<>();
 
+        reqBodyHash.put("name", name);
+        reqBodyHash.put("email", email);
+        reqBodyHash.put("address", address);
+        reqBodyHash.put("phone", phone);
+        reqBodyHash.put("city", city);
+        reqBodyHash.put("state", state);
+        reqBodyHash.put("country", country);
+        reqBodyHash.put("postal_code", postal_code);
+        reqBodyHash.put("address_type", address_type);
+}
 
-    }
 
 }
 
