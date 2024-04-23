@@ -15,7 +15,9 @@ public class Manage {
 
     private String Query03 ="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
-    private String preparedQuery03Delete = "delete cities where id =?;";
+    private String preparedQuery03Delete = "delete from cities where id = ? and name = ?;";
+
+    private String selectQuery03="select * from cities where id = ? and name = ?";
 
 
     private String Query01="SELECT name FROM categories where slug='fashion'";
