@@ -3,6 +3,7 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
@@ -45,47 +46,48 @@ public class DB_Stepdefinitions {
 
     @When("Query01 is prepared and executed.")
     public void query01IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery01();
-        resultSet=DBUtils.getStatement().executeQuery(query);
+        query = manage.getQuery01();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @When("ResultSet01 results are processed.")
     public void resultset01ResultsAreProcessed() throws SQLException {
         resultSet.next();
-        String actualName=resultSet.getString("name");//yani user_id column'da 1.satirdaki degeri getir
-        String  expectedName="Fashion";
-        assertEquals(expectedName,actualName);
+        String actualName = resultSet.getString("name");//yani user_id column'da 1.satirdaki degeri getir
+        String expectedName = "Fashion";
+        assertEquals(expectedName, actualName);
     }
 
     @When("Query04 is prepared and executed.")
     public void query04IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery04();
-        preparedStatement=DBUtils.getPraperedStatement(query);
+        query = manage.getQuery04();
+        preparedStatement = DBUtils.getPraperedStatement(query);
         //INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)
-        preparedStatement.setInt(1,faker.number().numberBetween(100,900));
-        preparedStatement.setString(2,"Fransa");
-        preparedStatement.setString(3,"akdeniz@gmail.com");
-        preparedStatement.setString(4,"customer");
-        preparedStatement.setString(5,"DB testi basladi");
-        rowCount=preparedStatement.executeUpdate();
+        preparedStatement.setInt(1, faker.number().numberBetween(100, 900));
+        preparedStatement.setString(2, "Fransa");
+        preparedStatement.setString(3, "akdeniz@gmail.com");
+        preparedStatement.setString(4, "customer");
+        preparedStatement.setString(5, "DB testi basladi");
+        rowCount = preparedStatement.executeUpdate();
     }
+
     @When("Query05 is prepared and executed.")
     public void query05IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery05();
-        preparedStatement=DBUtils.getPraperedStatement(query);
-        rowCount=preparedStatement.executeUpdate();
+        query = manage.getQuery05();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        rowCount = preparedStatement.executeUpdate();
     }
 
     @When("Query27 is prepared and executed.")
     public void query27IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery27();
+        query = manage.getQuery27();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @When("ResultSet27 results are processed.")
     public void resultset27ResultsAreProcessed() throws SQLException {
         resultSet.next();
-        List<String> descriptions=new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
         descriptions.add(resultSet.getString("description"));
         System.out.println(descriptions);
     }
@@ -95,6 +97,7 @@ public class DB_Stepdefinitions {
         query = manage.getQuery07();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @When("ResultSet07 results are processed.")
     public void result_set07_results_are_processed() throws SQLException {
 
@@ -111,50 +114,70 @@ public class DB_Stepdefinitions {
             }
         }
     }
+
     @Given("Query02 is prepared and executed.")
     public void query02_is_prepared_and_executed() throws SQLException {
-        city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
-        id=faker.number().numberBetween(100011,100099);
-        query= manage.getQuery02();
+        city = faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
+        id = faker.number().numberBetween(100011, 100099);
+        query = manage.getQuery02();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        preparedStatement.setInt(1,id);
-        preparedStatement.setString(2,city);
-        preparedStatement.setInt(3,110);
-        preparedStatement.setInt(4,1);
-        preparedStatement.setDate(5,Date.valueOf(LocalDate.now()));
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, city);
+        preparedStatement.setInt(3, 110);
+        preparedStatement.setInt(4, 1);
+        preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-        System.out.println("id : "+id);
+        System.out.println("id : " + id);
     }
+
     @Given("ResultSet02 results are processed.")
     public void result_set02_results_are_processed() {
-        assertEquals(1,rowCount);
+        assertEquals(1, rowCount);
     }
 
     @Given("Query03 is prepared and executed.")
     public void query03_is_prepared_and_executed() throws SQLException {
-        city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
-        id=faker.number().numberBetween(90010,100010);
-        query= manage.getQuery03();
+        city = faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
+        id = faker.number().numberBetween(90010, 100010);
+        query = manage.getQuery03();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        preparedStatement.setInt(1,id);
-        preparedStatement.setString(2,city);
-        preparedStatement.setInt(3,115);
-        preparedStatement.setInt(4,1);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, city);
+        preparedStatement.setInt(3, 115);
+        preparedStatement.setInt(4, 1);
         preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-        assertEquals(1,rowCount);
-        System.out.println("id : "+id);
+        assertEquals(1, rowCount);
+        System.out.println("id : " + id);
     }
+
     @Given("Delete the data on Query03 and verify deletion")
     public void delete_the_data_on_query03_and_verify_deletion() throws SQLException {
-        query=manage.getPreparedQuery03Delete();
-        preparedStatement =DBUtils.getPraperedStatement(query);
-        preparedStatement.setInt(1,id);
+        query = manage.getPreparedQuery03Delete();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setInt(1, id);
         rowCount = preparedStatement.executeUpdate();
-        System.out.println("deleted id :"+id);
+        System.out.println("deleted id :" + id);
         //assertEquals(1,rowCount);
     }
 
+    @Given("Query011 is prepared and executed.")
+    public void query011_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery011();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet011 results are processed.")
+    public void result_set011_results_are_processed() throws SQLException {
+        double totalAmount = 0;
 
 
-}
+        while(resultSet.next()) {
+            double amount = resultSet.getDouble("total_amount");
+            totalAmount += amount;
+        }
+        System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
+    }
+
+    }
+
