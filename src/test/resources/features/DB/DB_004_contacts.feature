@@ -1,4 +1,4 @@
-@esraDB
+
 Feature:UPDATE QUERY EXECUTE
 
  Background: Database connection
