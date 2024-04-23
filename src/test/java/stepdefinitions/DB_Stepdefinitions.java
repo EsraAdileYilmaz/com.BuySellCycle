@@ -180,4 +180,61 @@ public class DB_Stepdefinitions {
             Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
     }
+
+    @Given("Query21 is prepared and executed.")
+    public void query21_is_prepared_and_executed() {
+        try {
+
+            id = faker.number().numberBetween(90010, 100010);
+
+
+            query = manage.getPreparedQuery21();
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error executing Query21: {}", e.getMessage());
+
+        }
+    }
+
+
+    @Given("ResultSet21 results are processed.")
+    public void result_set21_results_are_processed() {
+        try {
+
+            if (resultSet.next()) {
+                int numOrders = resultSet.getInt("num_orders");
+
+
+                String newShippingName = "newShippingName";
+
+                if (numOrders > 0) {
+
+                    query = manage.getResultGetQuery21();
+                    preparedStatement = DBUtils.getPraperedStatement(query);
+                    preparedStatement.setString(1, newShippingName);
+                    preparedStatement.setInt(2, id);
+
+
+                    int rowsAffected = preparedStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        System.out.println("Shipping name updated successfully.");
+                    } else {
+                        System.out.println("No rows updated. Order ID not found.");
+                    }
+                } else {
+                    System.out.println("No orders found for the given order ID.");
+                }
+            } else {
+                System.out.println("No result obtained from Query21.");
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet21: {}", e.getMessage());
+
+        }
+    }
+
+
 }

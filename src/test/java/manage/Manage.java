@@ -28,4 +28,8 @@ public class Manage {
 
     private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
 
+    private String preparedQuery21 = "SELECT COUNT(*) AS num_orders FROM guest_order_details WHERE order_id = ?";
+
+    private String resultGetQuery21 = "UPDATE guest_order_details SET shipping_name = ? WHERE order_id = ?";
+
 }
