@@ -5,11 +5,9 @@ import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
-import lombok.Data;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
@@ -29,8 +27,11 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 
+
 @Data
 @Slf4j
+@Getter
+@Setter
 public class DB_Stepdefinitions {
 
 
