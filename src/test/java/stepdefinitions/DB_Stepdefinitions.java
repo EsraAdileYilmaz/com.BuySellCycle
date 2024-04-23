@@ -3,10 +3,13 @@ package stepdefinitions;
 import com.github.javafaker.Faker;
 import config_Requirements.ConfigReader;
 import io.cucumber.java.en.*;
+import manage.Manage;
+import org.testng.Assert;
+import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
-import org.testng.Assert;
+import org.junit.Assert;
 import utilities.DB_Utilities.DBUtils;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,7 +18,11 @@ import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import static org.junit.Assert.assertEquals;
+
 
 @Data
 @Slf4j
@@ -47,47 +54,48 @@ public class DB_Stepdefinitions {
 
     @When("Query01 is prepared and executed.")
     public void query01IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery01();
-        resultSet=DBUtils.getStatement().executeQuery(query);
+        query = manage.getQuery01();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @When("ResultSet01 results are processed.")
     public void resultset01ResultsAreProcessed() throws SQLException {
         resultSet.next();
-        String actualName=resultSet.getString("name");//yani user_id column'da 1.satirdaki degeri getir
-        String  expectedName="Fashion";
-        assertEquals(expectedName,actualName);
+        String actualName = resultSet.getString("name");//yani user_id column'da 1.satirdaki degeri getir
+        String expectedName = "Fashion";
+        assertEquals(expectedName, actualName);
     }
 
     @When("Query04 is prepared and executed.")
     public void query04IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery04();
-        preparedStatement=DBUtils.getPraperedStatement(query);
+        query = manage.getQuery04();
+        preparedStatement = DBUtils.getPraperedStatement(query);
         //INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)
-        preparedStatement.setInt(1,faker.number().numberBetween(100,900));
-        preparedStatement.setString(2,"Fransa");
-        preparedStatement.setString(3,"akdeniz@gmail.com");
-        preparedStatement.setString(4,"customer");
-        preparedStatement.setString(5,"DB testi basladi");
-        rowCount=preparedStatement.executeUpdate();
+        preparedStatement.setInt(1, faker.number().numberBetween(100, 900));
+        preparedStatement.setString(2, "Fransa");
+        preparedStatement.setString(3, "akdeniz@gmail.com");
+        preparedStatement.setString(4, "customer");
+        preparedStatement.setString(5, "DB testi basladi");
+        rowCount = preparedStatement.executeUpdate();
     }
+
     @When("Query05 is prepared and executed.")
     public void query05IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery05();
-        preparedStatement=DBUtils.getPraperedStatement(query);
-        rowCount=preparedStatement.executeUpdate();
+        query = manage.getQuery05();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        rowCount = preparedStatement.executeUpdate();
     }
 
     @When("Query27 is prepared and executed.")
     public void query27IsPreparedAndExecuted() throws SQLException {
-        query=manage.getQuery27();
+        query = manage.getQuery27();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @When("ResultSet27 results are processed.")
     public void resultset27ResultsAreProcessed() throws SQLException {
         resultSet.next();
-        List<String> descriptions=new ArrayList<>();
+        List<String> descriptions = new ArrayList<>();
         descriptions.add(resultSet.getString("description"));
         System.out.println(descriptions);
     }
@@ -97,7 +105,9 @@ public class DB_Stepdefinitions {
 
         resultSet = DBUtils.getStatement().executeQuery(manage.getQuery07());
     }
+
     @When("The phone data should be checked for the presence of digit '5'.")
+
     public void result_set07_results_are_processed() throws SQLException {
         int count = 0;
         boolean containsFive = true; // Tüm numaraların '5' içerdiğini varsayarak başla.
@@ -114,6 +124,7 @@ public class DB_Stepdefinitions {
 
         assert containsFive; // Tüm kontrol edilen numaraların '5' içerdiğini doğrula
     }
+
     @Given("I have the data ready for a new city and executed.")
     public void I_have_the_data_ready_for_a_new_city_and_executed() throws SQLException {
         city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
@@ -125,8 +136,9 @@ public class DB_Stepdefinitions {
         preparedStatement.setInt(4,1);
         preparedStatement.setDate(5,Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-        System.out.println("id : "+id);
+        System.out.println("id : " + id);
     }
+
     @Given("I add this data to the cities table and verify.")
     public void I_add_this_data_to_the_cities_table_and_verify() {
 
@@ -175,9 +187,81 @@ public class DB_Stepdefinitions {
             count = resultset.getInt("count");
         }
         Assert.assertEquals(0, count);
+
+    }
+
+    @Given("Query30 is prepared and executed.")
+    public void query30_is_prepared_and_executed() throws SQLException {
+        query=manage.getQuery30();
+        resultSet=DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet30 results are processed.")
+    public void result_set30_results_are_processed() {
+        System.out.println("total price");
+    }
+    @Given("Query25 is prepared and executed.")
+    public void query25_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery25();
+        resultSet=DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet25 results are processed.")
+    public void result_set25_results_are_processed() throws SQLException {
+        Map<String,Double> resultMap = new LinkedHashMap<>();
+        while(resultSet.next()) {
+            String txnId = resultSet.getString(("txn_id"));
+            double amount = resultSet.getDouble("amount");
+            resultMap.put(txnId, amount);
+        }
+        //To group and sort of the result
+        System.out.println("txn_id - amount");
+        for (Map.Entry<String, Double> entry : resultMap.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+
+
+
+
+    @Given("Query011 is prepared and executed.")
+    public void query011_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery011();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet011 results are processed.")
+    public void result_set011_results_are_processed() throws SQLException {
+        double totalAmount = 0;
+
+
+        while(resultSet.next()) {
+            double amount = resultSet.getDouble("total_amount");
+            totalAmount += amount;
+        }
+        System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
     }
 
 
     }
+
+
+    @When("Query09 is prepared and executed.")
+    public void query09_is_prepared_and_executed() throws SQLException {
+        query = manage.getPreparedQuery09();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setString(1, "46.2.239.35");
+        resultSet = preparedStatement.executeQuery();
+    }
+
+    }
+
+
+    @Then("ResultSet09 results are processed.")
+    public void result_set09_results_are_processed() throws SQLException {
+        if (resultSet.next()) {
+            int totalCount = resultSet.getInt("total_count");
+            Assert.assertEquals( "Total count should be 0.",0,totalCount);
+        }
+    }
+}
+
 
 
