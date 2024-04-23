@@ -9,6 +9,7 @@ import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
+
 import utilities.DB_Utilities.DBUtils;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -216,43 +217,48 @@ public class DB_Stepdefinitions {
         for (Map.Entry<String, Double> entry : resultMap.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
-
     }
 
-        @Given("Query011 is prepared and executed.")
-        public void query011_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery011();
-            resultSet = DBUtils.getStatement().executeQuery(query);
+
+
+
+    @Given("Query011 is prepared and executed.")
+    public void query011_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery011();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet011 results are processed.")
+    public void result_set011_results_are_processed() throws SQLException {
+        double totalAmount = 0;
+
+
+        while(resultSet.next()) {
+            double amount = resultSet.getDouble("total_amount");
+            totalAmount += amount;
         }
-
-        @Given("ResultSet011 results are processed.")
-        public void result_set011_results_are_processed () throws SQLException {
-            double totalAmount = 0;
+        System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
+    }
 
 
-            while (resultSet.next()) {
-                double amount = resultSet.getDouble("total_amount");
-                totalAmount += amount;
-            }
-            System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
+
+    @When("Query09 is prepared and executed.")
+    public void query09_is_prepared_and_executed() throws SQLException {
+        query = manage.getPreparedQuery09();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setString(1, "46.2.239.35");
+        resultSet = preparedStatement.executeQuery();
+    }
+
+
+
+    @Then("ResultSet09 results are processed.")
+    public void result_set09_results_are_processed() throws SQLException {
+        if (resultSet.next()) {
+            int totalCount = resultSet.getInt("total_count");
+            //Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
-
-        @When("Query09 is prepared and executed.")
-        public void query09_is_prepared_and_executed () throws SQLException {
-            query = manage.getPreparedQuery09();
-            preparedStatement = DBUtils.getPraperedStatement(query);
-            preparedStatement.setString(1, "46.2.239.35");
-            resultSet = preparedStatement.executeQuery();
-        }
-
-        @Then("ResultSet09 results are processed.")
-        public void result_set09_results_are_processed () throws SQLException {
-            if (resultSet.next()) {
-                int totalCount = resultSet.getInt("total_count");
-                //Assert.assertEquals("Total count should be 0.", 0, totalCount);
-            }
-        }
-
+    }
 }
 
 
