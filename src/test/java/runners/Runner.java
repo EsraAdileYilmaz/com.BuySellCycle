@@ -17,10 +17,11 @@ import org.junit.runner.RunWith;
         glue = {"stepdefinitions", "hooks"},
 
 
-        tags = "@smoke",
+        tags = "@checkPhone",
 
 
         dryRun = false
+
 )
 
 
