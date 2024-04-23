@@ -2,17 +2,22 @@ package stepdefinitions;
 
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
+import org.junit.Assert;
 import utilities.DB_Utilities.DBUtils;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +166,7 @@ public class DB_Stepdefinitions {
         //assertEquals(1,rowCount);
     }
 
+
     @Given("Query011 is prepared and executed.")
     public void query011_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery011();
@@ -180,4 +186,22 @@ public class DB_Stepdefinitions {
     }
 
     }
+
+
+    @When("Query09 is prepared and executed.")
+    public void query09_is_prepared_and_executed() throws SQLException {
+        query = manage.getPreparedQuery09();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setString(1, "46.2.239.35");
+        resultSet = preparedStatement.executeQuery();
+    }
+
+    @Then("ResultSet09 results are processed.")
+    public void result_set09_results_are_processed() throws SQLException {
+        if (resultSet.next()) {
+            int totalCount = resultSet.getInt("total_count");
+            Assert.assertEquals( "Total count should be 0.",0,totalCount);
+        }
+    }
+}
 
