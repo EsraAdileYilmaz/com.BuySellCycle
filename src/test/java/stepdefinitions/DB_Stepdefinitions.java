@@ -282,6 +282,7 @@ public class DB_Stepdefinitions {
        query= manage.getQuery028();
        resultSet=DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet028 results are processed.")
     public void result_set028_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -292,6 +293,36 @@ public class DB_Stepdefinitions {
     }
 
 
+
+
+    @Given("Query13 is prepared and executed.")
+    public void query13_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery13();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet13 results are processed.")
+    public void result_set13_results_are_processed() {
+
+    }
+    @Given("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet19 results are processed.")
+    public void result_set19_results_are_processed() {
+
+        assertEquals(0,rowCount);
+    }
+    @Given("Query29 is prepared and executed.")
+    public void query29_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery29();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet29 results are processed.")
+    public void result_set29_results_are_processed() {
+
+    }
 
 }
 
