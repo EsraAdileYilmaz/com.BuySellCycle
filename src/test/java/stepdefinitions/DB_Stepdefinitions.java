@@ -258,7 +258,41 @@ public class DB_Stepdefinitions {
             int totalCount = resultSet.getInt("total_count");
             //Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
+
+
     }
+    @Given("Query026 is prepared and executed.")
+    public void query026_is_prepared_and_executed() throws SQLException {
+        query=manage.getQuery026();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+
+    }
+    @Given("ResultSet026 results are processed.")
+    public void result_set026_results_are_processed() throws SQLException {
+        while (resultSet.next()) {
+            String paymentMethod = resultSet.getString("payment_method");
+            double totalAmount = resultSet.getDouble("total_amount");
+
+            System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
+        }
+
+    }
+    @Given("Query028 is prepared and executed.")
+    public void query028_is_prepared_and_executed() throws SQLException {
+       query= manage.getQuery028();
+       resultSet=DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet028 results are processed.")
+    public void result_set028_results_are_processed() throws SQLException {
+        while (resultSet.next()) {
+            int userId = resultSet.getInt("user_id");
+            System.out.println("User ID: " + userId);
+        }
+
+    }
+
+
+
 }
 
 
