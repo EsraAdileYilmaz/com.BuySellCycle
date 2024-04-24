@@ -6,6 +6,6 @@ Feature: CALCULATE QUERY
   Scenario: Verify the number of users whose 'shipping_address' and 'billing_address'
   are not the same in the order_address_details table.
 
-    When Query10 is prepared and executed.
+    When Query10 is prepared to calculate on order_address_details and executed
     Then ResultSet10 results are processed.
     And The database connection is closed.
