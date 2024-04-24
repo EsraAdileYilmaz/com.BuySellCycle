@@ -5,7 +5,7 @@ Feature: As an administrator, I want to be able to access detailed information a
   and the message information should be verified as "Unauthenticated.".
 
     * The api user constructs the base url with the "invalid" token.
-    * The api user sets "api/departmentDetails" path parameters
-    * The api user sends a GET request containing the 16000 in the body and saves the response
+    * The api user sets "api/departmentList" path parameters
+    * The api user sends a GET request containing the 16 in the body and saves the response
     * The api user verifies that the status code is 401
     * The api user verifies that the message information in the response body is "Unauthenticated"

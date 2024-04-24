@@ -5,7 +5,7 @@ the expected status code returned should be 200, and the message in the response
 
 * The api user constructs the base url with the "admin" token.
 * The api user sets "api/holidayList" path parameters
-* The API user sends a GET request and records the response from the api "holidayList" endpoint.
+* The API user sends a GET request and records the response from the api holidayList endpoint.
 * The api user verifies that the status code is 200
 * The api user verifies that the message information in the response body is "success"
 
@@ -17,7 +17,7 @@ the expected status code returned should be 200, and the message in the response
 
     * The api user sets "api/holidayList " path parameters
 
-    * The API user sends a GET request and records the response from the api "holidayList" endpoint.
+    * The API user sends a GET request and records the response from the api holidayList endpoint.
 
     * The api user validates the "<year>" and "<name>" of the response body with index <dataIndex>.
 
