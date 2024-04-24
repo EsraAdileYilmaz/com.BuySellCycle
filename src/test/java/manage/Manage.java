@@ -41,7 +41,7 @@ public class Manage {
 
     private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
 
-    private String Query13 = "";
+    private String Query13 = "SELECT seller_products.product_id, coupon_products.coupon_id FROM seller_products LEFT JOIN coupon_products ON seller_products.product_id = coupon_products.product_id LIMIT 3;";
 
     private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
 

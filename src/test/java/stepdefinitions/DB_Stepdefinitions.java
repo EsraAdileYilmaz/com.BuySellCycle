@@ -335,11 +335,29 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
 
+
     @Given("Query13 is prepared and executed.")
     public void query13_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery13();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
+        @Given("Query13 is prepared and executed.")
+        public void query13_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery13();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet13 results are processed.")
+        public void result_set13_results_are_processed () throws SQLException {
+
+        List<String> productsNotCoupon = new ArrayList<>();
+            // To retrieve the first 3 records, resultSet.next() is called 3 times.
+            for (int i = 0; i < 3 && resultSet.next(); i++) {
+                productsNotCoupon.add(resultSet.getString("product_id"));
+            }
+
+            System.out.println(productsNotCoupon);
+        }
 
     @Given("ResultSet13 results are processed.")
     public void result_set13_results_are_processed() {

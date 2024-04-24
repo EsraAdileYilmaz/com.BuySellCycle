@@ -17,7 +17,9 @@ import org.junit.runner.RunWith;
         glue = {"stepdefinitions", "hooks"},
 
 
-        tags = "@q5",
+        tags = "@esraDB",
+
+
 
 
         dryRun = false
