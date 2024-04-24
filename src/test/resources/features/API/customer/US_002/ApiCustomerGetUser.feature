@@ -1,6 +1,6 @@
 
 Feature: As a user, I should be able to access detailed information about the user who logged into the system via API connection
-
+@API
 Scenario Outline: When a GET request is sent to the /api/customerGetUser endpoint with valid authorization credentials,
 the expected status code returned should be 200, and the message in the response body should confirm: "success".
 
@@ -11,8 +11,8 @@ the expected status code returned should be 200, and the message in the response
 * The api user verifies that the message information in the response body is "success"
 * The api users validates to  the response body match the "<first_name>", "<last_name>", "<email>" information
   Examples:
-    | first_name     | last_name   | email  |
-    |                |             |        |
+    | first_name     | last_name   |       email                          |
+    |  Esra Yilmaz   |  null       |  customer.esra@buysellcycle.com      |
 
   Scenario: When a GET request is sent to the /api/customerGetUser endpoint with invalid authorization credentials,
   the expected status code returned should be 401, and the message in the response body should confirm: "Unauthenticated.".

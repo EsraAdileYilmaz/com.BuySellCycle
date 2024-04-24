@@ -269,7 +269,6 @@ public class DB_Stepdefinitions {
        resultSet=DBUtils.getStatement().executeQuery(query);
     }
 
-
     @Given("Query12 is prepared and executed.")
     public void query12_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery12();
@@ -307,14 +306,12 @@ public class DB_Stepdefinitions {
                 dates.computeIfAbsent(note, k -> new ArrayList<>()).addAll(Arrays.asList(uniqueDaysArray));
             }
         }
-
         // Write days for each each unique notes
         for (Map.Entry<String, List<String>> entry : notes.entrySet()) {
             String note = entry.getKey();
             List<String> day = entry.getValue();
             System.out.println("Days: " + note + ", Unique Notes: " + String.join(", ", day));
         }
-
     }
 
     @When("Query10 is prepared to calculate on order_address_details and executed")
@@ -329,47 +326,43 @@ public class DB_Stepdefinitions {
         int expectedUserCount = 2;
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
-
-        @Given("Query13 is prepared and executed.")
-        public void query13_is_prepared_and_executed () throws SQLException {
+    @Given("Query13 is prepared and executed.")
+    public void query13_is_prepared_and_executed () throws SQLException {
             query = manage.getQuery13();
             resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet13 results are processed.")
+    public void result_set13_results_are_processed () throws SQLException {
+
+      List<String> productsNotCoupon = new ArrayList<>();
+      // To retrieve the first 3 records, resultSet.next() is called 3 times.
+       for (int i = 0; i < 3 && resultSet.next(); i++) {
+            productsNotCoupon.add(resultSet.getString("product_id"));
         }
-        @Given("ResultSet13 results are processed.")
-        public void result_set13_results_are_processed () throws SQLException {
-
-        List<String> productsNotCoupon = new ArrayList<>();
-            // To retrieve the first 3 records, resultSet.next() is called 3 times.
-            for (int i = 0; i < 3 && resultSet.next(); i++) {
-                productsNotCoupon.add(resultSet.getString("product_id"));
-            }
-
-            System.out.println(productsNotCoupon);
-
-        }
+        System.out.println(productsNotCoupon);
+    }
 
         @Given("Query19 is prepared and executed.")
         public void query19_is_prepared_and_executed () throws SQLException {
             query = manage.getQuery19();
             resultSet = DBUtils.getStatement().executeQuery(query);
         }
-        @Given("ResultSet19 results are processed.")
-        public void result_set19_results_are_processed () {
-
-            assertEquals(0, rowCount);
-        }
-        @Given("Query29 is prepared and executed.")
-        public void query29_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery29();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-        @Given("ResultSet29 results are processed.")
-        public void result_set29_results_are_processed () throws SQLException {
-            resultSet.next();
-            String actualAverage = resultSet.getString("average_grand_total");
-            String expectedAverage = "176420.36284403672";
-            assertEquals(expectedAverage, actualAverage);
-        }
+    @Given("ResultSet19 results are processed.")
+     public void result_set19_results_are_processed () {
+      assertEquals(0, rowCount);
+    }
+    @Given("Query29 is prepared and executed.")
+      public void query29_is_prepared_and_executed () throws SQLException {
+        query = manage.getQuery29();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet29 results are processed.")
+     public void result_set29_results_are_processed () throws SQLException {
+       resultSet.next();
+       String actualAverage = resultSet.getString("average_grand_total");
+       String expectedAverage = "176420.36284403672";
+       assertEquals(expectedAverage, actualAverage);
+    }
     @When("Query23 is prepared to calculate for module value is not null and execute")
     public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
         query = manage.getQuery23();
@@ -382,6 +375,24 @@ public class DB_Stepdefinitions {
         int expectedUserCount = 6;
         Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
     }
+
+
+
+    @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
+    public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() {
+
+
+
+    }
+    @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
+    public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() {
+
+
+
+
+    }
+
+
 
 
     @Given("Query14 is prepared and executed.")
