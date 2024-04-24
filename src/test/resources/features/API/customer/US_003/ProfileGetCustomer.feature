@@ -5,7 +5,7 @@ Scenario: When a GET request is sent to the /api/profile/get-customer-data endpo
 
   * The api user constructs the base url with the "customer" token.
   * The api user sets "api/profile/get-customer-data" path parameters
-  * The API user sends a GET request and records the response from the api "finans data" endpoint.
+  * The API user sends a GET request and records the response from the api customer finans data endpoint.
   * The api user verifies that the status code is 200
   * The api user verifies that the message information in the response body is "success"
 
@@ -15,7 +15,7 @@ Scenario Outline: When a GET request is sent to the /api/profile/get-customer-da
 
   * The api user constructs the base url with the "customer" token.
   * The api user sets "api/profile/get-customer-data" path parameters
-  * The API user sends a GET request and records the response from the api "finans data" endpoint.
+  * The API user sends a GET request and records the response from the api customer finans data endpoint.
   * The api users validates to  the response body match the "<wallet_running_balance>", "<wallet_pending_balance>", "<total_coupon>","<total_wishlist>","<total_cancel_order>" information
     Examples:
       | wallet_running_balance | wallet_pending_balance | total_coupon | total_wishlist | total_cancel_order |  |
@@ -27,7 +27,7 @@ Scenario Outline: When a GET request is sent to the /api/profile/get-customer-da
 
    * The api user constructs the base url with the "invalid" token.
    * The api user sets "api/profile/get-customer-data" path parameters
-    * The API user sends a GET request and records the response from the api "finans data" endpoint.
+   * The API user sends a GET request and records the response from the api customer finans data endpoint.
    * The api user verifies that the status code is 401
    * The api user verifies that the message information in the response body is "Unauthenticated."
 

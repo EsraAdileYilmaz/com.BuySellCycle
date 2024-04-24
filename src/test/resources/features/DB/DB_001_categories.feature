@@ -1,4 +1,4 @@
-@esraSmoke1
+
 Feature: SELECT QUERY EXECUTE
 
   Background: Database connection
