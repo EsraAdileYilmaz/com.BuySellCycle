@@ -1164,27 +1164,30 @@ public class API_Stepdefinitions {
     }
 
 
-        @Given("The api user sends the DELETE request and saves the response returned from the {string} endpoint.")
-        public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_endpoint (String string){
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("id", added_item_id);
-            API_Methods.deleteResponse(requestBody.toString());
-        }
-        @Given("The api user prepares a DELETE request containing the {int} to be deleted to send to the {string} endpoint.")
-        public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_endpoint (Integer int1, String string){
-            requestBody = new JSONObject();
-            requestBody.put("id", id);
-        }
-        @Given("The api user prepares a POST request containing {string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
-        public void the_api_user_prepares_a_post_request_containing_the_holiday_id_to_be_deleted_to_send_to_the_api_holiday_add_endpoint (String Deleted_Id){
-            JSONObject reqBody = new JSONObject();
-            reqBody.put("Deleted_Id", Deleted_Id);
-        }
-        @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api profile customerDetailsAddress endpoint.")
-        public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_profile_customer_details_address_endpoint (Integer int1){
-            requestBody = new JSONObject();
-            requestBody.put("id", id);
-        }
+    @Given("The api user sends the DELETE request and saves the response returned from the {string} endpoint.")
+    public void the_api_user_sends_the_delete_request_and_saves_the_response_returned_from_the_endpoint(String string) {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id", added_item_id);
+        API_Methods.deleteResponse(requestBody.toString());
+    }
+
+    @Given("The api user prepares a DELETE request containing the {int} to be deleted to send to the {string} endpoint.")
+    public void the_api_user_prepares_a_delete_request_containing_the_to_be_deleted_to_send_to_the_endpoint(Integer int1, String string) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
+
+    @Given("The api user prepares a POST request containing {string} the holiday id to be deleted to send to the api holidayAdd endpoint.")
+    public void the_api_user_prepares_a_post_request_containing_the_holiday_id_to_be_deleted_to_send_to_the_api_holiday_add_endpoint(String Deleted_Id) {
+        JSONObject reqBody = new JSONObject();
+        reqBody.put("Deleted_Id", Deleted_Id);
+    }
+
+    @Given("The api user prepares a GET request containing the {int} for which details are to be accessed, to send to the api profile customerDetailsAddress endpoint.")
+    public void the_api_user_prepares_a_get_request_containing_the_for_which_details_are_to_be_accessed_to_send_to_the_api_profile_customer_details_address_endpoint(Integer int1) {
+        requestBody = new JSONObject();
+        requestBody.put("id", id);
+    }
 
 
     @Given("The api user prepares a POST request containing the {string},{string},{string},{string},{string},{string},{string},{string},{string},{string},{string} information to send to the api couponAdd endpoint.")
