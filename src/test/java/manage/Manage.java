@@ -44,13 +44,17 @@ public class Manage {
     private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
 
 
-
-    private String Query13 = "";
+    private String Query13 = "SELECT seller_products.product_id, coupon_products.coupon_id FROM seller_products LEFT JOIN coupon_products ON seller_products.product_id = coupon_products.product_id LIMIT 3;";
 
     private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
 
     private String Query29 = "SELECT AVG(grand_total) AS average_grand_total FROM orders WHERE is_paid = 1;";
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
+
+
+    private String Query15="SELECT * FROM customer_coupon_stores JOIN users ON customer_coupon_stores.id = users.id LIMIT 3;";
+
+    private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
 
 
     private String preparedQuery21 = "SELECT COUNT(*) AS num_orders FROM guest_order_details WHERE order_id = ?";
