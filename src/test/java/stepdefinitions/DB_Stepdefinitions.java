@@ -370,12 +370,21 @@ public class DB_Stepdefinitions {
 
         List<Integer> listNotNull = new ArrayList<>();
         for (int i = 0; i < listNotNull.size(); i++) {
-            listNotNull.add(resultSet.getInt());
+           // listNotNull.add(resultSet.getInt());
 
         }
 
         Assert.assertEquals(rowCount,listNotNull);
     }
+    @Given("Query20 is prepared and executed.")
+    public void query20_is_prepared_and_executed() {
+
+    }
+    @Given("ResultSet020 results are processed.")
+    public void result_set020_results_are_processed() {
+
+    }
+
 
 }
 

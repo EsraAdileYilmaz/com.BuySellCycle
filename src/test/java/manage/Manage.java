@@ -49,6 +49,8 @@ public class Manage {
 
     private String query014 = "SELECT * FROM refund_reasons WHERE reason IS NULL;";
 
+    private String query020 = "INSERT INTO device_tokens (token_column_name) VALUES";
+
 
 
 

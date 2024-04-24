@@ -2,8 +2,8 @@ Feature: SELECT QUERY EXECUTE
 
   Background: Database connection
     * Database connection is established.
-  @IP
-  Scenario: Refund_reasons tablosunda 'reason' degeri Null olan veri olup olmadigini dogrulayiniz.
+
+  Scenario: Verify whether there is data in the refund_reasons table with a 'reason' value of Null.
 
     * Query14 is prepared and executed.
     * ResultSet14 results are processed.
