@@ -55,6 +55,9 @@ public class Manage {
     private String Query15="SELECT * FROM customer_coupon_stores JOIN users ON customer_coupon_stores.id = users.id LIMIT 3;";
 
     private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
+    private String query014 = "SELECT COUNT(*) AS null_reason_count FROM refund_reasons WHERE reason IS NULL;";
+
+    private  String query20 = "INSERT INTO device_tokens (id, user_id, device_token, created_at, updated_at) VALUES(?,?,?,?,?)";
 
 
     private String preparedQuery21 = "SELECT COUNT(*) AS num_orders FROM guest_order_details WHERE order_id = ?";
