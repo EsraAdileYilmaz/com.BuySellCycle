@@ -2,7 +2,7 @@ Feature: CALCULATE QUERY
 
   Background: Database connection
     Given Database connection is established.
-
+  @query
   Scenario: In the log_activity table, calculate and verify the number of
   topics with ip= ? and method='Delete'
 

@@ -254,10 +254,10 @@ public class DB_Stepdefinitions {
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
-        if (resultSet.next()) {
-            int totalCount = resultSet.getInt("total_count");
-            //Assert.assertEquals( "Total count should be 0.",0,totalCount);
-        }
+            resultSet.next();
+            int actualTotalCount = resultSet.getInt("total_count");
+            int expectedCount = 0;
+            Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
     }
     @Given("Query13 is prepared and executed.")
     public void query13_is_prepared_and_executed() throws SQLException {
@@ -286,6 +286,20 @@ public class DB_Stepdefinitions {
     @Given("ResultSet29 results are processed.")
     public void result_set29_results_are_processed() {
 
+    }
+
+    @When("Query10 is prepared and executed.")
+    public void queryIsPreparedAndExecuted() throws SQLException {
+        query = manage.getQuery10();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Then("ResultSet10 results are processed.")
+    public void resultsetResultsAreProcessed() throws SQLException {
+        resultSet.next();
+        int actualUserCount = resultSet.getInt("user_count");
+        int expectedUserCount = 2;
+        Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
 }
 
