@@ -243,17 +243,19 @@ public class DB_Stepdefinitions {
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
-            resultSet.next();
-            int actualTotalCount = resultSet.getInt("total_count");
-            int expectedCount = 0;
-            Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
+        resultSet.next();
+        int actualTotalCount = resultSet.getInt("total_count");
+        int expectedCount = 0;
+        Assert.assertEquals(actualTotalCount, expectedCount, "Total count should be 0.");
 
     }
+
     @Given("Query026 is prepared and executed.")
     public void query026_is_prepared_and_executed() throws SQLException {
-        query=manage.getQuery026();
+        query = manage.getQuery026();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet026 results are processed.")
     public void result_set026_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -263,10 +265,11 @@ public class DB_Stepdefinitions {
             System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
         }
     }
+
     @Given("Query028 is prepared and executed.")
     public void query028_is_prepared_and_executed() throws SQLException {
-       query= manage.getQuery028();
-       resultSet=DBUtils.getStatement().executeQuery(query);
+        query = manage.getQuery028();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @Given("Query12 is prepared and executed.")
@@ -319,6 +322,7 @@ public class DB_Stepdefinitions {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("ResultSet10 results are processed.")
     public void resultsetResultsAreProcessed() throws SQLException {
         resultSet.next();
@@ -326,48 +330,55 @@ public class DB_Stepdefinitions {
         int expectedUserCount = 2;
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
-    @Given("Query13 is prepared and executed.")
-    public void query13_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery13();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-    @Given("ResultSet13 results are processed.")
-    public void result_set13_results_are_processed () throws SQLException {
 
-      List<String> productsNotCoupon = new ArrayList<>();
-      // To retrieve the first 3 records, resultSet.next() is called 3 times.
-       for (int i = 0; i < 3 && resultSet.next(); i++) {
+    @Given("Query13 is prepared and executed.")
+    public void query13_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery13();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet13 results are processed.")
+    public void result_set13_results_are_processed() throws SQLException {
+
+        List<String> productsNotCoupon = new ArrayList<>();
+        // To retrieve the first 3 records, resultSet.next() is called 3 times.
+        for (int i = 0; i < 3 && resultSet.next(); i++) {
             productsNotCoupon.add(resultSet.getString("product_id"));
         }
         System.out.println(productsNotCoupon);
     }
 
-        @Given("Query19 is prepared and executed.")
-        public void query19_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery19();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-    @Given("ResultSet19 results are processed.")
-     public void result_set19_results_are_processed () {
-      assertEquals(0, rowCount);
+    @Given("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
+    @Given("ResultSet19 results are processed.")
+    public void result_set19_results_are_processed() {
+        assertEquals(0, rowCount);
+    }
+
     @Given("Query29 is prepared and executed.")
-      public void query29_is_prepared_and_executed () throws SQLException {
+    public void query29_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery29();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet29 results are processed.")
-     public void result_set29_results_are_processed () throws SQLException {
-       resultSet.next();
-       String actualAverage = resultSet.getString("average_grand_total");
-       String expectedAverage = "176420.36284403672";
-       assertEquals(expectedAverage, actualAverage);
+    public void result_set29_results_are_processed() throws SQLException {
+        resultSet.next();
+        String actualAverage = resultSet.getString("average_grand_total");
+        String expectedAverage = "176420.36284403672";
+        assertEquals(expectedAverage, actualAverage);
     }
+
     @When("Query23 is prepared to calculate for module value is not null and execute")
     public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
         query = manage.getQuery23();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("Process result and verify the result")
     public void process_result_and_verify_the_result() throws SQLException {
         resultSet.next();
@@ -377,37 +388,34 @@ public class DB_Stepdefinitions {
     }
 
 
-
     @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
     public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() {
 
 
-
     }
+
     @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
     public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() {
 
 
-
-
     }
-
-
 
 
     @Given("Query14 is prepared and executed.")
-    public void query14_is_prepared_and_executed() throws SQLException{
-      query = manage.getQuery014();
+    public void query14_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery014();
         preparedStatement = DBUtils.getPraperedStatement(query);
         resultSet = preparedStatement.executeQuery();
     }
+
     @Given("ResultSet14 results are processed.")
     public void result_set14_results_are_processed() throws SQLException {
         resultSet.next();
-    Assert.assertTrue(resultSet.getInt(1)>0);
+        Assert.assertTrue(resultSet.getInt(1) > 0);
 
 
     }
+
     @Given("Query20 is prepared and executed.")
     public void query20_is_prepared_and_executed() throws SQLException {
 
@@ -416,7 +424,7 @@ public class DB_Stepdefinitions {
 
         for (int i = 0; i < 10; i++) {
 
-            preparedStatement.setInt(1,  faker.number().numberBetween(200, 300));
+            preparedStatement.setInt(1, faker.number().numberBetween(200, 300));
             preparedStatement.setInt(2, 3001);
             preparedStatement.setString(3, faker.lorem().characters());
             preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
@@ -426,6 +434,7 @@ public class DB_Stepdefinitions {
         }
 
     }
+
     @Given("ResultSet20 results are processed.")
     public void result_set20_results_are_processed() {
         Assert.assertEquals(1, rowCount);
@@ -434,39 +443,171 @@ public class DB_Stepdefinitions {
     }
 
 
-      @Given("Query15 is prepared and executed.")
-      public void query15_is_prepared_and_executed() throws SQLException {
-          query = manage.getQuery15();
-          resultSet = DBUtils.getStatement().executeQuery(query);
-      }
+    @Given("Query15 is prepared and executed.")
+    public void query15_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery15();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
 
-      @When("ResultSet15 results are processed.")
-      public void result_set15_results_are_processed() throws SQLException {
+    @When("ResultSet15 results are processed.")
+    public void result_set15_results_are_processed() throws SQLException {
         /*List<Object> customerUsersList=new ArrayList<>();
           for (int i = 0; i <customerUsersList.size() ; i++) {
             customerUsersList.add(resultSet.getObject(i));
           }
           System.out.println("Customer coupon stories= " +customerUsersList);*/
-          List<Object> customerUsersList = new ArrayList<>();
-          ResultSetMetaData metaData = resultSet.getMetaData();
-          int columnCount = metaData.getColumnCount();
+        List<Object> customerUsersList = new ArrayList<>();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
 
-          while (resultSet.next()) {
-              // Her bir satır için bir Object listesi oluştur
-              List<Object> row = new ArrayList<>();
-              for (int i = 1; i <= columnCount; i++) {
-                  // Her sütunun değerini alıp listeye ekle
-                  row.add(resultSet.getObject(i));
-              }
-              // Oluşturulan satırı genel listeye ekle
-              customerUsersList.add(row);
-          }
+        while (resultSet.next()) {
+            // Her bir satır için bir Object listesi oluştur
+            List<Object> row = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                // Her sütunun değerini alıp listeye ekle
+                row.add(resultSet.getObject(i));
+            }
+            // Oluşturulan satırı genel listeye ekle
+            customerUsersList.add(row);
+        }
 
-          System.out.println("Customer coupon stories: " + customerUsersList);
-      }
+        System.out.println("Customer coupon stories: " + customerUsersList);
+    }
 
 
-}
+
+    @Given("Query21 is prepared and executed.")
+    public void query21_is_prepared_and_executed() {
+        try {
+            query = manage.getQuery21() ;
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error preparing or executing Query21: {}", e.getMessage());
+        }
+    }
+
+    @Given("ResultSet21 results are processed.")
+    public void result_set21_results_are_processed() {
+        try {
+            if (resultSet.next()) {
+                int totalOrders = resultSet.getInt("total_orders");
+                System.out.println("Total orders placed according to the specified order_id: " + totalOrders);
+                log.info("Total orders placed according to the specified order_id: {}", totalOrders);
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet21: {}", e.getMessage());
+        } finally {
+            DBUtils.closeResultSet(resultSet);
+            DBUtils.closeStatement(preparedStatement);
+        }
+    }
+
+
+    @Given("Query22 is prepared and executed.")
+    public void data_is_entered_into_the_digital_gift_cards_table() {
+        try {
+
+            int id = 3726;
+            String giftName = faker.lorem().words(2).toString();
+            String descriptionOne = faker.lorem().sentence();
+            String thumbnailImageOne = faker.internet().image();
+            String thumbnailImageTwo = faker.internet().image();
+
+
+            query = manage.getPreparedQuery22();
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, giftName);
+            preparedStatement.setString(3, descriptionOne);
+            preparedStatement.setString(4, thumbnailImageOne);
+            preparedStatement.setString(5, thumbnailImageTwo);
+
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                log.info("Data inserted successfully into digital_gift_cards table.");
+            } else {
+                log.error("Failed to insert data into digital_gift_cards table.");
+            }
+        } catch (SQLException e) {
+            log.error("Error inserting data into digital_gift_cards table: {}", e.getMessage());
+
+        }
+    }
+
+    @Given("ResultSet22 results are processed.")
+    public void delete_inserted_data_from_digital_gift_cards_table() {
+        try {
+            query = manage.getResultQuery22();
+
+            int insertedId = 3726;
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, insertedId);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                log.info("Inserted data successfully deleted from digital_gift_cards table.");
+            } else {
+                log.error("Failed to delete inserted data from digital_gift_cards table.");
+            }
+        } catch (SQLException e) {
+            log.error("Error deleting inserted data from digital_gift_cards table: {}", e.getMessage());
+        } finally {
+            DBUtils.closeStatement(preparedStatement);
+        }
+    }
+
+
+    @Given("Query24 is prepared and executed.")
+    public void query24_is_prepared_and_executed() {
+        try {
+            query = manage.getPreparedQuery24();
+
+            log.info("Executing SQL query: {}", query);
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error preparing or executing Query24: {}", e.getMessage());
+        }
+    }
+
+    @Given("ResultSet24 results are processed")
+    public void result_set24_results_are_processed() {
+        try {
+            query = manage.getResultQuery24();
+
+            boolean hasResults = false;
+            while (resultSet.next()) {
+                hasResults = true;
+                long id = resultSet.getLong("id");
+                String customerEmail = resultSet.getString("customer_email");
+                double subTotal = resultSet.getDouble("sub_total");
+                long orderNumber = resultSet.getLong("order_number");
+                System.out.println("Data retrieved and reversed successfully:");
+                log.info("ID: {}, Customer Email: {}, Sub Total: {}, Order Number: {}", id, customerEmail, subTotal, orderNumber);
+            }
+
+            if (!hasResults) {
+                System.out.println("No data found matching the criteria.");
+                log.info("No data found matching the criteria.");
+            } else {
+                System.out.println("Data retrieval and processing completed successfully.");
+                log.info("Data retrieval and processing completed successfully.");
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet24: {}", e.getMessage());
+        } finally {
+            DBUtils.closeResultSet(resultSet);
+            DBUtils.closeStatement(preparedStatement);
+        }
+
+    }
+
+    }
 
 
 
