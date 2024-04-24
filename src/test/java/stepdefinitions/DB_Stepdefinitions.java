@@ -10,11 +10,12 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
 import utilities.DB_Utilities.DBUtils;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+
 import static org.junit.Assert.assertEquals;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
@@ -339,7 +340,7 @@ public class DB_Stepdefinitions {
 
         }
 
-    @Given("Query19 is prepared and executed.")
+        @Given("Query19 is prepared and executed.")
         public void query19_is_prepared_and_executed () throws SQLException {
             query = manage.getQuery19();
             resultSet = DBUtils.getStatement().executeQuery(query);
@@ -358,6 +359,37 @@ public class DB_Stepdefinitions {
         public void result_set29_results_are_processed () {
 
         }
+
+      @Given("Query15 is prepared and executed.")
+      public void query15_is_prepared_and_executed() throws SQLException {
+          query = manage.getQuery15();
+          resultSet = DBUtils.getStatement().executeQuery(query);
+      }
+
+      @When("ResultSet15 results are processed.")
+      public void result_set15_results_are_processed() throws SQLException {
+        /*List<Object> customerUsersList=new ArrayList<>();
+          for (int i = 0; i <customerUsersList.size() ; i++) {
+            customerUsersList.add(resultSet.getObject(i));
+          }
+          System.out.println("Customer coupon stories= " +customerUsersList);*/
+          List<Object> customerUsersList = new ArrayList<>();
+          ResultSetMetaData metaData = resultSet.getMetaData();
+          int columnCount = metaData.getColumnCount();
+
+          while (resultSet.next()) {
+              // Her bir satır için bir Object listesi oluştur
+              List<Object> row = new ArrayList<>();
+              for (int i = 1; i <= columnCount; i++) {
+                  // Her sütunun değerini alıp listeye ekle
+                  row.add(resultSet.getObject(i));
+              }
+              // Oluşturulan satırı genel listeye ekle
+              customerUsersList.add(row);
+          }
+
+          System.out.println("Customer coupon stories: " + customerUsersList);
+      }
 
 }
 
