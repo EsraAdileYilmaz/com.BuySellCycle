@@ -1,6 +1,7 @@
 package utilities.DB_Utilities;
 import config_Requirements.ConfigReader;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.*;
 public class DBUtils {
@@ -297,4 +298,39 @@ public class DBUtils {
 
         return randomNumber;
     }
+
+        public static void closeResultSet(ResultSet resultSet) {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    public static final Logger logger = LoggerFactory.getLogger(DBUtils.class);
+
+    public void closePreparedStatement(PreparedStatement preparedStatement) {
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                DBUtils.logger.error("Error closing PreparedStatement: {}", e.getMessage(), e);
+            }
+        }
+    }
+
+    public static void closeStatement(PreparedStatement preparedStatement) {
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
+
+

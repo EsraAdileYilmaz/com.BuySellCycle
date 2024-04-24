@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static org.junit.Assert.assertEquals;
 
 @Data
@@ -363,7 +366,7 @@ public class DB_Stepdefinitions {
         }
     @When("Query23 is prepared to calculate for module value is not null and execute")
     public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
-        query = manage.getQuery23();
+       // query = manage.getQuery23();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
     @Then("Process result and verify the result")
@@ -375,62 +378,156 @@ public class DB_Stepdefinitions {
     }
 
     @Given("Query21 is prepared and executed.")
-    public void query21_is_prepared_and_executed() {
-        try {
+    public void query21_is_prepared_and_executed_for_each_order_id() {
+        int[] orderIds = {2, 23, 62, 78, 91, 92, 115, 116, 118, 129, 139, 149, 181};
 
-            id = faker.number().numberBetween(90010, 100010);
+        for (int orderId : orderIds) {
+            try {
+                query = manage.getPreparedQuery21();
+                preparedStatement = DBUtils.getPraperedStatement(query);
+                preparedStatement.setInt(1, orderId);
+                resultSet = preparedStatement.executeQuery();
 
-
-            query = manage.getPreparedQuery21();
-            preparedStatement = DBUtils.getPraperedStatement(query);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            log.error("Error executing Query21: {}", e.getMessage());
-
+                if (resultSet.next()) {
+                    int numOrders = resultSet.getInt("num_orders");
+                    log.info("Order ID: {}, Number of Orders: {}", orderId, numOrders);
+                }
+            } catch (SQLException e) {
+                log.error("Error executing Query21 for Order ID {}: {}", orderId, e.getMessage());
+            }
         }
     }
 
 
     @Given("ResultSet21 results are processed.")
-    public void result_set21_results_are_processed() {
-        try {
+    public void result_set21_results_are_processed_for_each_order_id() {
+        int[] orderIds = {2, 23, 62, 78, 91, 92, 115, 116, 118, 129, 139, 149, 181};
+        String newShippingName = "NewShippingName"; // Example new shipping name
 
-            if (resultSet.next()) {
-                int numOrders = resultSet.getInt("num_orders");
+        for (int orderId : orderIds) {
+            try {
 
-
-                String newShippingName = "newShippingName";
-
-                if (numOrders > 0) {
-
-                    query = manage.getResultGetQuery21();
-                    preparedStatement = DBUtils.getPraperedStatement(query);
-                    preparedStatement.setString(1, newShippingName);
-                    preparedStatement.setInt(2, id);
+                query = manage.getPreparedQuery21();
+                preparedStatement = DBUtils.getPraperedStatement(query);
+                preparedStatement.setInt(1, orderId);
+                resultSet = preparedStatement.executeQuery();
 
 
-                    int rowsAffected = preparedStatement.executeUpdate();
+                if (resultSet.next()) {
+                    int numOrders = resultSet.getInt("num_orders");
 
-                    if (rowsAffected > 0) {
-                        System.out.println("Shipping name updated successfully.");
+                    if (numOrders > 0) {
+
+                        query = manage.getResultGetQuery21();
+                        preparedStatement = DBUtils.getPraperedStatement(query);
+                        preparedStatement.setString(1, newShippingName);
+                        preparedStatement.setInt(2, orderId);
+
+
+                        int rowsAffected = preparedStatement.executeUpdate();
+
+                        if (rowsAffected > 0) {
+                            log.info("Shipping name updated successfully for Order ID: {}", orderId);
+                        } else {
+                            log.error("No rows updated for Order ID: {}", orderId);
+                        }
                     } else {
-                        System.out.println("No rows updated. Order ID not found.");
+                        log.error("No orders found for Order ID: {}", orderId);
                     }
                 } else {
-                    System.out.println("No orders found for the given order ID.");
+                    log.error("No result obtained from Query21 for Order ID: {}", orderId);
                 }
-            } else {
-                System.out.println("No result obtained from Query21.");
+            } catch (SQLException e) {
+                log.error("Error processing ResultSet21 for Order ID {}: {}", orderId, e.getMessage());
+
             }
-        } catch (SQLException e) {
-            log.error("Error processing ResultSet21: {}", e.getMessage());
-
         }
-
     }
 
 
+
+    @Given("Query22 is prepared and executed.")
+    public void data_is_entered_into_the_digital_gift_cards_table() {
+        try {
+
+            int id = 3626;
+            String giftName = faker.lorem().words(2).toString();
+            String descriptionOne = faker.lorem().sentence();
+            String thumbnailImageOne = faker.internet().image();
+            String thumbnailImageTwo = faker.internet().image();
+
+
+            query = "INSERT INTO digital_gift_cards (id, gift_name, descriptionOne, thumbnail_image_one, thumbnail_image_two) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, giftName);
+            preparedStatement.setString(3, descriptionOne);
+            preparedStatement.setString(4, thumbnailImageOne);
+            preparedStatement.setString(5, thumbnailImageTwo);
+
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                log.info("Data inserted successfully into digital_gift_cards table.");
+            } else {
+                log.error("Failed to insert data into digital_gift_cards table.");
+            }
+        } catch (SQLException e) {
+            log.error("Error inserting data into digital_gift_cards table: {}", e.getMessage());
+
+        }
+    }
+
+
+    @Given("Query24 is prepared and executed.")
+    public void query24_is_prepared_and_executed() {
+        try {
+            query = "SELECT * FROM orders " +
+                    "WHERE customer_email NOT LIKE '%customer%' AND sub_total < 2000 " +
+                    "ORDER BY order_number DESC";
+
+            log.info("Executing SQL query: {}", query);
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error preparing or executing Query24: {}", e.getMessage());
+        }
+    }
+
+    @Given("ResultSet24 results are processed")
+    public void result_set24_results_are_processed() {
+        try {
+            query = "SELECT * FROM orders " +
+                    "WHERE customer_email NOT LIKE '%customer%' AND sub_total < 2000 " +
+                    "ORDER BY order_number DESC";
+
+            boolean hasResults = false;
+            while (resultSet.next()) {
+                hasResults = true;
+                long id = resultSet.getLong("id");
+                String customerEmail = resultSet.getString("customer_email");
+                double subTotal = resultSet.getDouble("sub_total");
+                long orderNumber = resultSet.getLong("order_number");
+                System.out.println("Data retrieved and reversed successfully:");
+                log.info("ID: {}, Customer Email: {}, Sub Total: {}, Order Number: {}", id, customerEmail, subTotal, orderNumber);
+            }
+
+            if (!hasResults) {
+                System.out.println("No data found matching the criteria.");
+                log.info("No data found matching the criteria.");
+            } else {
+                System.out.println("Data retrieval and processing completed successfully.");
+                log.info("Data retrieval and processing completed successfully.");
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet24: {}", e.getMessage());
+        } finally {
+            DBUtils.closeResultSet(resultSet);
+            DBUtils.closeStatement(preparedStatement);
+        }
+    }
 }
 
 
