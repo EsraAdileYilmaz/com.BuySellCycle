@@ -9,3 +9,4 @@ Feature: A description
     * Query21 is prepared and executed.
     * ResultSet21 results are processed.
     * The database connection is closed.
+

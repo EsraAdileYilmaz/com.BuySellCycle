@@ -51,4 +51,35 @@ public class Manage {
 
     private String Query29 = "SELECT AVG(grand_total) AS average_grand_total FROM orders WHERE is_paid = 1;";
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
+
+
+
+
+
+
+    // ********************************* GULCAN ********************************
+
+
+
+    private String preparedQuery21 = "SELECT COUNT(*) AS num_orders FROM guest_order_details WHERE order_id = ?";
+
+    private String resultGetQuery21 = "UPDATE guest_order_details SET shipping_name = ? WHERE order_id?";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
