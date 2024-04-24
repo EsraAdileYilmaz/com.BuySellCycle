@@ -9,6 +9,56 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class Manage {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ********************************* GULCAN ********************************
+
     private String Query07= "select phone from customer_addresses where phone like '%5%' order by id limit 3;";
 
     private String Query02="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
