@@ -1,4 +1,5 @@
 package utilities.API_Utilities;
+
 import config_Requirements.ConfigReader;
 import hooks.HooksAPI;
 import io.restassured.builder.RequestSpecBuilder;
@@ -27,7 +28,6 @@ public class API_Methods {
 
     public static Response response;
     public static int id;
-
 
 
     public static Response getResponse() {
@@ -171,7 +171,7 @@ public class API_Methods {
                 .body("message", equalTo(message));
     }
 
-    public static void pathParamsMethod(String rawPaths){
+    public static void pathParamsMethod(String rawPaths) {
         String[] paths = rawPaths.split("/"); // [api,refundReasonUpdate,25]
 
         System.out.println(Arrays.toString(paths));
