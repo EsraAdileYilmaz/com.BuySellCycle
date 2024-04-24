@@ -19,7 +19,6 @@ public class Manage {
 
     private String selectQuery03="select * from cities where id = ? and name = ?";
 
-
     private String Query01="SELECT name FROM categories where slug='fashion'";
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
@@ -29,15 +28,13 @@ public class Manage {
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
     private String Query25="SELECT txn_id, MAX(amount) AS amount FROM order_payments WHERE txn_id != 'none' AND amount > 9000 GROUP BY txn_id ORDER BY amount DESC;";
 
-
-    private String Query05="UPDATE contacts SET message = 'Herkese kolay gelsin';";
-
     private String Query27="SELECT description FROM transactions WHERE payment_method IN ('Stripe', 'Cash On Delivery') GROUP BY description HAVING COUNT(DISTINCT payment_method) = 2";
-
 
     private String Query011="SELECT SUM(amount) AS total_amount FROM wallet_balances WHERE type = 'Referral' AND id BETWEEN 10 AND 20";
 
     private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
+
+    private  String preparedQuery15 = "select * from customer_coupon_stores;";
 
 
 }
