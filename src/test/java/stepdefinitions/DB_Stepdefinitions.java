@@ -40,6 +40,8 @@ public class DB_Stepdefinitions {
     String updateLog;
     int supportMessageId;
     int count;
+    String email;
+    PreparedStatement deleteStatement ;
 
     @When("Database connection is established.")
     public void databaseConnectionIsEstablished() {
