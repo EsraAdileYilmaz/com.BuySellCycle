@@ -39,6 +39,11 @@ public class Manage {
 
     private String preparedQuery09 = "SELECT COUNT(*) AS total_count FROM log_activity WHERE ip = ? AND method = 'Delete';";
 
+    private String Query026="SELECT payment_method,SUM(amount) AS total_amount FROM transactions GROUP BY payment_method HAVING total_amount > 7000 ORDER BY total_amount DESC";
+
+    private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
+
+
 
     private String Query13 = "";
 
