@@ -23,6 +23,8 @@ public class Manage {
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
 
+    private String UpdateQuery04="UPDATE contacts SET message = 'Herkese kolay gelsin';";
+
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
 
     private String Query25="SELECT txn_id, MAX(amount) AS amount FROM order_payments WHERE txn_id != 'none' AND amount > 9000 GROUP BY txn_id ORDER BY amount DESC;";
@@ -39,23 +41,14 @@ public class Manage {
 
     private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
 
-    private String Query13 = "";
+    private String Query13 = "SELECT seller_products.product_id, coupon_products.coupon_id FROM seller_products LEFT JOIN coupon_products ON seller_products.product_id = coupon_products.product_id LIMIT 3;";
 
     private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
 
-    private String Query29 = "";
+    private String Query29 = "SELECT AVG(grand_total) AS average_grand_total FROM orders WHERE is_paid = 1;";
 
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
 
-    private String query014 = "SELECT * FROM refund_reasons WHERE reason IS NULL;";
-
-    private String query020 = "INSERT INTO device_tokens (token_column_name) VALUES";
-
-
-
-
-
-
-
+    private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
 }
 
