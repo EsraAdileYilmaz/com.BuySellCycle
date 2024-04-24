@@ -10,21 +10,17 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
 import utilities.DB_Utilities.DBUtils;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import static org.junit.Assert.assertEquals;
-
 import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 
 @Data
@@ -82,9 +78,9 @@ public class DB_Stepdefinitions {
         rowCount = preparedStatement.executeUpdate();
     }
 
-    @When("Query05 is prepared and executed.")
+    @When("UpdateQuery04 is prepared and executed.")
     public void query05IsPreparedAndExecuted() throws SQLException {
-        query = manage.getQuery05();
+        query = manage.getUpdateQuery04();
         preparedStatement = DBUtils.getPraperedStatement(query);
         rowCount = preparedStatement.executeUpdate();
     }
@@ -246,19 +242,17 @@ public class DB_Stepdefinitions {
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
-        resultSet.next();
-        int actualTotalCount = resultSet.getInt("total_count");
-        int expectedCount = 0;
-        Assert.assertEquals(actualTotalCount, expectedCount, "Total count should be 0.");
+            resultSet.next();
+            int actualTotalCount = resultSet.getInt("total_count");
+            int expectedCount = 0;
+            Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
 
     }
-
     @Given("Query026 is prepared and executed.")
     public void query026_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery026();
+        query=manage.getQuery026();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
-
     @Given("ResultSet026 results are processed.")
     public void result_set026_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -268,11 +262,10 @@ public class DB_Stepdefinitions {
             System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
         }
     }
-
     @Given("Query028 is prepared and executed.")
     public void query028_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery028();
-        resultSet = DBUtils.getStatement().executeQuery(query);
+       query= manage.getQuery028();
+       resultSet=DBUtils.getStatement().executeQuery(query);
     }
 
 
@@ -328,7 +321,6 @@ public class DB_Stepdefinitions {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
-
     @Then("ResultSet10 results are processed.")
     public void resultsetResultsAreProcessed() throws SQLException {
         resultSet.next();
@@ -337,53 +329,51 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
 
-    @Given("Query13 is prepared and executed.")
-    public void query13_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery13();
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
+        @Given("Query13 is prepared and executed.")
+        public void query13_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery13();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet13 results are processed.")
+        public void result_set13_results_are_processed () {
 
-    @Given("ResultSet13 results are processed.")
-    public void result_set13_results_are_processed() {
-
-    }
+        }
 
     @Given("Query19 is prepared and executed.")
-    public void query19_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery19();
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
+        public void query19_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery19();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet19 results are processed.")
+        public void result_set19_results_are_processed () {
 
-    @Given("ResultSet19 results are processed.")
-    public void result_set19_results_are_processed() {
-
-        assertEquals(0, rowCount);
-    }
-
-    @Given("Query29 is prepared and executed.")
-    public void query29_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery29();
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-
-    @Given("ResultSet29 results are processed.")
-    public void result_set29_results_are_processed() {
-
-    }
-
+            assertEquals(0, rowCount);
+        }
+        @Given("Query29 is prepared and executed.")
+        public void query29_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery29();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet29 results are processed.")
+        public void result_set29_results_are_processed () throws SQLException {
+            resultSet.next();
+            String actualAverage = resultSet.getString("average_grand_total");
+            String expectedAverage = "176420.36284403672";
+            assertEquals(expectedAverage, actualAverage);
+        }
     @When("Query23 is prepared to calculate for module value is not null and execute")
-    public void query23_is_prepared_to_calculate_module_value_is_not_null_and_execute() throws SQLException {
+    public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
         query = manage.getQuery23();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
-
     @Then("Process result and verify the result")
     public void process_result_and_verify_the_result() throws SQLException {
         resultSet.next();
         int actualUserCount = resultSet.getInt("type_count");
         int expectedUserCount = 6;
-        Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(6).");
+        Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
     }
+
 }
 
 
