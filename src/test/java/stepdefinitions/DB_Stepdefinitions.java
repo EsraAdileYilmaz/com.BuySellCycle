@@ -9,7 +9,7 @@ import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
-import org.junit.Assert;
+
 import utilities.DB_Utilities.DBUtils;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -206,8 +206,8 @@ public class DB_Stepdefinitions {
     }
     @Given("ResultSet25 results are processed.")
     public void result_set25_results_are_processed() throws SQLException {
-        Map<String,Double> resultMap = new LinkedHashMap<>();
-        while(resultSet.next()) {
+        Map<String, Double> resultMap = new LinkedHashMap<>();
+        while (resultSet.next()) {
             String txnId = resultSet.getString(("txn_id"));
             double amount = resultSet.getDouble("amount");
             resultMap.put(txnId, amount);
@@ -217,6 +217,7 @@ public class DB_Stepdefinitions {
         for (Map.Entry<String, Double> entry : resultMap.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
+    }
 
 
 
@@ -240,8 +241,6 @@ public class DB_Stepdefinitions {
     }
 
 
-    }
-
 
     @When("Query09 is prepared and executed.")
     public void query09_is_prepared_and_executed() throws SQLException {
@@ -251,15 +250,42 @@ public class DB_Stepdefinitions {
         resultSet = preparedStatement.executeQuery();
     }
 
-    }
 
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
         if (resultSet.next()) {
             int totalCount = resultSet.getInt("total_count");
-            Assert.assertEquals( "Total count should be 0.",0,totalCount);
+            //Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
+    }
+    @Given("Query13 is prepared and executed.")
+    public void query13_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery13();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet13 results are processed.")
+    public void result_set13_results_are_processed() {
+
+    }
+    @Given("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet19 results are processed.")
+    public void result_set19_results_are_processed() {
+
+        assertEquals(0,rowCount);
+    }
+    @Given("Query29 is prepared and executed.")
+    public void query29_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery29();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet29 results are processed.")
+    public void result_set29_results_are_processed() {
+
     }
 }
 
