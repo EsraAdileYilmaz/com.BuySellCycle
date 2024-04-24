@@ -22,18 +22,16 @@ public class Manage {
     private String Query01="SELECT name FROM categories where slug='fashion'";
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
+
     private String UpdateQuery04="UPDATE contacts SET message = 'Herkese kolay gelsin';";
 
-
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
+
     private String Query25="SELECT txn_id, MAX(amount) AS amount FROM order_payments WHERE txn_id != 'none' AND amount > 9000 GROUP BY txn_id ORDER BY amount DESC;";
+
     private String Query12="SELECT DATE(day) AS day, GROUP_CONCAT(DISTINCT note ORDER BY note ASC SEPARATOR ', ') AS unique_notes, GROUP_CONCAT(DISTINCT day ORDER BY day ASC SEPARATOR ', ') AS dates FROM attendances GROUP BY DATE(day), note;";
 
-
-
-
     private String Query27="SELECT description FROM transactions WHERE payment_method IN ('Stripe', 'Cash On Delivery') GROUP BY description HAVING COUNT(DISTINCT payment_method) = 2";
-
 
     private String Query011="SELECT SUM(amount) AS total_amount FROM wallet_balances WHERE type = 'Referral' AND id BETWEEN 10 AND 20";
 
@@ -43,12 +41,16 @@ public class Manage {
 
     private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
 
-
-
     private String Query13 = "";
 
     private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
 
     private String Query29 = "SELECT AVG(grand_total) AS average_grand_total FROM orders WHERE is_paid = 1;";
+
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
+
+    private String query05AddAContact= "INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?);";
+
+    private String query05DeleteAddedContact="DELETE from contacts where id = ?;";
+
 }
