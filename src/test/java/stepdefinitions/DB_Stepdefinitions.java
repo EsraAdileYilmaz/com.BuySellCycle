@@ -260,10 +260,17 @@ public class DB_Stepdefinitions {
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
+
+            resultSet.next();
+            int actualTotalCount = resultSet.getInt("total_count");
+            int expectedCount = 0;
+            Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
+
         if (resultSet.next()) {
             int totalCount = resultSet.getInt("total_count");
             //Assert.assertEquals( "Total count should be 0.",0,totalCount);
         }
+
 
 
     }
@@ -345,6 +352,21 @@ public class DB_Stepdefinitions {
             System.out.println("Days: " + note + ", Unique Notes: " + String.join(", ", day));
         }
 
+    }
+
+
+    @When("Query10 is prepared and executed.")
+    public void queryIsPreparedAndExecuted() throws SQLException {
+        query = manage.getQuery10();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Then("ResultSet10 results are processed.")
+    public void resultsetResultsAreProcessed() throws SQLException {
+        resultSet.next();
+        int actualUserCount = resultSet.getInt("user_count");
+        int expectedUserCount = 2;
+        Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
 
         @Given("Query13 is prepared and executed.")
