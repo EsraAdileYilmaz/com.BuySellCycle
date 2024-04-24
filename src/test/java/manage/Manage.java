@@ -22,7 +22,7 @@ public class Manage {
     private String Query01="SELECT name FROM categories where slug='fashion'";
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";
-
+  
     private String UpdateQuery04="UPDATE contacts SET message = 'Herkese kolay gelsin';";
 
     private String Query30="SELECT SUM(price) AS total_price FROM carts WHERE is_buy_now = 1 AND created_at < '2024-03-30'";
