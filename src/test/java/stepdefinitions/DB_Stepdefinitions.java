@@ -232,7 +232,7 @@ public class DB_Stepdefinitions {
         System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
     }
 
-    @When("Query09 is prepared and executed.")
+    @When("Query09 is prepared to calculate on log_activity and executed")
     public void query09_is_prepared_and_executed() throws SQLException {
         query = manage.getPreparedQuery09();
         preparedStatement = DBUtils.getPraperedStatement(query);
@@ -316,7 +316,7 @@ public class DB_Stepdefinitions {
 
     }
 
-    @When("Query10 is prepared and executed.")
+    @When("Query10 is prepared to calculate on order_address_details and executed")
     public void queryIsPreparedAndExecuted() throws SQLException {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
@@ -361,6 +361,18 @@ public class DB_Stepdefinitions {
             String expectedAverage = "176420.36284403672";
             assertEquals(expectedAverage, actualAverage);
         }
+    @When("Query23 is prepared to calculate for module value is not null and execute")
+    public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
+        query = manage.getQuery23();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+    @Then("Process result and verify the result")
+    public void process_result_and_verify_the_result() throws SQLException {
+        resultSet.next();
+        int actualUserCount = resultSet.getInt("type_count");
+        int expectedUserCount = 6;
+        Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
+    }
 
     @Given("Query21 is prepared and executed.")
     public void query21_is_prepared_and_executed() {

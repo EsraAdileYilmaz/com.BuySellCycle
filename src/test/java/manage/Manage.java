@@ -9,56 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class Manage {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ********************************* GULCAN ********************************
-
     private String Query07= "select phone from customer_addresses where phone like '%5%' order by id limit 3;";
 
     private String Query02="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
@@ -101,8 +51,4 @@ public class Manage {
 
     private String Query29 = "SELECT AVG(grand_total) AS average_grand_total FROM orders WHERE is_paid = 1;";
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
-
-    private String preparedQuery21 = "SELECT COUNT(*) AS num_orders FROM guest_order_details WHERE order_id = ?";
-
-    private String resultGetQuery21 = "UPDATE guest_order_details SET shipping_name = ? WHERE order_id?";
 }
