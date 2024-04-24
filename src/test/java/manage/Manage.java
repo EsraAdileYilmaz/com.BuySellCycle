@@ -51,6 +51,6 @@ public class Manage {
 
     private String query05AddAContact= "INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?);";
 
-    private String query05DeleteAddedContact="DELETE from contacts where id = ?;";
+    private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
 
 }
