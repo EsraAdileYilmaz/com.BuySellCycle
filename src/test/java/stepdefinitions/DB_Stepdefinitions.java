@@ -80,7 +80,7 @@ public class DB_Stepdefinitions {
 
     @When("Query05 is prepared and executed.")
     public void query05IsPreparedAndExecuted() throws SQLException {
-        query = manage.getQuery05();
+
         preparedStatement = DBUtils.getPraperedStatement(query);
         rowCount = preparedStatement.executeUpdate();
     }
@@ -358,6 +358,24 @@ public class DB_Stepdefinitions {
         public void result_set29_results_are_processed () {
 
         }
+
+    @Given("Query14 is prepared and executed.")
+    public void query14_is_prepared_and_executed() throws SQLException{
+      query = manage.getQuery014();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        rowCount = preparedStatement.executeUpdate();
+    }
+    @Given("ResultSet14 results are processed.")
+    public void result_set14_results_are_processed() {
+
+        List<Integer> listNotNull = new ArrayList<>();
+        for (int i = 0; i < listNotNull.size(); i++) {
+            listNotNull.add(resultSet.getInt());
+
+        }
+
+        Assert.assertEquals(rowCount,listNotNull);
+    }
 
 }
 

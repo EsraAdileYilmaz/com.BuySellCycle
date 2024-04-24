@@ -17,10 +17,10 @@ import org.junit.runner.RunWith;
         glue = {"stepdefinitions", "hooks"},
 
 
-        tags = "@esraDB",
+        tags = "@IP",
 
 
-        dryRun = false
+        dryRun = true
 
 )
 
