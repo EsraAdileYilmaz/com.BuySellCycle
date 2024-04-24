@@ -19,7 +19,6 @@ public class Manage {
 
     private String selectQuery03="select * from cities where id = ? and name = ?";
 
-
     private String Query01="SELECT name FROM categories where slug='fashion'";
 
     private String Query04="INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?)";

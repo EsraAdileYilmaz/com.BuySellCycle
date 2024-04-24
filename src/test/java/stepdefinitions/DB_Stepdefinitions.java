@@ -9,7 +9,6 @@ import io.cucumber.java.sl.In;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
-
 import utilities.DB_Utilities.DBUtils;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -17,17 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import java.time.LocalDate;
-
 import java.util.*;
-
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
-
 
 @Data
 @Slf4j
@@ -112,11 +106,9 @@ public class DB_Stepdefinitions {
     }
 
     @When("The phone data should be checked for the presence of digit '5'.")
-
     public void result_set07_results_are_processed() throws SQLException {
         int count = 0;
         boolean containsFive = true; // Tüm numaraların '5' içerdiğini varsayarak başla.
-
         while (resultSet.next() && count < 3) { // Sadece ilk üç kaydı kontrol et.
             String phone = resultSet.getString("phone");
             System.out.println("Phone number " + (count + 1) + ": " + phone);
@@ -126,7 +118,6 @@ public class DB_Stepdefinitions {
             }
             count++; // Kayıtlı telefon numarası sayısını artır.
         }
-
         assert containsFive; // Tüm kontrol edilen numaraların '5' içerdiğini doğrula
     }
 
@@ -165,7 +156,6 @@ public class DB_Stepdefinitions {
         rowCount = preparedStatement.executeUpdate();
         System.out.println("id : " + id);
         assertEquals(1, rowCount);
-
     }
 
     @When("I delete the city with id and name")
@@ -177,14 +167,12 @@ public class DB_Stepdefinitions {
         preparedStatement.setString(2, cityName);
         preparedStatement.executeUpdate();
 
-
     }
 
     @Then("The city with id and name should no longer exist in the table")
     public void the_city_with_id_and_name_should_no_longer_exist_in_the_table() throws SQLException {
         String cityId = ConfigReader.getProperty("cityId");
         String cityName = ConfigReader.getProperty("cityName");
-
         preparedStatement = DBUtils.getPraperedStatement(manage.getSelectQuery03());
         preparedStatement.setInt(1, Integer.parseInt(cityId));
         preparedStatement.setString(2, cityName);
@@ -194,7 +182,6 @@ public class DB_Stepdefinitions {
             count = resultset.getInt("count");
         }
         Assert.assertEquals(0, count);
-
     }
 
     @Given("Query30 is prepared and executed.")
@@ -229,7 +216,6 @@ public class DB_Stepdefinitions {
         }
     }
 
-
     @Given("Query011 is prepared and executed.")
     public void query011_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery011();
@@ -239,15 +225,12 @@ public class DB_Stepdefinitions {
     @Given("ResultSet011 results are processed.")
     public void result_set011_results_are_processed() throws SQLException {
         double totalAmount = 0;
-
-
         while (resultSet.next()) {
             double amount = resultSet.getDouble("total_amount");
             totalAmount += amount;
         }
         System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
     }
-
 
     @When("Query09 is prepared and executed.")
     public void query09_is_prepared_and_executed() throws SQLException {
@@ -257,28 +240,18 @@ public class DB_Stepdefinitions {
         resultSet = preparedStatement.executeQuery();
     }
 
-
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
-
             resultSet.next();
             int actualTotalCount = resultSet.getInt("total_count");
             int expectedCount = 0;
             Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
-
-        if (resultSet.next()) {
-            int totalCount = resultSet.getInt("total_count");
-            //Assert.assertEquals( "Total count should be 0.",0,totalCount);
-        }
-
-
 
     }
     @Given("Query026 is prepared and executed.")
     public void query026_is_prepared_and_executed() throws SQLException {
         query=manage.getQuery026();
         resultSet = DBUtils.getStatement().executeQuery(query);
-
     }
     @Given("ResultSet026 results are processed.")
     public void result_set026_results_are_processed() throws SQLException {
@@ -288,7 +261,6 @@ public class DB_Stepdefinitions {
 
             System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
         }
-
     }
     @Given("Query028 is prepared and executed.")
     public void query028_is_prepared_and_executed() throws SQLException {
@@ -310,16 +282,6 @@ public class DB_Stepdefinitions {
             int userId = resultSet.getInt("user_id");
             System.out.println("User ID: " + userId);
         }
-
-    }
-
-
-
-
-    @Given("Query13 is prepared and executed.")
-    public void query13_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery13();
-        resultSet = DBUtils.getStatement().executeQuery(query);
 
     }
 
@@ -354,13 +316,11 @@ public class DB_Stepdefinitions {
 
     }
 
-
     @When("Query10 is prepared and executed.")
     public void queryIsPreparedAndExecuted() throws SQLException {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
-
     @Then("ResultSet10 results are processed.")
     public void resultsetResultsAreProcessed() throws SQLException {
         resultSet.next();
@@ -378,7 +338,6 @@ public class DB_Stepdefinitions {
         public void result_set13_results_are_processed () {
 
         }
-
 
     @Given("Query19 is prepared and executed.")
         public void query19_is_prepared_and_executed () throws SQLException {
@@ -399,11 +358,6 @@ public class DB_Stepdefinitions {
         public void result_set29_results_are_processed () {
 
         }
-
-
-
-   
-
 
 }
 
