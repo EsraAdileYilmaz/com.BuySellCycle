@@ -17,10 +17,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import static org.junit.Assert.assertEquals;
 import java.time.LocalDate;
+
+import java.util.*;
+
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -127,14 +132,14 @@ public class DB_Stepdefinitions {
 
     @Given("I have the data ready for a new city and executed.")
     public void I_have_the_data_ready_for_a_new_city_and_executed() throws SQLException {
-        city=faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
-        id=faker.number().numberBetween(100011,100099);
+        city = faker.options().option("London", "Birmingham", "Milton Keynes", "Manchester", "Glasgow");
+        id = faker.number().numberBetween(100011, 100099);
         preparedStatement = DBUtils.getPraperedStatement(manage.getQuery02());
-        preparedStatement.setInt(1,id);
-        preparedStatement.setString(2,city);
-        preparedStatement.setInt(3,110);
-        preparedStatement.setInt(4,1);
-        preparedStatement.setDate(5,Date.valueOf(LocalDate.now()));
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, city);
+        preparedStatement.setInt(3, 110);
+        preparedStatement.setInt(4, 1);
+        preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
         System.out.println("id : " + id);
     }
@@ -142,44 +147,46 @@ public class DB_Stepdefinitions {
     @Given("I add this data to the cities table and verify.")
     public void I_add_this_data_to_the_cities_table_and_verify() {
 
-        assertEquals(1,rowCount);
+        assertEquals(1, rowCount);
     }
 
     @Given("I have a city with id and name in the cities table")
     public void i_have_a_city_with_id_and_name_in_the_cities_table() throws SQLException {
         String cityId = ConfigReader.getProperty("cityId");
         String cityName = ConfigReader.getProperty("cityName");
-        int stateID=119;
-        int status=1;
+        int stateID = 119;
+        int status = 1;
         preparedStatement = DBUtils.getPraperedStatement(manage.getQuery03());
-        preparedStatement.setInt(1,Integer.parseInt(cityId));
+        preparedStatement.setInt(1, Integer.parseInt(cityId));
         preparedStatement.setString(2, cityName);
         preparedStatement.setInt(3, stateID); // Assuming state_id is 1
         preparedStatement.setInt(4, status); // Assuming status is true
-        preparedStatement.setDate(5,Date.valueOf(LocalDate.now()));
+        preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
         rowCount = preparedStatement.executeUpdate();
-        System.out.println("id : "+id);
-        assertEquals(1,rowCount);
+        System.out.println("id : " + id);
+        assertEquals(1, rowCount);
 
     }
+
     @When("I delete the city with id and name")
     public void i_delete_the_city_with_id_and_name() throws SQLException {
         String cityId = ConfigReader.getProperty("cityId");
         String cityName = ConfigReader.getProperty("cityName");
         preparedStatement = DBUtils.getPraperedStatement(manage.getPreparedQuery03Delete());
-        preparedStatement.setInt(1,Integer.parseInt(cityId));
+        preparedStatement.setInt(1, Integer.parseInt(cityId));
         preparedStatement.setString(2, cityName);
         preparedStatement.executeUpdate();
 
 
     }
+
     @Then("The city with id and name should no longer exist in the table")
     public void the_city_with_id_and_name_should_no_longer_exist_in_the_table() throws SQLException {
         String cityId = ConfigReader.getProperty("cityId");
         String cityName = ConfigReader.getProperty("cityName");
 
         preparedStatement = DBUtils.getPraperedStatement(manage.getSelectQuery03());
-        preparedStatement.setInt(1,Integer.parseInt(cityId));
+        preparedStatement.setInt(1, Integer.parseInt(cityId));
         preparedStatement.setString(2, cityName);
         ResultSet resultset = preparedStatement.executeQuery();
         count = 0;
@@ -192,18 +199,21 @@ public class DB_Stepdefinitions {
 
     @Given("Query30 is prepared and executed.")
     public void query30_is_prepared_and_executed() throws SQLException {
-        query=manage.getQuery30();
-        resultSet=DBUtils.getStatement().executeQuery(query);
+        query = manage.getQuery30();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet30 results are processed.")
     public void result_set30_results_are_processed() {
         System.out.println("total price");
     }
+
     @Given("Query25 is prepared and executed.")
     public void query25_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery25();
-        resultSet=DBUtils.getStatement().executeQuery(query);
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet25 results are processed.")
     public void result_set25_results_are_processed() throws SQLException {
         Map<String, Double> resultMap = new LinkedHashMap<>();
@@ -220,8 +230,6 @@ public class DB_Stepdefinitions {
     }
 
 
-
-
     @Given("Query011 is prepared and executed.")
     public void query011_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery011();
@@ -233,13 +241,12 @@ public class DB_Stepdefinitions {
         double totalAmount = 0;
 
 
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             double amount = resultSet.getDouble("total_amount");
             totalAmount += amount;
         }
         System.out.println("Total amount for referrals with IDs between 10 and 20: " + totalAmount);
     }
-
 
 
     @When("Query09 is prepared and executed.")
@@ -249,7 +256,6 @@ public class DB_Stepdefinitions {
         preparedStatement.setString(1, "46.2.239.35");
         resultSet = preparedStatement.executeQuery();
     }
-
 
 
     @Then("ResultSet09 results are processed.")
@@ -283,6 +289,14 @@ public class DB_Stepdefinitions {
        resultSet=DBUtils.getStatement().executeQuery(query);
     }
 
+
+    @Given("Query12 is prepared and executed.")
+    public void query12_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery12();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        resultSet = preparedStatement.executeQuery();
+    }
+
     @Given("ResultSet028 results are processed.")
     public void result_set028_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -299,32 +313,78 @@ public class DB_Stepdefinitions {
     public void query13_is_prepared_and_executed() throws SQLException {
         query = manage.getQuery13();
         resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-    @Given("ResultSet13 results are processed.")
-    public void result_set13_results_are_processed() {
 
     }
+
+    @Given("ResultSet12 results are processed.")
+    public void result_set12_results_are_processed() throws SQLException {
+        Map<String, List<String>> notes = new HashMap<>();
+        Map<String, List<String>> dates = new HashMap<>();
+        while (resultSet.next()) {
+            String day = resultSet.getString("dates");
+            String[] uniqueNotes = resultSet.getString("unique_notes").split(", ");
+            String[] uniqueDays = resultSet.getString("dates").split(", ");
+
+            //Unique notes processed for each day
+            String[] uniqueNotesArray = uniqueNotes;
+            for (String note : uniqueNotes) {
+                notes.computeIfAbsent(day, k -> new ArrayList<>()).add(note);
+            }
+
+            // Unique days processed for each note
+            String[] uniqueDaysArray = uniqueDays;
+            for (String note : uniqueNotes) {
+                dates.computeIfAbsent(note, k -> new ArrayList<>()).addAll(Arrays.asList(uniqueDaysArray));
+            }
+        }
+
+        // Write days for each each unique notes
+        for (Map.Entry<String, List<String>> entry : notes.entrySet()) {
+            String note = entry.getKey();
+            List<String> day = entry.getValue();
+            System.out.println("Days: " + note + ", Unique Notes: " + String.join(", ", day));
+        }
+
+    }
+
+        @Given("Query13 is prepared and executed.")
+        public void query13_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery13();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet13 results are processed.")
+        public void result_set13_results_are_processed () {
+
+        }
+
+
     @Given("Query19 is prepared and executed.")
-    public void query19_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery19();
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-    @Given("ResultSet19 results are processed.")
-    public void result_set19_results_are_processed() {
+        public void query19_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery19();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet19 results are processed.")
+        public void result_set19_results_are_processed () {
 
-        assertEquals(0,rowCount);
-    }
-    @Given("Query29 is prepared and executed.")
-    public void query29_is_prepared_and_executed() throws SQLException {
-        query = manage.getQuery29();
-        resultSet = DBUtils.getStatement().executeQuery(query);
-    }
-    @Given("ResultSet29 results are processed.")
-    public void result_set29_results_are_processed() {
+            assertEquals(0, rowCount);
+        }
+        @Given("Query29 is prepared and executed.")
+        public void query29_is_prepared_and_executed () throws SQLException {
+            query = manage.getQuery29();
+            resultSet = DBUtils.getStatement().executeQuery(query);
+        }
+        @Given("ResultSet29 results are processed.")
+        public void result_set29_results_are_processed () {
 
-    }
+        }
+
+
+
+   
+
 
 }
+
 
 
 
