@@ -377,6 +377,7 @@ public class DB_Stepdefinitions {
     }
 
 
+
     @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
     public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() {
 
@@ -463,7 +464,6 @@ public class DB_Stepdefinitions {
 
           System.out.println("Customer coupon stories: " + customerUsersList);
       }
-
 
 
 }

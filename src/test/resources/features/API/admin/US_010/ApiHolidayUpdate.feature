@@ -1,5 +1,8 @@
-Feature:
-  Scenario Outline:
+Feature: As an administrator, I want to be able to update holiday information for the specified id number via API connection
+
+  Scenario Outline: Creating new data for the query below, the holiday id to be updated, and the updated holiday data
+  (year, name, date) is sent to the /api/holidayUpdate/{id} endpoint
+
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/holidayAdd" path parameters
     * The api user prepares a POST request containing the holiday data "<year>", "<name>", "<date>"
@@ -45,7 +48,7 @@ Feature:
   Scenario: /api/holidayUpdate/{id} endpoint'ine gecerli authorization bilgileri ile yanlis (sistemde bulunmayan)
   holiday id ve güncel holiday verilerini (year, name, date) iceren bir PATCH body gönderildiginde dönen status code'in
   404 ve response body'deki message bilgisinin "holiday not found" oldugu dogrulanmali.
-
+    
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/holidayUpdate/{id}" path parameters
     * The api user sends the PATCH request and saves the response returned from the api refundReasonUpdate endpoint.
