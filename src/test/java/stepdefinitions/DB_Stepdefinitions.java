@@ -78,9 +78,9 @@ public class DB_Stepdefinitions {
         rowCount = preparedStatement.executeUpdate();
     }
 
-    @When("Query05 is prepared and executed.")
+    @When("UpdateQuery04 is prepared and executed.")
     public void query05IsPreparedAndExecuted() throws SQLException {
-        query = manage.getQuery05();
+        query = manage.getUpdateQuery04();
         preparedStatement = DBUtils.getPraperedStatement(query);
         rowCount = preparedStatement.executeUpdate();
     }
