@@ -355,8 +355,11 @@ public class DB_Stepdefinitions {
             resultSet = DBUtils.getStatement().executeQuery(query);
         }
         @Given("ResultSet29 results are processed.")
-        public void result_set29_results_are_processed () {
-
+        public void result_set29_results_are_processed () throws SQLException {
+            resultSet.next();
+            String actualAverage = resultSet.getString("average_grand_total");
+            String expectedAverage = "176420.36284403672";
+            assertEquals(expectedAverage, actualAverage);
         }
 
 }
