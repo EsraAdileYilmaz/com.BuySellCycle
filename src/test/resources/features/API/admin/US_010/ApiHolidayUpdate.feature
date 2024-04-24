@@ -1,4 +1,5 @@
-
+Feature:
+  Scenario Outline:
     * The api user constructs the base url with the "admin" token.
     * The api user sets "api/holidayAdd" path parameters
     * The api user prepares a POST request containing the holiday data "<year>", "<name>", "<date>"

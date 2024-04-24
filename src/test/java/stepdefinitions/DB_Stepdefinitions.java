@@ -386,25 +386,37 @@ public class DB_Stepdefinitions {
     public void query14_is_prepared_and_executed() throws SQLException{
       query = manage.getQuery014();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        rowCount = preparedStatement.executeUpdate();
+        resultSet = preparedStatement.executeQuery();
     }
     @Given("ResultSet14 results are processed.")
-    public void result_set14_results_are_processed() {
+    public void result_set14_results_are_processed() throws SQLException {
+        resultSet.next();
+    Assert.assertTrue(resultSet.getInt(1)>0);
 
-        List<Integer> listNotNull = new ArrayList<>();
-        for (int i = 0; i < listNotNull.size(); i++) {
-           listNotNull.add(resultSet.getInt());
+
+    }
+    @Given("Query20 is prepared and executed.")
+    public void query20_is_prepared_and_executed() throws SQLException {
+
+        query = manage.getQuery20();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+
+        for (int i = 0; i < 10; i++) {
+
+            preparedStatement.setInt(1,  faker.number().numberBetween(200, 300));
+            preparedStatement.setInt(2, 3001);
+            preparedStatement.setString(3, faker.lorem().characters());
+            preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
+            preparedStatement.setDate(5, Date.valueOf(LocalDate.now()));
+            rowCount = preparedStatement.executeUpdate();
 
         }
 
-        Assert.assertEquals(rowCount,listNotNull);
     }
-    @Given("Query20 is prepared and executed.")
-    public void query20_is_prepared_and_executed() {
+    @Given("ResultSet20 results are processed.")
+    public void result_set20_results_are_processed() {
+        Assert.assertEquals(1, rowCount);
 
-    }
-    @Given("ResultSet020 results are processed.")
-    public void result_set020_results_are_processed() {
 
     }
 
