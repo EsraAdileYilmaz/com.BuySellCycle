@@ -13,8 +13,6 @@ import utilities.DB_Utilities.DBUtils;
 
 import java.sql.*;
 
-import static org.junit.Assert.assertEquals;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -22,7 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.*;
 
 @Data
 @Slf4j
@@ -243,17 +242,19 @@ public class DB_Stepdefinitions {
 
     @Then("ResultSet09 results are processed.")
     public void result_set09_results_are_processed() throws SQLException {
-            resultSet.next();
-            int actualTotalCount = resultSet.getInt("total_count");
-            int expectedCount = 0;
-            Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
+        resultSet.next();
+        int actualTotalCount = resultSet.getInt("total_count");
+        int expectedCount = 0;
+        Assert.assertEquals(actualTotalCount, expectedCount, "Total count should be 0.");
 
     }
+
     @Given("Query026 is prepared and executed.")
     public void query026_is_prepared_and_executed() throws SQLException {
-        query=manage.getQuery026();
+        query = manage.getQuery026();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet026 results are processed.")
     public void result_set026_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -263,10 +264,11 @@ public class DB_Stepdefinitions {
             System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
         }
     }
+
     @Given("Query028 is prepared and executed.")
     public void query028_is_prepared_and_executed() throws SQLException {
-       query= manage.getQuery028();
-       resultSet=DBUtils.getStatement().executeQuery(query);
+        query = manage.getQuery028();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
 
@@ -322,6 +324,7 @@ public class DB_Stepdefinitions {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("ResultSet10 results are processed.")
     public void resultsetResultsAreProcessed() throws SQLException {
         resultSet.next();
@@ -330,51 +333,57 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
 
-        @Given("Query13 is prepared and executed.")
-        public void query13_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery13();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-        @Given("ResultSet13 results are processed.")
-        public void result_set13_results_are_processed () throws SQLException {
+    @Given("Query13 is prepared and executed.")
+    public void query13_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery13();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet13 results are processed.")
+    public void result_set13_results_are_processed() throws SQLException {
 
         List<String> productsNotCoupon = new ArrayList<>();
-            // To retrieve the first 3 records, resultSet.next() is called 3 times.
-            for (int i = 0; i < 3 && resultSet.next(); i++) {
-                productsNotCoupon.add(resultSet.getString("product_id"));
-            }
-
-            System.out.println(productsNotCoupon);
-
+        // To retrieve the first 3 records, resultSet.next() is called 3 times.
+        for (int i = 0; i < 3 && resultSet.next(); i++) {
+            productsNotCoupon.add(resultSet.getString("product_id"));
         }
 
-        @Given("Query19 is prepared and executed.")
-        public void query19_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery19();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-        @Given("ResultSet19 results are processed.")
-        public void result_set19_results_are_processed () {
+        System.out.println(productsNotCoupon);
 
-            assertEquals(0, rowCount);
-        }
-        @Given("Query29 is prepared and executed.")
-        public void query29_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery29();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-        @Given("ResultSet29 results are processed.")
-        public void result_set29_results_are_processed () throws SQLException {
-            resultSet.next();
-            String actualAverage = resultSet.getString("average_grand_total");
-            String expectedAverage = "176420.36284403672";
-            assertEquals(expectedAverage, actualAverage);
-        }
+    }
+
+    @Given("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet19 results are processed.")
+    public void result_set19_results_are_processed() {
+
+        assertEquals(0, rowCount);
+    }
+
+    @Given("Query29 is prepared and executed.")
+    public void query29_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery29();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Given("ResultSet29 results are processed.")
+    public void result_set29_results_are_processed() throws SQLException {
+        resultSet.next();
+        String actualAverage = resultSet.getString("average_grand_total");
+        String expectedAverage = "176420.36284403672";
+        assertEquals(expectedAverage, actualAverage);
+    }
+
     @When("Query23 is prepared to calculate for module value is not null and execute")
     public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
         query = manage.getQuery23();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("Process result and verify the result")
     public void process_result_and_verify_the_result() throws SQLException {
         resultSet.next();
@@ -383,39 +392,75 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
     }
 
-      @Given("Query15 is prepared and executed.")
-      public void query15_is_prepared_and_executed() throws SQLException {
-          query = manage.getQuery15();
-          resultSet = DBUtils.getStatement().executeQuery(query);
-      }
+    @Given("Query15 is prepared and executed.")
+    public void query15_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery15();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
 
-      @When("ResultSet15 results are processed.")
-      public void result_set15_results_are_processed() throws SQLException {
+    @When("ResultSet15 results are processed.")
+    public void result_set15_results_are_processed() throws SQLException {
         /*List<Object> customerUsersList=new ArrayList<>();
           for (int i = 0; i <customerUsersList.size() ; i++) {
             customerUsersList.add(resultSet.getObject(i));
           }
           System.out.println("Customer coupon stories= " +customerUsersList);*/
-          List<Object> customerUsersList = new ArrayList<>();
-          ResultSetMetaData metaData = resultSet.getMetaData();
-          int columnCount = metaData.getColumnCount();
+        List<Object> customerUsersList = new ArrayList<>();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
 
-          while (resultSet.next()) {
-              // Her bir satır için bir Object listesi oluştur
-              List<Object> row = new ArrayList<>();
-              for (int i = 1; i <= columnCount; i++) {
-                  // Her sütunun değerini alıp listeye ekle
-                  row.add(resultSet.getObject(i));
-              }
-              // Oluşturulan satırı genel listeye ekle
-              customerUsersList.add(row);
-          }
+        while (resultSet.next()) {
+            // Her bir satır için bir Object listesi oluştur
+            List<Object> row = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                // Her sütunun değerini alıp listeye ekle
+                row.add(resultSet.getObject(i));
+            }
+            // Oluşturulan satırı genel listeye ekle
+            customerUsersList.add(row);
+        }
 
-          System.out.println("Customer coupon stories: " + customerUsersList);
-      }
+        System.out.println("Customer coupon stories: " + customerUsersList);
+    }
+
+
+    @When("I delete the added contact with email from the table")
+    public void iDeleteTheAddedContactWithEmailFromTheTable() throws SQLException {
+
+        deleteStatement = DBUtils.getPraperedStatement(manage.getQuery05DeleteAddedContact());
+        deleteStatement.setString(3, email);
+        deleteStatement.executeUpdate();
+
+    }
+
+    @Then("I verify that the contact data with email is no longer exist in the table")
+    public void iVerifyThatTheContactDataWithEmailIsNoLongerExistInTheTable() throws SQLException {
+        ResultSet resultset = deleteStatement.executeQuery();
+        count = 0;
+        if (resultset.next()) {
+            count = resultset.getInt("count");
+        }
+        Assert.assertEquals(0, count);
+    }
+
+    @Given("Query{int} is prepared and executed.")
+    public void queryIsPreparedAndExecuted(int arg0) throws SQLException {
+        query = manage.getQuery05AddAContact();
+        email = faker.internet().emailAddress();
+        id = faker.number().numberBetween(100, 900);
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, faker.name().firstName());
+        preparedStatement.setString(3, email);
+        preparedStatement.setString(4, "customer");
+        preparedStatement.setString(5, "Hi there");
+        rowCount = preparedStatement.executeUpdate();
+
+        assertTrue("An error occurred while inserting data.", rowCount > 0);
+
+
+    }
 
 }
-
-
 
 
