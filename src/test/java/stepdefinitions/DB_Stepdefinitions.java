@@ -335,7 +335,15 @@ public class DB_Stepdefinitions {
             resultSet = DBUtils.getStatement().executeQuery(query);
         }
         @Given("ResultSet13 results are processed.")
-        public void result_set13_results_are_processed () {
+        public void result_set13_results_are_processed () throws SQLException {
+
+        List<String> productsNotCoupon = new ArrayList<>();
+            // To retrieve the first 3 records, resultSet.next() is called 3 times.
+            for (int i = 0; i < 3 && resultSet.next(); i++) {
+                productsNotCoupon.add(resultSet.getString("product_id"));
+            }
+
+            System.out.println(productsNotCoupon);
 
         }
 
