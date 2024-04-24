@@ -376,25 +376,6 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
     }
 
-
-
-    @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
-    public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() {
-
-
-
-    }
-    @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
-    public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() {
-
-
-
-
-    }
-
-
-
-
     @Given("Query14 is prepared and executed.")
     public void query14_is_prepared_and_executed() throws SQLException{
       query = manage.getQuery014();
@@ -465,6 +446,26 @@ public class DB_Stepdefinitions {
           System.out.println("Customer coupon stories: " + customerUsersList);
       }
 
+    @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
+    public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() throws SQLException {
+
+        resultSet = DBUtils.getStatement().executeQuery(manage.getQuery08());
+    }
+    @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
+    public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() throws SQLException {
+
+        List<String> expectedOrder = Arrays.asList("Shipped", "Received", "Processing", "Pending", "Delivered");
+        List<String> actualOrder = new ArrayList<>();
+
+        while (resultSet.next()) {
+            actualOrder.add(resultSet.getString("name"));
+        }
+        Collections.reverse(actualOrder);
+        System.out.println(expectedOrder);
+        System.out.println(actualOrder);
+        assert actualOrder.equals(expectedOrder) : "The data names are not in the expected reverse order.";
+
+    }
 
 }
 
