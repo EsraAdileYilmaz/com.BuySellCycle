@@ -71,5 +71,20 @@ public class Manage {
   
     private String query16Join ="SELECT o.id FROM orders o JOIN order_address_details d ON o.id = d.order_id WHERE d.shipping_address = 'Switzerland';";
 
+    private String Query21 = "SELECT COUNT(*) AS total_orders FROM guest_order_details WHERE order_id IN (2, 23, 62, 78, 91, 92, 115, 116, 118, 129, 139, 149, 181)";
+
+    private String preparedQuery22 = "INSERT INTO digital_gift_cards (id, gift_name, descriptionOne, thumbnail_image_one, thumbnail_image_two) " +
+            "VALUES (?, ?, ?, ?, ?)";
+
+    private String resultQuery22 = "DELETE FROM digital_gift_cards WHERE id = ?";
+
+    private String preparedQuery24 ="SELECT * FROM orders " +
+            "WHERE customer_email NOT LIKE '%customer%' AND sub_total < 2000 " +
+            "ORDER BY order_number DESC";
+
+    private String resultQuery24 = "SELECT * FROM orders " +
+            "WHERE customer_email NOT LIKE '%customer%' AND sub_total < 2000 " +
+            "ORDER BY order_number DESC";
+
 
 }
