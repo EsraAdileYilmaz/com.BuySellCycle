@@ -246,11 +246,13 @@ public class DB_Stepdefinitions {
             Assert.assertEquals( actualTotalCount,expectedCount,"Total count should be 0.");
 
     }
+
     @Given("Query026 is prepared and executed.")
     public void query026_is_prepared_and_executed() throws SQLException {
         query=manage.getQuery026();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet026 results are processed.")
     public void result_set026_results_are_processed() throws SQLException {
         while (resultSet.next()) {
@@ -260,6 +262,7 @@ public class DB_Stepdefinitions {
             System.out.println("Payment Method: " + paymentMethod + ", Total Amount: " + totalAmount);
         }
     }
+
     @Given("Query028 is prepared and executed.")
     public void query028_is_prepared_and_executed() throws SQLException {
        query= manage.getQuery028();
@@ -316,6 +319,7 @@ public class DB_Stepdefinitions {
         query = manage.getQuery10();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("ResultSet10 results are processed.")
     public void resultsetResultsAreProcessed() throws SQLException {
         resultSet.next();
@@ -323,11 +327,13 @@ public class DB_Stepdefinitions {
         int expectedUserCount = 2;
         Assert.assertEquals(actualUserCount, expectedUserCount, "The user count should match the expected count(2).");
     }
+
     @Given("Query13 is prepared and executed.")
     public void query13_is_prepared_and_executed () throws SQLException {
             query = manage.getQuery13();
             resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet13 results are processed.")
     public void result_set13_results_are_processed () throws SQLException {
 
@@ -348,11 +354,13 @@ public class DB_Stepdefinitions {
      public void result_set19_results_are_processed () {
       assertEquals(0, rowCount);
     }
+
     @Given("Query29 is prepared and executed.")
       public void query29_is_prepared_and_executed () throws SQLException {
         query = manage.getQuery29();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet29 results are processed.")
      public void result_set29_results_are_processed () throws SQLException {
        resultSet.next();
@@ -360,11 +368,13 @@ public class DB_Stepdefinitions {
        String expectedAverage = "176420.36284403672";
        assertEquals(expectedAverage, actualAverage);
     }
+
     @When("Query23 is prepared to calculate for module value is not null and execute")
     public void query23_is_prepared_to_calculate_for_module_value_is_not_null_and_execute() throws SQLException {
         query = manage.getQuery23();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
     @Then("Process result and verify the result")
     public void process_result_and_verify_the_result() throws SQLException {
         resultSet.next();
@@ -373,8 +383,6 @@ public class DB_Stepdefinitions {
         log.info("The type_count should match the expected count(6).");
         Assert.assertEquals(actualUserCount, expectedUserCount);
     }
-
-
 
     @Given("Prepare a query that adds datas to the bank_accounts table in bulk.")
     public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk(Integer int1) throws SQLException {
@@ -412,13 +420,13 @@ public class DB_Stepdefinitions {
         preparedStatement = DBUtils.getPraperedStatement(query);
         resultSet = preparedStatement.executeQuery();
     }
+
     @Given("ResultSet14 results are processed.")
     public void result_set14_results_are_processed() throws SQLException {
         resultSet.next();
     Assert.assertTrue(resultSet.getInt(1)>0);
-
-
     }
+
     @Given("Query20 is prepared and executed.")
     public void query20_is_prepared_and_executed() throws SQLException {
 
@@ -437,6 +445,7 @@ public class DB_Stepdefinitions {
         }
 
     }
+
     @Given("ResultSet20 results are processed.")
     public void result_set20_results_are_processed() {
         Assert.assertEquals(1, rowCount);
@@ -444,15 +453,14 @@ public class DB_Stepdefinitions {
 
     }
 
-
-      @Given("Query15 is prepared and executed.")
+    @Given("Query15 is prepared and executed.")
       public void query15_is_prepared_and_executed() throws SQLException {
           query = manage.getQuery15();
           resultSet = DBUtils.getStatement().executeQuery(query);
-      }
+    }
 
-      @When("ResultSet15 results are processed.")
-      public void result_set15_results_are_processed() throws SQLException {
+    @When("ResultSet15 results are processed.")
+    public void result_set15_results_are_processed() throws SQLException {
         /*List<Object> customerUsersList=new ArrayList<>();
           for (int i = 0; i <customerUsersList.size() ; i++) {
             customerUsersList.add(resultSet.getObject(i));
@@ -474,13 +482,14 @@ public class DB_Stepdefinitions {
           }
 
           System.out.println("Customer coupon stories: " + customerUsersList);
-      }
+    }
 
     @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
     public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() throws SQLException {
 
         resultSet = DBUtils.getStatement().executeQuery(manage.getQuery08());
     }
+
     @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
     public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() throws SQLException {
 
@@ -496,7 +505,6 @@ public class DB_Stepdefinitions {
         assert actualOrder.equals(expectedOrder) : "The data names are not in the expected reverse order.";
 
     }
-
 
     @When("I delete the added contact with email from the table")
     public void iDeleteTheAddedContactWithEmailFromTheTable() throws SQLException {
@@ -725,11 +733,7 @@ public class DB_Stepdefinitions {
             DBUtils.closeStatement(preparedStatement);
         }
 
-
-
-
     }
-      
 
 }
 
