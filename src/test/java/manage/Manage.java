@@ -65,4 +65,6 @@ public class Manage {
 
     private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
 
+    private String query17 = "SELECT email FROM users JOIN attendances  ON users.id = attendances.user_id WHERE users.id = 3 AND attendances.year < 2022;";
+
 }
