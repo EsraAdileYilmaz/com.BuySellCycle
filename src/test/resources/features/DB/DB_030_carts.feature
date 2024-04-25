@@ -5,6 +5,6 @@ Feature: Calculate the total cost of products with is_buy_now=1 before 2024-03-3
 
   Scenario:Calculate the total cost of products with is_buy_now=1 before 2024-03-30 in the carts table
 
-    * Query30 is prepared and executed.
+    * Prepare Query for data and executed.
     * ResultSet30 results are processed.
     * The database connection is closed.

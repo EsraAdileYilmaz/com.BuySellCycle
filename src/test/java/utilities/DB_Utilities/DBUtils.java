@@ -3,6 +3,7 @@ import config_Requirements.ConfigReader;
 
 import java.sql.*;
 import java.util.*;
+
 public class DBUtils {
     static Connection connection;
     static Statement statement;
@@ -18,7 +19,8 @@ public class DBUtils {
     ;
     String username = ConfigReader.getProperty("DBname","db");
     String password = ConfigReader.getProperty("DBPassword","db");
-
+    public static int id;
+    static Random random=new Random();
 
     public static void createConnection() {
         String url = ConfigReader.getProperty("URL","db");
@@ -296,6 +298,27 @@ public class DBUtils {
         System.out.println("Oluşturulan Sayı: " + randomNumber);
 
         return randomNumber;
+    }
+
+    public static Integer idGenerator(String givenQuery) throws SQLException {
+        resultSet = DBUtils.getStatement().executeQuery(givenQuery);
+
+        List<Long> ids = new ArrayList<>();
+        while (resultSet.next()) {
+            ids.add(resultSet.getLong("id"));
+        }
+
+        int maxAttempts = 1000; // Maksimum deneme sayısı
+        int attemptCount = 0;
+        do {
+            long max = 8511963174281719650L;
+            int id = (int) Math.abs(random.nextLong() % max);
+            if (!ids.contains(id)) {
+                return id;
+            }
+            attemptCount++;
+        } while (attemptCount < maxAttempts);
+        throw new IllegalStateException("Unique ID could not be generated after " + maxAttempts + " attempts.");
     }
 
 

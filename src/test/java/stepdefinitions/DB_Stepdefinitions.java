@@ -185,19 +185,19 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(0, count);
     }
 
-    @Given("Query30 is prepared and executed.")
-    public void query30_is_prepared_and_executed() throws SQLException {
+    @Given("Prepare Query for data and executed.")
+    public void prepare_query_for_data_and_executed() throws SQLException {
         query = manage.getQuery30();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
 
     @Given("ResultSet30 results are processed.")
     public void result_set30_results_are_processed() {
-        System.out.println("total price");
+        log.info("total price");
     }
 
-    @Given("Query25 is prepared and executed.")
-    public void query25_is_prepared_and_executed() throws SQLException {
+    @Given("Prepare a query that adds datas to the carts table.")
+    public void prepare_a_query_that_adds_datas_to_the_carts_table() throws SQLException {
         query = manage.getQuery25();
         resultSet = DBUtils.getStatement().executeQuery(query);
     }
@@ -269,8 +269,8 @@ public class DB_Stepdefinitions {
        resultSet=DBUtils.getStatement().executeQuery(query);
     }
 
-    @Given("Query12 is prepared and executed.")
-    public void query12_is_prepared_and_executed() throws SQLException {
+    @Given("Prepare a query that adds datas to the attendances table..")
+    public void prepare_a_query_that_adds_datas_to_the_attendances_table() throws SQLException {
         query = manage.getQuery12();
         preparedStatement = DBUtils.getPraperedStatement(query);
         resultSet = preparedStatement.executeQuery();
@@ -378,34 +378,40 @@ public class DB_Stepdefinitions {
 
 
 
-    @Given("Prepare a query that adds datas to the bank_accounts table in bulk.")
-    public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk(Integer int1) throws SQLException {
-        query = manage.getQuery12();
+    @Given("Scenario: Enter datas in bulk to the bank_accounts table and verify that it is added.")
+public void scenario_enter_datas_in_bulk_to_the_bank_accounts_table_and_verify_that_it_is_added() throws SQLException {
+        query = manage.getQuery18();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        resultSet = preparedStatement.executeQuery();
+
     }
     @Given("Enter the data in bulk. Check that it is added to the table.")
-    public void enter_the_data_in_bulk_check_that_it_is_added_to_the_table(Integer int1) throws SQLException {
+public void enter_the_data_in_bulk_check_that_it_is_added_to_the_table() throws SQLException {
+        try (Connection connection = DBUtils.getStatement().getConnection()) {
+            PreparedStatement stm = connection.prepareStatement("Insert Into bank_accounts (id,bank_name,branch_name,account_name,account_number,opening_balance,description,status) Values(?,?,?,?,?,?,?,?)");
 
-        // 5 set of data to be inserted
-       List<Object[]> dataList = new ArrayList<>();
-        dataList.add(new Object[]{1, "Bank A", "Branch A", "Account A", "123456", 1000.0, "Description A", "Active"});
-        dataList.add(new Object[]{2, "Bank B", "Branch B", "Account B", "234567", 2000.0, "Description B", "Inactive"});
-        dataList.add(new Object[]{3, "Bank C", "Branch C", "Account C", "345678", 3000.0, "Description C", "Active"});
-        dataList.add(new Object[]{4, "Bank D", "Branch D", "Account D", "456789", 4000.0, "Description D", "Inactive"});
-        dataList.add(new Object[]{5, "Bank E", "Branch E", "Account E", "567890", 5000.0, "Description E", "Active"});
+            for (int i = 0; i < 4; i++) {
+                stm.setInt(1, (int) faker.number().numberBetween(30000, 9000000));
+                stm.setString(2, faker.company().name());
+                stm.setString(3, faker.lorem().word()); // branch_name
+                stm.setString(4, faker.lorem().word()); // account_name
+                stm.setString(5, faker.numerify("#######")); // account_number
+                stm.setDouble(6, faker.random().nextDouble()); // opening_balance
+                stm.setString(7, faker.lorem().word()); // description
+                stm.setString(8, String.valueOf(faker.number().randomDigitNotZero())); // status
 
-        // Insert data into table
-        for (Object[] data : dataList) {
-            for (int i = 0; i < data.length; i++) {
-                preparedStatement.setObject(i + 1, data[i]);
+                stm.addBatch();
+
             }
-            preparedStatement.addBatch();
-        }
-        preparedStatement.executeBatch();
 
-        // Check if data is added to the table
-        System.out.println("Data added successfully.");
+            int[] affectedRows = new int[]{stm.executeUpdate()};
+
+            // Verileri yazdırma
+            System.out.println("Eklenen veriler:");
+            for (int rowCount : affectedRows) {
+                System.out.println("Etkilenen satır sayısı: " + rowCount);
+            }
+
+        }
     }
 
     @Given("Query14 is prepared and executed.")
@@ -534,6 +540,7 @@ public class DB_Stepdefinitions {
 
         assertTrue("An error occurred while inserting data.", rowCount > 0);
     }
+
 }
 
 
