@@ -520,7 +520,7 @@ public class DB_Stepdefinitions {
     }
 
     @Given("Query_{int} is prepared and executed.")
-    public void query_IsPreparedAndExecuted(int arg0) throws SQLException {
+    public void query_IsPreparedAndExecuted() throws SQLException {
         query = manage.getQuery05AddAContact();
         email = faker.internet().emailAddress();
         id = faker.number().numberBetween(100, 900);
