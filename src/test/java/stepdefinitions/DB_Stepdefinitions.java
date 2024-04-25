@@ -534,7 +534,37 @@ public class DB_Stepdefinitions {
 
         assertTrue("An error occurred while inserting data.", rowCount > 0);
     }
+
+
+
+    @When("the user queries ids with  with shipping_address=Switzerland in the order_address_details table according to the orders table. to list orders shipped to Switzerland according to the orders table.")
+    public void theUserQueriesIdsWithWithShipping_addressSwitzerlandInTheOrder_address_detailsTableAccordingToTheOrdersTableToListOrdersShippedToSwitzerlandAccordingToTheOrdersTable() throws SQLException {
+        query = manage.getQuery16Join();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+
+    }
+
+    @And("The user list the ids from the resultset")
+    public void theUserListTheIdsFromTheResultset() throws SQLException {
+        List<Object> idList = new ArrayList<>();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        while (resultSet.next()) {
+            // Her bir satır için bir Object listesi oluştur
+            List<Object> row = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                // Her sütunun değerini alıp listeye ekle
+                row.add(resultSet.getObject(i));
+            }
+            // Oluşturulan satırı genel listeye ekle
+            idList.add(row);
+        }
+
+        System.out.println(": " + idList);
+    }
 }
+
 
 
 

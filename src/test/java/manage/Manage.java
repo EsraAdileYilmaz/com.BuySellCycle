@@ -67,4 +67,6 @@ public class Manage {
 
     private String query06GroupId= "SELECT coupon_id, COUNT(*) AS product_count FROM coupon_products GROUP BY coupon_id;";
 
+    private String query16Join ="SELECT o.id FROM orders o JOIN order_address_details d ON o.id = d.order_id WHERE d.shipping_address = 'Switzerland';";
+
 }
