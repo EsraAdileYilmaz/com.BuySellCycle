@@ -559,6 +559,7 @@ public class DB_Stepdefinitions {
         }
 
         System.out.println(": " + idList);
+    }
 
     @When("Query17 is prepared  for users and attendances table and execute")
     public void queryIsPreparedForUsersAndAttendancesTableAndExecute() throws SQLException {
@@ -579,6 +580,7 @@ public class DB_Stepdefinitions {
             Assert.assertEquals(actualEmail, expectedUserEmail, "The actual email should match with expected");
         }
     }
+
     @Given("I query to group the coupon_products table by coupon_id")
     public void iQueryToGroupTheCoupon_productsTableByCoupon_id() throws SQLException {
         query = manage.getQuery06GroupId();
