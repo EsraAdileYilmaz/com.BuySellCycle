@@ -13,6 +13,8 @@ public class Manage {
 
     private String Query02="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
+    private String Query08="SELECT name FROM delivery_processes ORDER BY id LIMIT 5;";
+
     private String Query03 ="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
     private String preparedQuery03Delete = "delete from cities where id = ? and name = ?;";
@@ -49,10 +51,11 @@ public class Manage {
 
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
 
-
     private String Query15="SELECT * FROM customer_coupon_stores JOIN users ON customer_coupon_stores.id = users.id LIMIT 3;";
 
     private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
+
+    private String Query18="Insert Into bank_accounts (id,bank_name,branch_name,account_name,account_number,opening_balance,description,status) Values(?,?,?,?,?,?,?,?)";
 
     private String query014 = "SELECT COUNT(*) AS null_reason_count FROM refund_reasons WHERE reason IS NULL;";
 
@@ -61,4 +64,5 @@ public class Manage {
     private String query05AddAContact= "INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?);";
 
     private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
+
 }

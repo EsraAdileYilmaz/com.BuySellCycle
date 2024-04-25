@@ -3,8 +3,8 @@ Feature: Enter 5 data in bulk to the bank_accounts table and verify that it is a
   Background: Database connection
     * Database connection is established.
 
-  Scenario:Enter 5 data in bulk to the bank_accounts table and verify that it is added.
+  Scenario: Enter 5 data in bulk to the bank_accounts table and verify that it is added.
 
-    * Query18 is prepared and executed.
-    * ResultSet18 results are processed.
+    * Prepare a query that adds datas to the bank_accounts table in bulk.
+    * Enter the data in bulk. Check that it is added to the table.
     * The database connection is closed.
