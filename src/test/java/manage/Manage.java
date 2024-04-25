@@ -41,7 +41,7 @@ public class Manage {
 
     private String Query028="SELECT DISTINCT user_id FROM support_tickets WHERE reference_no LIKE '%-%' OR reference_no NOT LIKE '%-%'";
 
-    private String Query13 = "";
+    private String Query13 = "SELECT seller_products.product_id, coupon_products.coupon_id FROM seller_products LEFT JOIN coupon_products ON seller_products.product_id = coupon_products.product_id LIMIT 3;";
 
     private String Query19 = "SELECT * FROM bank_accounts WHERE bank_name = 'Witting Group' AND opening_balance < 0;";
 
@@ -49,7 +49,17 @@ public class Manage {
 
     private String query10 = "SELECT  COUNT(*) AS user_count FROM order_address_details WHERE shipping_address <> billing_address;";
 
+
+    private String Query15="SELECT * FROM customer_coupon_stores JOIN users ON customer_coupon_stores.id = users.id LIMIT 3;";
+
     private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
 
+
     private String Query18="Insert Into bank_accounts (id,bank_name,branch_name,account_name,account_number,opening_balance,description,status) Values(?,?,?,?,?,?,?,?)";
+
+    private String query014 = "SELECT COUNT(*) AS null_reason_count FROM refund_reasons WHERE reason IS NULL;";
+
+    private  String query20 = "INSERT INTO device_tokens (id, user_id, device_token, created_at, updated_at) VALUES(?,?,?,?,?)";
+
+
 }
