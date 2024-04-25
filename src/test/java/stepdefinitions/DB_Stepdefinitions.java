@@ -520,7 +520,7 @@ public class DB_Stepdefinitions {
     }
 
     @Given("Query_{int} is prepared and executed.")
-    public void query_IsPreparedAndExecuted(int arg0) throws SQLException {
+    public void query_IsPreparedAndExecuted() throws SQLException {
         query = manage.getQuery05AddAContact();
         email = faker.internet().emailAddress();
         id = faker.number().numberBetween(100, 900);
@@ -533,6 +533,22 @@ public class DB_Stepdefinitions {
         rowCount = preparedStatement.executeUpdate();
 
         assertTrue("An error occurred while inserting data.", rowCount > 0);
+    }
+
+    @Given("I query to group the coupon_products table by coupon_id")
+    public void iQueryToGroupTheCoupon_productsTableByCoupon_id() throws SQLException {
+        query = manage.getQuery06GroupId();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @When("I find out how many products for each coupon")
+    public void iFindOutHowManyProductsForEachCoupon() throws SQLException {
+        while (resultSet.next()) {
+            int couponId = resultSet.getInt("coupon_id");
+            int productCount = resultSet.getInt("product_count");
+            System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
+        }
+
     }
 }
 
