@@ -555,7 +555,7 @@ public class DB_Stepdefinitions {
             String expectedUserEmail = "seller@gmail.com";
             Assert.assertEquals(actualEmail, expectedUserEmail, "The actual email should match with expected");
         }
-
+    }
     @Given("I query to group the coupon_products table by coupon_id")
     public void iQueryToGroupTheCoupon_productsTableByCoupon_id() throws SQLException {
         query = manage.getQuery06GroupId();
