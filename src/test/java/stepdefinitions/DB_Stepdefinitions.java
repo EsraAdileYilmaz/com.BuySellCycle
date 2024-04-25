@@ -519,8 +519,8 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(0, count);
     }
 
-    @Given("Query{int} is prepared and executed.")
-    public void queryIsPreparedAndExecuted(int arg0) throws SQLException {
+    @Given("Query_{int} is prepared and executed.")
+    public void query_IsPreparedAndExecuted(int arg0) throws SQLException {
         query = manage.getQuery05AddAContact();
         email = faker.internet().emailAddress();
         id = faker.number().numberBetween(100, 900);
