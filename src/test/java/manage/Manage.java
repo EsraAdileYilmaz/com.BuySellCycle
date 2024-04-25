@@ -3,6 +3,9 @@ package manage;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Slf4j
 @Getter
@@ -56,7 +59,7 @@ public class Manage {
     private String query23 = "select count(*) as type_count from email_template_types  where module is not null;";
 
     private String Query18="Insert Into bank_accounts (id,bank_name,branch_name,account_name,account_number,opening_balance,description,status) Values(?,?,?,?,?,?,?,?)";
-
+    private String Query18_id="SELECT id FROM bank_accounts";
     private String query014 = "SELECT COUNT(*) AS null_reason_count FROM refund_reasons WHERE reason IS NULL;";
 
     private  String query20 = "INSERT INTO device_tokens (id, user_id, device_token, created_at, updated_at) VALUES(?,?,?,?,?)";
@@ -64,5 +67,6 @@ public class Manage {
     private String query05AddAContact= "INSERT INTO contacts (id,name,email,query_type,message) VALUES (?,?,?,?,?);";
 
     private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
+
 
 }

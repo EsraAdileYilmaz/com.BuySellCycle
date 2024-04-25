@@ -5,6 +5,6 @@ Feature: list the unique 'notes' in the attendances table, separated by days
 
   Scenario:list the unique 'notes' in the attendances table, separated by days
 
-    * Query12 is prepared and executed.
+    * Prepare a query that adds datas to the attendances table.
     * ResultSet12 results are processed.
     * The database connection is closed.
