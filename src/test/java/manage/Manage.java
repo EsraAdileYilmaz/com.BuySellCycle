@@ -65,8 +65,11 @@ public class Manage {
 
     private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
 
-    private String query06GroupId= "SELECT coupon_id, COUNT(*) AS product_count FROM coupon_products GROUP BY coupon_id;";
+    private String query17 = "SELECT email FROM users JOIN attendances  ON users.id = attendances.user_id WHERE users.id = 3 AND attendances.year < 2022;";
 
+    private String query06GroupId= "SELECT coupon_id, COUNT(*) AS product_count FROM coupon_products GROUP BY coupon_id;";
+  
     private String query16Join ="SELECT o.id FROM orders o JOIN order_address_details d ON o.id = d.order_id WHERE d.shipping_address = 'Switzerland';";
+
 
 }

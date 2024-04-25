@@ -10,9 +10,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
 import utilities.DB_Utilities.DBUtils;
-
 import java.sql.*;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.*;
 
 @Data
@@ -373,7 +370,8 @@ public class DB_Stepdefinitions {
         resultSet.next();
         int actualUserCount = resultSet.getInt("type_count");
         int expectedUserCount = 6;
-        Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
+        log.info("The type_count should match the expected count(6).");
+        Assert.assertEquals(actualUserCount, expectedUserCount);
     }
 
 
@@ -520,7 +518,7 @@ public class DB_Stepdefinitions {
     }
 
     @Given("Query_{int} is prepared and executed.")
-    public void query_IsPreparedAndExecuted(int arg0) throws SQLException {
+    public void query_IsPreparedAndExecuted() throws SQLException {
         query = manage.getQuery05AddAContact();
         email = faker.internet().emailAddress();
         id = faker.number().numberBetween(100, 900);
@@ -534,7 +532,6 @@ public class DB_Stepdefinitions {
 
         assertTrue("An error occurred while inserting data.", rowCount > 0);
     }
-
 
 
     @When("the user queries ids with  with shipping_address=Switzerland in the order_address_details table according to the orders table. to list orders shipped to Switzerland according to the orders table.")
@@ -562,7 +559,41 @@ public class DB_Stepdefinitions {
         }
 
         System.out.println(": " + idList);
+
+    @When("Query17 is prepared  for users and attendances table and execute")
+    public void queryIsPreparedForUsersAndAttendancesTableAndExecute() throws SQLException {
+        query = manage.getQuery17();
+        resultSet = DBUtils.getStatement().executeQuery(query);
     }
+
+    @Then("Process result and verify the email address")
+    public void processResultAndVerifyTheEmailAddress() throws SQLException {
+        if (!resultSet.next()) {
+            log.info("There is no e-mail address that meets this condition.");
+
+        } else {
+
+            String actualEmail = resultSet.getString("email");
+            log.info("It works for UserId = 3");
+            String expectedUserEmail = "seller@gmail.com";
+            Assert.assertEquals(actualEmail, expectedUserEmail, "The actual email should match with expected");
+        }
+
+    @Given("I query to group the coupon_products table by coupon_id")
+    public void iQueryToGroupTheCoupon_productsTableByCoupon_id() throws SQLException {
+        query = manage.getQuery06GroupId();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @When("I find out how many products for each coupon")
+    public void iFindOutHowManyProductsForEachCoupon() throws SQLException {
+        while (resultSet.next()) {
+            int couponId = resultSet.getInt("coupon_id");
+            int productCount = resultSet.getInt("product_count");
+            System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
+        }
+    }
+      
 }
 
 
