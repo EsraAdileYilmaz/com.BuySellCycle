@@ -65,4 +65,6 @@ public class Manage {
 
     private String query05DeleteAddedContact="DELETE from contacts where email = ?;";
 
+    private String query06GroupId= "SELECT coupon_id, COUNT(*) AS product_count FROM coupon_products GROUP BY coupon_id;";
+
 }
