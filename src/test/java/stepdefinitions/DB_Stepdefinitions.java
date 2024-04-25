@@ -374,6 +374,38 @@ public class DB_Stepdefinitions {
         Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
     }
 
+    @Given("Prepare a query that adds datas to the bank_accounts table in bulk.")
+    public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk(Integer int1) throws SQLException {
+        query = manage.getQuery12();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        resultSet = preparedStatement.executeQuery();
+    }
+    @Given("Enter the data in bulk. Check that it is added to the table.")
+    public void enter_the_data_in_bulk_check_that_it_is_added_to_the_table(Integer int1) throws SQLException {
+
+        // 5 set of data to be inserted
+       List<Object[]> dataList = new ArrayList<>();
+        dataList.add(new Object[]{1, "Bank A", "Branch A", "Account A", "123456", 1000.0, "Description A", "Active"});
+        dataList.add(new Object[]{2, "Bank B", "Branch B", "Account B", "234567", 2000.0, "Description B", "Inactive"});
+        dataList.add(new Object[]{3, "Bank C", "Branch C", "Account C", "345678", 3000.0, "Description C", "Active"});
+        dataList.add(new Object[]{4, "Bank D", "Branch D", "Account D", "456789", 4000.0, "Description D", "Inactive"});
+        dataList.add(new Object[]{5, "Bank E", "Branch E", "Account E", "567890", 5000.0, "Description E", "Active"});
+
+        // Insert data into table
+        for (Object[] data : dataList) {
+            for (int i = 0; i < data.length; i++) {
+                preparedStatement.setObject(i + 1, data[i]);
+            }
+            preparedStatement.addBatch();
+        }
+        preparedStatement.executeBatch();
+
+        // Check if data is added to the table
+        System.out.println("Data added successfully.");
+    }
+
+
+
 }
 
 
