@@ -13,6 +13,8 @@ public class Manage {
 
     private String Query02="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
+    private String Query08="SELECT name FROM delivery_processes ORDER BY id LIMIT 5;";
+
     private String Query03 ="insert into cities (id, name, state_id, status, created_at) values (?, ?, ?, ?,?);";
 
     private String preparedQuery03Delete = "delete from cities where id = ? and name = ?;";
