@@ -13,8 +13,6 @@ import utilities.DB_Utilities.DBUtils;
 
 import java.sql.*;
 
-import static org.junit.Assert.assertEquals;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -22,7 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.*;
 
 @Data
 @Slf4j
@@ -41,7 +40,8 @@ public class DB_Stepdefinitions {
     String updateLog;
     int supportMessageId;
     int count;
-
+    String email;
+    PreparedStatement deleteStatement ;
     @When("Database connection is established.")
     public void databaseConnectionIsEstablished() {
         DBUtils.createConnection();
@@ -500,6 +500,40 @@ public class DB_Stepdefinitions {
     }
 
 
+    @When("I delete the added contact with email from the table")
+    public void iDeleteTheAddedContactWithEmailFromTheTable() throws SQLException {
+
+        deleteStatement = DBUtils.getPraperedStatement(manage.getQuery05DeleteAddedContact());
+        deleteStatement.setString(3, email);
+        deleteStatement.executeUpdate();
+
+    }
+
+    @Then("I verify that the contact data with email is no longer exist in the table")
+    public void iVerifyThatTheContactDataWithEmailIsNoLongerExistInTheTable() throws SQLException {
+        ResultSet resultset = deleteStatement.executeQuery();
+        count = 0;
+        if (resultset.next()) {
+            count = resultset.getInt("count");
+        }
+        Assert.assertEquals(0, count);
+    }
+
+    @Given("Query{int} is prepared and executed.")
+    public void queryIsPreparedAndExecuted(int arg0) throws SQLException {
+        query = manage.getQuery05AddAContact();
+        email = faker.internet().emailAddress();
+        id = faker.number().numberBetween(100, 900);
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, faker.name().firstName());
+        preparedStatement.setString(3, email);
+        preparedStatement.setString(4, "customer");
+        preparedStatement.setString(5, "Hi there");
+        rowCount = preparedStatement.executeUpdate();
+
+        assertTrue("An error occurred while inserting data.", rowCount > 0);
+    }
 }
 
 
