@@ -373,7 +373,8 @@ public class DB_Stepdefinitions {
         resultSet.next();
         int actualUserCount = resultSet.getInt("type_count");
         int expectedUserCount = 6;
-        Assert.assertEquals(actualUserCount, expectedUserCount, "The type_count should match the expected count(6).");
+        log.info("The type_count should match the expected count(6).");
+        Assert.assertEquals(actualUserCount, expectedUserCount);
     }
 
 
@@ -535,6 +536,26 @@ public class DB_Stepdefinitions {
         assertTrue("An error occurred while inserting data.", rowCount > 0);
     }
 
+
+    @When("Query17 is prepared  for users and attendances table and execute")
+    public void queryIsPreparedForUsersAndAttendancesTableAndExecute() throws SQLException {
+        query = manage.getQuery17();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Then("Process result and verify the email address")
+    public void processResultAndVerifyTheEmailAddress() throws SQLException {
+        if (!resultSet.next()) {
+            log.info("There is no e-mail address that meets this condition.");
+
+        } else {
+
+            String actualEmail = resultSet.getString("email");
+            log.info("It works for UserId = 3");
+            String expectedUserEmail = "seller@gmail.com";
+            Assert.assertEquals(actualEmail, expectedUserEmail, "The actual email should match with expected");
+        }
+
     @Given("I query to group the coupon_products table by coupon_id")
     public void iQueryToGroupTheCoupon_productsTableByCoupon_id() throws SQLException {
         query = manage.getQuery06GroupId();
@@ -548,6 +569,7 @@ public class DB_Stepdefinitions {
             int productCount = resultSet.getInt("product_count");
             System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
         }
+
 
     }
 }
