@@ -569,10 +569,140 @@ public class DB_Stepdefinitions {
             int productCount = resultSet.getInt("product_count");
             System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
         }
+    }
 
+    @Given("Query21 is prepared and executed.")
+    public void query21_is_prepared_and_executed() {
+        try {
+            query = manage.getQuery21() ;
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error preparing or executing Query21: {}", e.getMessage());
+        }
+    }
+
+    @Given("ResultSet21 results are processed.")
+    public void result_set21_results_are_processed() {
+        try {
+            if (resultSet.next()) {
+                int totalOrders = resultSet.getInt("total_orders");
+                System.out.println("Total orders placed according to the specified order_id: " + totalOrders);
+                log.info("Total orders placed according to the specified order_id: {}", totalOrders);
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet21: {}", e.getMessage());
+        } finally {
+            DBUtils.closeResultSet(resultSet);
+            DBUtils.closeStatement(preparedStatement);
+        }
+    }
+
+    @Given("Query22 is prepared and executed.")
+    public void data_is_entered_into_the_digital_gift_cards_table() {
+        try {
+
+            int id = 3726;
+            String giftName = faker.lorem().words(2).toString();
+            String descriptionOne = faker.lorem().sentence();
+            String thumbnailImageOne = faker.internet().image();
+            String thumbnailImageTwo = faker.internet().image();
+
+
+            query = manage.getPreparedQuery22();
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, giftName);
+            preparedStatement.setString(3, descriptionOne);
+            preparedStatement.setString(4, thumbnailImageOne);
+            preparedStatement.setString(5, thumbnailImageTwo);
+
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                log.info("Data inserted successfully into digital_gift_cards table.");
+            } else {
+                log.error("Failed to insert data into digital_gift_cards table.");
+            }
+        } catch (SQLException e) {
+            log.error("Error inserting data into digital_gift_cards table: {}", e.getMessage());
+
+        }
+    }
+
+    @Given("ResultSet22 results are processed.")
+    public void delete_inserted_data_from_digital_gift_cards_table() {
+        try {
+            query = manage.getResultQuery22();
+
+            int insertedId = 3726;
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            preparedStatement.setInt(1, insertedId);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                log.info("Inserted data successfully deleted from digital_gift_cards table.");
+            } else {
+                log.error("Failed to delete inserted data from digital_gift_cards table.");
+            }
+        } catch (SQLException e) {
+            log.error("Error deleting inserted data from digital_gift_cards table: {}", e.getMessage());
+        } finally {
+            DBUtils.closeStatement(preparedStatement);
+        }
+    }
+
+
+    @Given("Query24 is prepared and executed.")
+    public void query24_is_prepared_and_executed() {
+        try {
+            query = manage.getPreparedQuery24();
+
+            log.info("Executing SQL query: {}", query);
+
+            preparedStatement = DBUtils.getPraperedStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            log.error("Error preparing or executing Query24: {}", e.getMessage());
+        }
+    }
+
+    @Given("ResultSet24 results are processed")
+    public void result_set24_results_are_processed() {
+        try {
+            query = manage.getResultQuery24();
+
+            boolean hasResults = false;
+            while (resultSet.next()) {
+                hasResults = true;
+                long id = resultSet.getLong("id");
+                String customerEmail = resultSet.getString("customer_email");
+                double subTotal = resultSet.getDouble("sub_total");
+                long orderNumber = resultSet.getLong("order_number");
+                System.out.println("Data retrieved and reversed successfully:");
+                log.info("ID: {}, Customer Email: {}, Sub Total: {}, Order Number: {}", id, customerEmail, subTotal, orderNumber);
+            }
+
+            if (!hasResults) {
+                System.out.println("No data found matching the criteria.");
+                log.info("No data found matching the criteria.");
+            } else {
+                System.out.println("Data retrieval and processing completed successfully.");
+                log.info("Data retrieval and processing completed successfully.");
+            }
+        } catch (SQLException e) {
+            log.error("Error processing ResultSet24: {}", e.getMessage());
+        } finally {
+            DBUtils.closeResultSet(resultSet);
+            DBUtils.closeStatement(preparedStatement);
+        }
 
     }
+
 }
+
 
 
 
