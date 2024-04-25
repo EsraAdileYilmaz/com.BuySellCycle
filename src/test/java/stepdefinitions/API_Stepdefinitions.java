@@ -1382,7 +1382,7 @@ public class API_Stepdefinitions {
         reqBodyHash.put("country", country);
         reqBodyHash.put("postal_code", postal_code);
         reqBodyHash.put("address_type", address_type);
-}
+    }
 
 
 }

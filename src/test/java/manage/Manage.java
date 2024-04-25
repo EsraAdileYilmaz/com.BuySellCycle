@@ -68,6 +68,8 @@ public class Manage {
     private String query17 = "SELECT email FROM users JOIN attendances  ON users.id = attendances.user_id WHERE users.id = 3 AND attendances.year < 2022;";
 
     private String query06GroupId= "SELECT coupon_id, COUNT(*) AS product_count FROM coupon_products GROUP BY coupon_id;";
+  
+    private String query16Join ="SELECT o.id FROM orders o JOIN order_address_details d ON o.id = d.order_id WHERE d.shipping_address = 'Switzerland';";
 
     private String Query21 = "SELECT COUNT(*) AS total_orders FROM guest_order_details WHERE order_id IN (2, 23, 62, 78, 91, 92, 115, 116, 118, 129, 139, 149, 181)";
 

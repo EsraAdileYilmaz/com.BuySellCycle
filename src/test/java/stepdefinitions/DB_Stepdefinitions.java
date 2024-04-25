@@ -10,9 +10,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import manage.Manage;
 import utilities.DB_Utilities.DBUtils;
-
 import java.sql.*;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.*;
 
 @Data
@@ -537,6 +534,32 @@ public class DB_Stepdefinitions {
     }
 
 
+    @When("the user queries ids with  with shipping_address=Switzerland in the order_address_details table according to the orders table. to list orders shipped to Switzerland according to the orders table.")
+    public void theUserQueriesIdsWithWithShipping_addressSwitzerlandInTheOrder_address_detailsTableAccordingToTheOrdersTableToListOrdersShippedToSwitzerlandAccordingToTheOrdersTable() throws SQLException {
+        query = manage.getQuery16Join();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+
+    }
+
+    @And("The user list the ids from the resultset")
+    public void theUserListTheIdsFromTheResultset() throws SQLException {
+        List<Object> idList = new ArrayList<>();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+        while (resultSet.next()) {
+            // Her bir satır için bir Object listesi oluştur
+            List<Object> row = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                // Her sütunun değerini alıp listeye ekle
+                row.add(resultSet.getObject(i));
+            }
+            // Oluşturulan satırı genel listeye ekle
+            idList.add(row);
+        }
+
+        System.out.println(": " + idList);
+
     @When("Query17 is prepared  for users and attendances table and execute")
     public void queryIsPreparedForUsersAndAttendancesTableAndExecute() throws SQLException {
         query = manage.getQuery17();
@@ -569,6 +592,7 @@ public class DB_Stepdefinitions {
             int productCount = resultSet.getInt("product_count");
             System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
         }
+
     }
 
     @Given("Query21 is prepared and executed.")
@@ -700,6 +724,10 @@ public class DB_Stepdefinitions {
         }
 
     }
+
+
+    }
+      
 
 }
 
