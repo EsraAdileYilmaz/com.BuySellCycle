@@ -1,4 +1,4 @@
-@query08
+
 Feature: Verify the names in the delivery_processes table
 Background: Database connection
   Given Database connection is established.

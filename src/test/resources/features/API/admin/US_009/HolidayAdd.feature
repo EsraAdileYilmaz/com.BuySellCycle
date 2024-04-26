@@ -1,8 +1,9 @@
 
 Feature: Adding and Verifying holidays via API
 
+  @smoke
+  @priority2
 
-  @smoke1
 
   Scenario: Successfully add a holiday with valid authorization and data
     Given The api user constructs the base url with the "admin" token.

@@ -1,4 +1,4 @@
-@deleteCity
+@smoke
 Feature: Add a data in cities table
   Background: Database connection
     Given Database connection is established.

@@ -1,3 +1,4 @@
+@smoke
 Feature: Calculate the total cost of products with is_buy_now=1 before 2024-03-30 in the carts table
 
   Background: Database connection

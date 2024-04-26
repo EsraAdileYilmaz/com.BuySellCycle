@@ -1,4 +1,4 @@
-@checkPhone
+@smoke
 Feature: SELECT QUERY EXECUTE
   Background: Database connection
     Given Database connection is established.

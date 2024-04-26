@@ -1,4 +1,4 @@
-@DEL
+
 Feature: As an administrator, I want to be able to delete department information with the specified ID number via the API connection.
 
   Scenario: Successful deletion of the body containing VALID authorization information and department ID
