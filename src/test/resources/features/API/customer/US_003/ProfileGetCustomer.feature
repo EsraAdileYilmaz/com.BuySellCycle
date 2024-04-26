@@ -1,3 +1,4 @@
+
 Feature: As a user, I should be able to access the financial information of the customer via API connection.
 
 Scenario: When a GET request is sent to the /api/profile/get-customer-data endpoint with valid authorization credentials,

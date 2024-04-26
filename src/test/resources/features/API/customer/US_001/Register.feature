@@ -1,3 +1,4 @@
+@smoke
 Feature: As a user/administrator, I should be able to create a new customer record in the system via API connection.
 
 Scenario: When a POST body consisting of valid data (first_name, last_name, email, password, password_confirmation, user_type, referral_code) is sent to the /api/register endpoint,

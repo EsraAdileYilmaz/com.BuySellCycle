@@ -1,5 +1,6 @@
-Feature: As an administrator, I should be able to access holiday data for staff members via API connection.
 
+Feature: As an administrator, I should be able to access holiday data for staff members via API connection.
+  @smoke2
 Scenario: When a GET request is sent to the /api/holidayList endpoint with valid authorization credentials,
 the expected status code returned should be 200, and the message in the response body should confirm: "success".
 
