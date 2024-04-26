@@ -18,7 +18,8 @@ import org.junit.runner.RunWith;
 
 
 
-        tags ="@db6",
+        tags ="@smoke1",
+
 
 
 
