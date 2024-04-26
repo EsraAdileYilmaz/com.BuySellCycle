@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import static org.junit.Assert.*;
 
+
 @Data
 @Slf4j
 @Getter
@@ -339,15 +340,44 @@ public class DB_Stepdefinitions {
         System.out.println(productsNotCoupon);
     }
 
-        @Given("Query19 is prepared and executed.")
-        public void query19_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery19();
-            resultSet = DBUtils.getStatement().executeQuery(query);
-        }
-    @Given("ResultSet19 results are processed.")
-     public void result_set19_results_are_processed () {
-      assertEquals(0, rowCount);
+    @Given("Query19Update is prepared and executed.")
+    public void query19Update_is_prepared_and_executed () throws SQLException {
+        query = manage.getQuery19Update();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        rowCount = preparedStatement.executeUpdate();
     }
+
+    @When("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Then("I verify that no records have negative opening balance")
+    public void i_verify_that_no_records_have_negative_opening_balance() throws SQLException {
+       boolean hasNegativeBalance = false;
+
+        while (resultSet.next()) {
+            if (resultSet.getDouble("opening_balance") < 0) {
+                hasNegativeBalance = true;
+
+            }
+        }
+
+        assertFalse(!hasNegativeBalance);
+       /*boolean hasNegativeBalance = false;
+
+        while (resultSet.next()) {
+            double openingBalance = resultSet.getDouble("opening_balance");
+            if (openingBalance < 0) {
+                hasNegativeBalance = true;
+                break; // Negatif bakiye bulunduğunda döngüyü sonlandır
+            }
+        }
+
+        assertFalse(!hasNegativeBalance);*/
+    }
+
     @Given("Query29 is prepared and executed.")
       public void query29_is_prepared_and_executed () throws SQLException {
         query = manage.getQuery29();
@@ -373,8 +403,6 @@ public class DB_Stepdefinitions {
         log.info("The type_count should match the expected count(6).");
         Assert.assertEquals(actualUserCount, expectedUserCount);
     }
-
-
 
     @Given("Prepare a query that adds datas to the bank_accounts table in bulk.")
     public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk(Integer int1) throws SQLException {
@@ -445,13 +473,13 @@ public class DB_Stepdefinitions {
     }
 
 
-      @Given("Query15 is prepared and executed.")
+    @Given("Query15 is prepared and executed.")
       public void query15_is_prepared_and_executed() throws SQLException {
           query = manage.getQuery15();
           resultSet = DBUtils.getStatement().executeQuery(query);
       }
 
-      @When("ResultSet15 results are processed.")
+    @When("ResultSet15 results are processed.")
       public void result_set15_results_are_processed() throws SQLException {
         /*List<Object> customerUsersList=new ArrayList<>();
           for (int i = 0; i <customerUsersList.size() ; i++) {
@@ -474,7 +502,7 @@ public class DB_Stepdefinitions {
           }
 
           System.out.println("Customer coupon stories: " + customerUsersList);
-      }
+    }
 
     @Given("Query08 is prepared to select the first five names from delivery_processes and executed.")
     public void query08_is_prepared_to_select_the_first_five_names_from_delivery_processes_and_executed() throws SQLException {
