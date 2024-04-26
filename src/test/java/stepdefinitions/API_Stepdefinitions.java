@@ -17,6 +17,8 @@ import org.junit.Assert;
 import utilities.API_Utilities.API_Methods;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.*;
 
 
@@ -692,8 +694,15 @@ public class API_Stepdefinitions {
 
     @When("The api user sends a POST request with the following JSON:")
     public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
+        String year = String.valueOf(faker.number().numberBetween(2025, 2029));
+        String date = faker.date().future(30, TimeUnit.DAYS).toString();
 
-        API_Methods.postResponse(requestJSONBody);
+        JSONObject json = new JSONObject();
+        json.put("year", year);
+        json.put("name", "Kurban Bayrami");
+        json.put("date", date);
+
+        API_Methods.postResponse(json.toString());
     }
 
 

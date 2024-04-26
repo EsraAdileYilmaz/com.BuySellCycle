@@ -86,5 +86,5 @@ public class Manage {
             "WHERE customer_email NOT LIKE '%customer%' AND sub_total < 2000 " +
             "ORDER BY order_number DESC";
 
-
+    private String Query19Update = "UPDATE bank_accounts SET opening_balance = -100 WHERE bank_name = 'Buckridge-Shanahan'";
 }

@@ -3,15 +3,19 @@ Feature: Adding and Verifying holidays via API
 
   @smoke
   @priority2
+
+
   Scenario: Successfully add a holiday with valid authorization and data
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/holidayAdd" path parameters
     When  The api user sends a POST request with the following JSON:
     """
     {
-    "year": "2025",
-    "name": "19 Mayis Genclik ve Spor Bayrami",
-    "date": "19.05.2025"
+
+    "year": "<year>",
+    "name": "Kurban Bayrami",
+    "date": "<date>"
+
     }
     """
     Then  The api user verifies that the status code is 201
