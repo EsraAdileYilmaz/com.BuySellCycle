@@ -694,16 +694,14 @@ public class API_Stepdefinitions {
 
     @When("The api user sends a POST request with the following JSON:")
     public void theApiUserSendsAPOSTRequestWithTheFollowingJSON(String requestJSONBody) {
-        String year = String.valueOf(faker.number().numberBetween(2022, 2029)); // 2022 ile 2028 arasında rastgele bir yıl seç
-        String date = faker.date().future(30, TimeUnit.DAYS).toString(); // 30 gün içinde bir tarih seç
+        String year = String.valueOf(faker.number().numberBetween(2025, 2029));
+        String date = faker.date().future(30, TimeUnit.DAYS).toString();
 
-        // JSON verisini oluştur
         JSONObject json = new JSONObject();
         json.put("year", year);
         json.put("name", "Kurban Bayrami");
         json.put("date", date);
 
-        // API_Methods.postResponse metodunu çağırarak POST isteğini gönder
         API_Methods.postResponse(json.toString());
     }
 
