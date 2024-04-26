@@ -1,4 +1,4 @@
-@Gamze
+
 Feature: As an administrator, I want to be able to update the existing address information of a customer with the specified address
   ID number and belonging customer_id via the API connection.
 

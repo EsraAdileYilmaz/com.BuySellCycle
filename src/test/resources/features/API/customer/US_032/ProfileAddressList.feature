@@ -1,4 +1,4 @@
-@address
+
 Feature: As a user, I want to view the addresses in my profile via the API connection.
   Scenario: GET query containing valid authorization credentials and requested address ID to access detailed information
     Given The api user constructs the base url with the "aycacustomer" token.

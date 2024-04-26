@@ -10,7 +10,7 @@ Feature: Accessing Coupon Details with Valid Authorization
 
 
 
-  @asliCoupon
+
   Scenario: Validating data returned in the response body2
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/coupon/couponDetails" path parameters

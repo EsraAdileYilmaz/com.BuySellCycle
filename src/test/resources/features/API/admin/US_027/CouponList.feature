@@ -7,7 +7,7 @@ Feature: Testing the Coupon List API
     Then  The api user verifies that the status code is 200
     And   The api user verifies that the message information in the response body is "success"
 
-  @aslicouponlist
+
   Scenario Outline: Validate information for coupon with specific ID in the response body
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/coupon/couponList" path parameters

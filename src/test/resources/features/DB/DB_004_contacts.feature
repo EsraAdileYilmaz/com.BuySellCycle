@@ -1,4 +1,4 @@
-@esraSmoke4
+@smoke
 Feature:UPDATE QUERY EXECUTE
 
  Background: Database connection

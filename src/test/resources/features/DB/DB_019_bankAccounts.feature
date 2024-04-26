@@ -1,4 +1,4 @@
-@negatifUpdate
+
 Feature: SELECT QUERY EXECUTE
 
   Background: Database connection
