@@ -1,23 +1,27 @@
 
 Feature: Adding and Verifying holidays via API
 
-@holidayadd09
+
+  @smoke1
+
   Scenario: Successfully add a holiday with valid authorization and data
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/holidayAdd" path parameters
     When  The api user sends a POST request with the following JSON:
     """
     {
+
     "year": "<year>",
     "name": "Kurban Bayrami",
     "date": "<date>"
+
     }
     """
     Then  The api user verifies that the status code is 201
     And   The api user verifies that the message information in the response body is "holiday added successfully"
 
 
-  @asliHoliday
+
   Scenario Outline: The creation of the new Holiday record via the API should be verified.
     Given The api user constructs the base url with the "admin" token.
     And   The api user sets "api/holidayDetails" path parameters
