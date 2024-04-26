@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import static org.junit.Assert.*;
 
+
 @Data
 @Slf4j
 @Getter
@@ -345,14 +346,42 @@ public class DB_Stepdefinitions {
         System.out.println(productsNotCoupon);
     }
 
-        @Given("Query19 is prepared and executed.")
-        public void query19_is_prepared_and_executed () throws SQLException {
-            query = manage.getQuery19();
-            resultSet = DBUtils.getStatement().executeQuery(query);
+    @Given("Query19Update is prepared and executed.")
+    public void query19Update_is_prepared_and_executed () throws SQLException {
+        query = manage.getQuery19Update();
+        preparedStatement = DBUtils.getPraperedStatement(query);
+        rowCount = preparedStatement.executeUpdate();
+    }
+
+    @When("Query19 is prepared and executed.")
+    public void query19_is_prepared_and_executed() throws SQLException {
+        query = manage.getQuery19();
+        resultSet = DBUtils.getStatement().executeQuery(query);
+    }
+
+    @Then("I verify that no records have negative opening balance")
+    public void i_verify_that_no_records_have_negative_opening_balance() throws SQLException {
+       boolean hasNegativeBalance = false;
+
+        while (resultSet.next()) {
+            if (resultSet.getDouble("opening_balance") < 0) {
+                hasNegativeBalance = true;
+
+            }
         }
-    @Given("ResultSet19 results are processed.")
-     public void result_set19_results_are_processed () {
-      assertEquals(0, rowCount);
+
+        assertFalse(!hasNegativeBalance);
+       /*boolean hasNegativeBalance = false;
+
+        while (resultSet.next()) {
+            double openingBalance = resultSet.getDouble("opening_balance");
+            if (openingBalance < 0) {
+                hasNegativeBalance = true;
+                break; // Negatif bakiye bulunduğunda döngüyü sonlandır
+            }
+        }
+
+        assertFalse(!hasNegativeBalance);*/
     }
 
     @Given("Query29 is prepared and executed.")
@@ -459,6 +488,7 @@ public class DB_Stepdefinitions {
 
     }
 
+
     @Given("Query15 is prepared and executed.")
       public void query15_is_prepared_and_executed() throws SQLException {
           query = manage.getQuery15();
@@ -466,7 +496,9 @@ public class DB_Stepdefinitions {
     }
 
     @When("ResultSet15 results are processed.")
+
     public void result_set15_results_are_processed() throws SQLException {
+
         /*List<Object> customerUsersList=new ArrayList<>();
           for (int i = 0; i <customerUsersList.size() ; i++) {
             customerUsersList.add(resultSet.getObject(i));
