@@ -9,6 +9,8 @@ public class DBUtils {
     static ResultSet resultSet;
 
     public static String query;
+    public static int id;
+    static Random random=new Random();
 
     //BU METHOD COK KULLANACAGIZ
     //createConnection database e baglanmak icin. Burda url, username, password u kullanarak database baglaniyoruz
@@ -317,6 +319,25 @@ public class DBUtils {
             }
         }
     }
+    public static Integer idGenerator(String givenQuery) throws SQLException {
+        resultSet = DBUtils.getStatement().executeQuery(givenQuery);
 
+        List<Long> ids = new ArrayList<>();
+        while (resultSet.next()) {
+            ids.add(resultSet.getLong("id"));
+        }
+
+        int maxAttempts = 1000; // Maksimum deneme sayısı
+        int attemptCount = 0;
+        do {
+            long max = 8511963174281719650L;
+            int id = (int) Math.abs(random.nextLong() % max);
+            if (!ids.contains(id)) {
+                return id;
+            }
+            attemptCount++;
+        } while (attemptCount < maxAttempts);
+        throw new IllegalStateException("Unique ID could not be generated after " + maxAttempts + " attempts.");
+    }
 
 }

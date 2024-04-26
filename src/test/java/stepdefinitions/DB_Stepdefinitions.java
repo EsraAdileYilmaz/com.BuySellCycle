@@ -190,7 +190,7 @@ public class DB_Stepdefinitions {
 
     @Given("ResultSet30 results are processed.")
     public void result_set30_results_are_processed() {
-        System.out.println("total price");
+        log.info("total price");
     }
 
     @Given("Query25 is prepared and executed.")
@@ -208,7 +208,7 @@ public class DB_Stepdefinitions {
             resultMap.put(txnId, amount);
         }
         //To group and sort of the result
-        System.out.println("txn_id - amount");
+        log.info("txn_id - amount");
         for (Map.Entry<String, Double> entry : resultMap.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
@@ -307,7 +307,7 @@ public class DB_Stepdefinitions {
         for (Map.Entry<String, List<String>> entry : notes.entrySet()) {
             String note = entry.getKey();
             List<String> day = entry.getValue();
-            System.out.println("Days: " + note + ", Unique Notes: " + String.join(", ", day));
+            log.info("Days: " + note + ", Unique Notes: " + String.join(", ", day));
         }
     }
 
@@ -377,33 +377,39 @@ public class DB_Stepdefinitions {
 
 
     @Given("Prepare a query that adds datas to the bank_accounts table in bulk.")
-    public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk(Integer int1) throws SQLException {
-        query = manage.getQuery12();
+    public void prepare_a_query_that_adds_datas_to_the_bank_accounts_table_in_bulk() throws SQLException {
+        query = manage.getQuery18();
         preparedStatement = DBUtils.getPraperedStatement(query);
-        resultSet = preparedStatement.executeQuery();
+        //resultSet = preparedStatement.executeQuery();
     }
     @Given("Enter the data in bulk. Check that it is added to the table.")
-    public void enter_the_data_in_bulk_check_that_it_is_added_to_the_table(Integer int1) throws SQLException {
+    public void enter_the_data_in_bulk_check_that_it_is_added_to_the_table() throws SQLException {
+        try (Connection connection = DBUtils.getStatement().getConnection()) {
+            PreparedStatement stm = connection.prepareStatement("Insert Into bank_accounts (id,bank_name,branch_name,account_name,account_number,opening_balance,description,status) Values(?,?,?,?,?,?,?,?)");
 
-        // 5 set of data to be inserted
-       List<Object[]> dataList = new ArrayList<>();
-        dataList.add(new Object[]{1, "Bank A", "Branch A", "Account A", "123456", 1000.0, "Description A", "Active"});
-        dataList.add(new Object[]{2, "Bank B", "Branch B", "Account B", "234567", 2000.0, "Description B", "Inactive"});
-        dataList.add(new Object[]{3, "Bank C", "Branch C", "Account C", "345678", 3000.0, "Description C", "Active"});
-        dataList.add(new Object[]{4, "Bank D", "Branch D", "Account D", "456789", 4000.0, "Description D", "Inactive"});
-        dataList.add(new Object[]{5, "Bank E", "Branch E", "Account E", "567890", 5000.0, "Description E", "Active"});
+            for (int i = 0; i < 4; i++) {
+                stm.setInt(1, (int) faker.number().numberBetween(30000, 9000000));
+                stm.setString(2, faker.company().name());
+                stm.setString(3, faker.lorem().word()); // branch_name
+                stm.setString(4, faker.lorem().word()); // account_name
+                stm.setString(5, faker.numerify("#######")); // account_number
+                stm.setDouble(6, faker.random().nextDouble()); // opening_balance
+                stm.setString(7, faker.lorem().word()); // description
+                stm.setString(8, String.valueOf(faker.number().randomDigitNotZero())); // status
 
-        // Insert data into table
-        for (Object[] data : dataList) {
-            for (int i = 0; i < data.length; i++) {
-                preparedStatement.setObject(i + 1, data[i]);
+                stm.addBatch();
+
             }
-            preparedStatement.addBatch();
-        }
-        preparedStatement.executeBatch();
 
-        // Check if data is added to the table
-        System.out.println("Data added successfully.");
+            int[] affectedRows = new int[]{stm.executeUpdate()};
+
+
+            log.info("Eklenen veriler:");
+            for (int rowCount : affectedRows) {
+                log.info("Etkilenen satır sayısı: " + rowCount);
+            }
+
+        }
     }
 
     @Given("Query14 is prepared and executed.")
