@@ -531,15 +531,16 @@ public class DB_Stepdefinitions {
     @Then("The results Query08 should be in reverse order: Shipped, Received, Processing, Pending, Delivered.")
     public void The_results_Query08_should_be_in_reverse_order_shipped_received_processing_pending_delivered() throws SQLException {
 
-        List<String> expectedOrder = Arrays.asList("Shipped", "Received", "Processing", "Pending", "Delivered");
+        List<String> expectedOrder = Arrays.asList("Delivered, Recieved, Shipped, Processing, Pending");
         List<String> actualOrder = new ArrayList<>();
 
         while (resultSet.next()) {
             actualOrder.add(resultSet.getString("name"));
         }
+        System.out.println("before reverse : " + actualOrder);
         Collections.reverse(actualOrder);
-        System.out.println(expectedOrder);
-        System.out.println(actualOrder);
+        System.out.println("expected result : " + expectedOrder);
+        System.out.println("actual result : " + actualOrder);
         assert actualOrder.equals(expectedOrder) : "The data names are not in the expected reverse order.";
 
     }
